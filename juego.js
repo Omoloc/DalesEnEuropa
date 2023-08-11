@@ -23,9 +23,14 @@ var clickedCircle = null;
 
 function preload() {
   // No se requiere la función preload para este ejemplo
+  
+  this.load.image('congreso', 'congreso.png');
 }
 
 function create() {
+  
+  this.add.image(0, 0, 'congreso').setOrigin(0);
+
   var positions = [
     { x: 100, y: 100 },
     { x: 200, y: 100 },
