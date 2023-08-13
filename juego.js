@@ -25,6 +25,7 @@ function preload() {
   // No se requiere la función preload para este ejemplo
   
   this.load.image('congreso', 'congreso.png');
+  this.load.image('feijo','feijo.gif');
 }
 
 function create() {
@@ -45,7 +46,8 @@ function create() {
     { x: 100, y: 300 },
     { x: 200, y: 300 },
     { x: 300, y: 300 },
-    { x: 400, y: 300 }
+    { x: 400, y: 300 },
+    { x: 500, y: 300 }
     // Agrega las demás posiciones aquí...
   ];
 
