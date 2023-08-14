@@ -4,6 +4,109 @@ var config = {
   width: 611,
   height: 349,
   scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH
+  },
+  scene: {
+    preload: preload,
+    create: create,
+    update: update
+  }
+};
+
+var game = new Phaser.Game(config);
+
+var score = 0;
+var scoreText;
+var positionImages = [];
+var imagesToDisplay = ['feijo', 'abascal', 'diaz', 'sanchez'];
+
+function preload() {
+  this.load.image('congreso', 'congreso.png');
+  this.load.image('feijo', 'feijo.gif');
+  this.load.image('abascal', 'abascal.png');
+  this.load.image('diaz', 'diaz.png');
+  this.load.image('sanchez', 'sanchez.png');
+}
+
+function create() {
+  this.add.image(0, 0, 'congreso').setOrigin(0);
+
+  var positions = [
+    { x: 100, y: 100 },
+    { x: 200, y: 100 },
+    { x: 300, y: 100 },
+    { x: 400, y: 100 },
+    { x: 500, y: 100 },
+    { x: 100, y: 200 },
+    { x: 200, y: 200 },
+    { x: 300, y: 200 },
+    { x: 400, y: 200 },
+    { x: 500, y: 200 },
+    { x: 100, y: 300 },
+    { x: 200, y: 300 },
+    { x: 300, y: 300 },
+    { x: 400, y: 300 },
+    { x: 500, y: 300 }
+    // ... (agrega las demás posiciones aquí)
+  ];
+
+  for (var i = 0; i < positions.length; i++) {
+    var position = positions[i];
+    var positionImage = this.add.image(position.x, position.y, Phaser.Math.RND.pick(imagesToDisplay));
+    positionImage.setDisplaySize(60, 60);
+    positionImage.setInteractive(); // Habilita interacción con la imagen
+
+    positionImage.on('pointerdown', function () {
+      if (this.alpha === 1) {
+        score += 1;
+        scoreText.setText('Score: ' + score);
+        this.alpha = 0;
+      }
+    });
+
+    positionImages.push(positionImage);
+  }
+
+  var style = { fontSize: '32px', fill: '#FFFF00' };
+  scoreText = this.add.text(16, 16, 'Score: 0', style);
+
+  greenCircleTimer = this.time.addEvent({
+    delay: 1000,
+    callback: showNextImage,
+    callbackScope: this,
+    loop: true
+  });
+}
+
+function showNextImage() {
+  positionImages.forEach(function (positionImage) {
+    positionImage.setAlpha(0);
+  });
+
+  var randomImage = Phaser.Math.RND.pick(imagesToDisplay);
+  var randomPositionImage = Phaser.Math.RND.pick(positionImages);
+
+  randomPositionImage.setTexture(randomImage);
+  randomPositionImage.setAlpha(1);
+}
+
+function update() {
+  // Lógica para el contador y el cambio de colores
+  // Se mueve a la función showNextImage()
+}
+
+
+
+
+/* *******
+
+// Configuración del juego
+var config = {
+  type: Phaser.AUTO,
+  width: 611,
+  height: 349,
+  scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
   },
@@ -121,7 +224,7 @@ function update() {
   // Se mueve a la función showFeijo()
 }
 
-/*
+*********************
   // Tablero de juego
   for (var i = 0; i < positions.length; i++) {
     var position = positions[i];
