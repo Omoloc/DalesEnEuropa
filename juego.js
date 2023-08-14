@@ -24,9 +24,9 @@ var imagesToDisplay = ['feijo', 'abascal', 'diaz', 'sanchez'];
 function preload() {
   this.load.image('congreso', 'congreso.png');
   this.load.image('feijo', 'feijo.gif');
-  this.load.image('abascal', 'abascal.png');
-  this.load.image('diaz', 'diaz.png');
-  this.load.image('sanchez', 'sanchez.png');
+  this.load.image('abascal', 'abascal.gif');
+  this.load.image('diaz', 'diaz.gif');
+  this.load.image('sanchez', 'sanchez.gif');
 }
 
 function create() {
