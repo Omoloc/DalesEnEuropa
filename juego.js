@@ -44,13 +44,12 @@ function create() {
   startButton.setInteractive();
   startButton.on('pointerdown', startGame);
 
-  scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#FFFF00' });
+  scoreText = this.add.text(16, 16, 'Score: 0',
+                            { fontSize: '32px', fill: '#FFFF00' });
   scoreText.setScrollFactor(0);
 
-  countdownText = this.add.text(config.width - 16, 16, 'Tiempo: ' + countdown, {
-    fontSize: '24px',
-    fill: '#FFFFFF'
-  });
+  countdownText = this.add.text(config.width - 16, 16, 'Tiempo: ' + countdown,
+                                { fontSize: '32px', fill: '#FFFF00' });
   countdownText.setOrigin(1, 0);
   countdownText.setScrollFactor(0);
   
@@ -68,6 +67,7 @@ function create() {
     }
   };
 scoreText = this.add.text(16, 16, 'Score: 0', style);
+countdownText = this.add.text(config.width - 16, 16, 'Tiempo: ' + countdown, style);
 
   greenCircleTimer = this.time.addEvent({
     delay: 1000,
@@ -177,21 +177,20 @@ function restartGame() {
 }
 
 function showNextImage() {
-  positionImages.forEach(function (positionImage) {
-    positionImage.setAlpha(0);
-  });
+  if (gameStarted) {
+    positionImages.forEach(function (positionImage) {
+      positionImage.setAlpha(0);
+    });
 
-  var randomImage = Phaser.Math.RND.pick(imagesToDisplay);
-  var randomPositionImage = Phaser.Math.RND.pick(positionImages);
+    var randomImage = Phaser.Math.RND.pick(imagesToDisplay);
+    var randomPositionImage = Phaser.Math.RND.pick(positionImages);
 
-  randomPositionImage.setTexture(randomImage);
-  randomPositionImage.setAlpha(1);
+    randomPositionImage.setTexture(randomImage);
+    randomPositionImage.setAlpha(1);
+  }
 }
 
 function update() {
   // Lógica para el contador y el cambio de colores
   // Se mueve a la función showNextImage()
 }
-
-
-
