@@ -20,6 +20,9 @@ var score = 0;
 var scoreText;
 var positionImages = [];
 var imagesToDisplay = ['feijo', 'abascal', 'diaz', 'sanchez'];
+var gameStarted = false; // Bandera para saber si el juego ha comenzado
+var countdown = 30; // Tiempo de juego en segundos
+var countdownText;
 
 function preload() {
   this.load.image('congreso', 'congreso.png');
@@ -31,6 +34,24 @@ function preload() {
 
 function create() {
   this.add.image(0, 0, 'congreso').setOrigin(0);
+
+    // Pantalla inicial
+  var startButton = this.add.text(config.width / 2, config.height / 2, 'Jugar', {
+    fontSize: '32px',
+    fill: '#FFFFFF'
+  }).setOrigin(0.5);
+  startButton.setInteractive();
+  startButton.on('pointerdown', startGame);
+
+  scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#FFFF00' });
+  scoreText.setScrollFactor(0);
+
+  countdownText = this.add.text(config.width - 16, 16, 'Tiempo: ' + countdown, {
+    fontSize: '24px',
+    fill: '#FFFFFF'
+  });
+  countdownText.setOrigin(1, 0);
+  countdownText.setScrollFactor(0);
 
   var positions = [
     { x: 100, y: 100 },
@@ -89,6 +110,63 @@ scoreText = this.add.text(16, 16, 'Score: 0', style);
   });
 }
 
+function startGame() {
+  if (!gameStarted) {
+    gameStarted = true;
+    // Oculta el botón y comienza el juego
+    this.children.list.forEach(function (child) {
+      child.visible = false;
+    });
+
+    greenCircleTimer = this.time.addEvent({
+      delay: 1000,
+      callback: showNextImage,
+      callbackScope: this,
+      loop: true
+    });
+
+    // Temporizador para el tiempo de juego
+    this.time.addEvent({
+      delay: 1000,
+      repeat: countdown,
+      callback: function () {
+        countdown--;
+        countdownText.setText('Tiempo: ' + countdown);
+        if (countdown === 0) {
+          endGame();
+        }
+      }
+    });
+  }
+}
+
+function endGame() {
+  gameStarted = false;
+  scoreText.visible = false;
+  countdownText.visible = false;
+  positionImages.forEach(function (positionImage) {
+    positionImage.visible = false;
+  });
+
+  var resultText = this.add.text(config.width / 2, config.height / 2 - 50, 'Puntuación: ' + score, {
+    fontSize: '32px',
+    fill: '#FFFFFF'
+  }).setOrigin(0.5);
+
+  var restartButton = this.add.text(config.width / 2, config.height / 2 + 50, 'Volver a jugar', {
+    fontSize: '24px',
+    fill: '#FFFFFF'
+  }).setOrigin(0.5);
+  restartButton.setInteractive();
+  restartButton.on('pointerdown', function () {
+    // Reiniciar el juego
+    resultText.destroy();
+    restartButton.destroy();
+    startButton.visible = true;
+    score = 0;
+    scoreText.setText('Score: 0');
+  });
+}
 function showNextImage() {
   positionImages.forEach(function (positionImage) {
     positionImage.setAlpha(0);
