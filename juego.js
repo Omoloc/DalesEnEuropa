@@ -54,7 +54,7 @@ function create() {
   for (var i = 0; i < positions.length; i++) {
     var position = positions[i];
     var positionImage = this.add.image(position.x, position.y, Phaser.Math.RND.pick(imagesToDisplay));
-    positionImage.setDisplaySize(60, 60);
+    positionImage.setDisplaySize(80, 80);
     positionImage.setInteractive(); // Habilita interacción con la imagen
 
     positionImage.on('pointerdown', function () {
@@ -68,8 +68,18 @@ function create() {
     positionImages.push(positionImage);
   }
 
-  var style = { fontSize: '32px', fill: '#FFFF00' };
-  scoreText = this.add.text(16, 16, 'Score: 0', style);
+ var style = {
+    fontSize: '32px',
+    fill: '#FFFF00',
+    backgroundColor: '#000000',  // Agrega el color de fondo negro al estilo
+    padding: {
+      left: 10,
+      right: 10,
+      top: 5,
+      bottom: 5
+    }
+  };
+scoreText = this.add.text(16, 16, 'Score: 0', style);
 
   greenCircleTimer = this.time.addEvent({
     delay: 1000,
