@@ -47,7 +47,7 @@ function create() {
 
   countdownText = this.add.text(config.width - 16, 16, 'Tiempo: ' + countdown,
                                 { fontSize: '32px', fill: '#FFFF00' });
-  countdownText.setOrigin(1, 0);
+  //countdownText.setOrigin(1, 0);
   countdownText.setScrollFactor(0);
   
   positionImages = createPositionImages.call(this);
@@ -64,7 +64,7 @@ function create() {
     }
   };
 scoreText = this.add.text(16, 16, 'Score: 0', style);
-countdownText = this.add.text(config.width - 16, 16, 'Tiempo: ' + countdown, style);
+//countdownText = this.add.text(config.width - 16, 16, 'Tiempo: ' + countdown, style);
 
   greenCircleTimer = this.time.addEvent({
     delay: 1000,
