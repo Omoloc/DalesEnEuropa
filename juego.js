@@ -37,7 +37,10 @@ function create() {
   this.add.image(0, 0, 'congreso').setOrigin(0);
 
     // Pantalla inicial
-  var startButton = this.add.text(config.width / 2, config.height / 2, 'Jugar',style).setOrigin(0.5);
+  startButton = this.add.text(config.width / 2, config.height / 2, 'Jugar', {
+    fontSize: '32px',
+    fill: '#FFFFFF'
+  }).setOrigin(0.5);
   startButton.setInteractive();
   startButton.on('pointerdown', startGame);
 
