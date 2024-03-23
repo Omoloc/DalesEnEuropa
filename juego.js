@@ -123,6 +123,12 @@ function startGame() {
     gameStarted = true;
     startButton.visible = false;
 
+    // Elimina el evento de temporizador anterior
+    if (greenCircleTimer) {
+      greenCircleTimer.remove();
+    }
+
+    // Crea un nuevo evento de temporizador
     greenCircleTimer = this.time.addEvent({
       delay: 1000,
       callback: showNextImage,
@@ -144,6 +150,7 @@ function startGame() {
     });
   }
 }
+
 
 function endGame() {
   gameStarted = false;
