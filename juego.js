@@ -2,15 +2,33 @@ class GameOverScene extends Phaser.Scene {
   constructor() {
     super({ key: 'GameOverScene' });
     console.log('Constructor GameOverScene');
+
+    // Vincula el contexto de 'this' en 'startGame' a la instancia de 'GameOverScene'
+    this.startGame = this.startGame.bind(this);
+
   }
 
   preload() {
     // Carga los recursos necesarios para esta escena
   }
+  startGame() {
+    // Cargo escena del juego
+    console.log('PlayGameScene Scene Called');
+  
+    this.scene.start('PlayGameScene');
+  }
 
   create() {
     // Configura el estado inicial de esta escena
-    this.add.text(0, 0, 'Game Over', { fontSize: '32px', fill: '#FFFF00' });
+    this.add.text(120, 10, 'Game Over', { fontSize: '32px', fill: '#FFFF00' });
+
+    this.startButton = this.add.text(config.width / 2, config.height / 2, 'Jugar de nuevo', {
+      fontSize: '32px',
+      fill: '#FF0000'
+    }).setOrigin(0.5);
+    
+    this.startButton.setInteractive();
+    this.startButton.on('pointerdown', this.startGame);
   }
 
   update() {
@@ -31,6 +49,7 @@ class PlayGameScene extends Phaser.Scene {
   }
 
   increaseScore() {
+    console.log('increaseScore called');
     this.score += 1;
     this.scoreText.setText('Score: ' + this.score);
   }
@@ -79,6 +98,7 @@ class PlayGameScene extends Phaser.Scene {
 
   create() {
     console.log('Create PlayGameScene');
+    this.countdown = 30; // Tiempo de juego en segundos
 
     this.add.image(0, 0, 'congreso').setOrigin(0);
 
@@ -113,6 +133,7 @@ class PlayGameScene extends Phaser.Scene {
       callbackScope: this,
       loop: true
     });
+    this.showNextImage();
 
     this.countdownTimer = this.time.addEvent({
       delay: 1000,
