@@ -148,7 +148,7 @@ class PlayGameScene extends Phaser.Scene {
     for (var i = 0; i < this.positions.length; i++) {
       this.position = this.positions[i];
       this.positionImage = this.add.image(this.position.x, this.position.y, '').setOrigin(0.5);
-      this.positionImage.setDisplaySize(60, 60);
+      this.positionImage.setDisplaySize(30, 30);
       this.positionImage.setInteractive();
       this.positionImage.on('pointerdown', this.increaseScore);
       this.images.push(this.positionImage);
