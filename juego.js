@@ -58,6 +58,7 @@ class PlayGameScene extends Phaser.Scene {
 
   increaseScore() {
     //console.log('increaseScore called');
+    this.soundCatched.play();
     this.score += 1;
     this.scoreText.setText('Score: ' + this.score);
   }
@@ -93,7 +94,8 @@ class PlayGameScene extends Phaser.Scene {
   countdown = 30; // Tiempo de juego en segundos
   scoreText ="";
   countdownText="";
-
+  soundOpened = null;
+  soundCatched = null;
 
   preload() {
     console.log('Preload PlayGameScene');
@@ -102,6 +104,10 @@ class PlayGameScene extends Phaser.Scene {
     this.load.image('abascal', 'abascal.gif');
     this.load.image('diaz', 'diaz.gif');
     this.load.image('sanchez', 'sanchez.gif');
+    this.load.audio('opened', 'Open.wav');
+    this.load.audio('catched', 'Catch.mp3');
+    console.log('this.load.audio(opened, Open.wav)');
+        
   }
 
   create() {
@@ -150,6 +156,13 @@ class PlayGameScene extends Phaser.Scene {
       loop: true
     });
 
+    //Comenzamos
+    this.soundOpened = this.sound.add('opened');
+    this.soundCatched = this.sound.add('catched');
+    this.soundOpened.play();
+    console.log('soundpOpened add and played');
+    
+
   }
 
   createPositionImages() {
@@ -194,7 +207,7 @@ class PlayGameScene extends Phaser.Scene {
     if (this.countdown === 0) {
       this.scene.start('GameOverScene', { puntuacion: this.score });
     }
-}
+  }
 
   startGame() {
     // Elimina el evento de temporizador anterior
