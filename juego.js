@@ -175,27 +175,27 @@ class PlayGameScene extends Phaser.Scene {
     this.images = [];
 
     this.positions = [
-      { x: 100, y: 90 },
-      { x: 200, y: 90 },
-      { x: 300, y: 90 },
-      { x: 400, y: 90 },
-      { x: 500, y: 90 },
-      { x: 100, y: 180 },
-      { x: 200, y: 180 },
-      { x: 300, y: 180 },
-      { x: 400, y: 180 },
-      { x: 500, y: 180 },
-      { x: 100, y: 260 },
-      { x: 200, y: 260 },
-      { x: 300, y: 260 },
-      { x: 400, y: 260 },
-      { x: 500, y: 260 }
+      { x: 100, y: 100 },
+      { x: 200, y: 100 },
+      { x: 300, y: 100 },
+      { x: 400, y: 100 },
+      { x: 500, y: 100 },
+      { x: 100, y: 200 },
+      { x: 200, y: 200 },
+      { x: 300, y: 200 },
+      { x: 400, y: 200 },
+      { x: 500, y: 200 },
+      { x: 100, y: 300 },
+      { x: 200, y: 300 },
+      { x: 300, y: 300 },
+      { x: 400, y: 300 },
+      { x: 500, y: 300 }
       // ... (agrega las demás posiciones aquí)
     ];
 
     for (var i = 0; i < this.positions.length; i++) {
       this.position = this.positions[i];
-      this.positionImage = this.add.image(this.position.x, this.position.y, '').setOrigin(0.5);
+      this.positionImage = this.add.image(this.position.x, this.position.y + 50, '').setOrigin(0.5);
       this.positionImage.setDisplaySize(30, 30);
       this.positionImage.setInteractive();
       this.positionImage.on('pointerdown', this.increaseScore);
