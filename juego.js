@@ -59,15 +59,31 @@ class PlayGameScene extends Phaser.Scene {
   }
 
   increaseScore() {
+    //Cargo una nueva imagen
+    this.showNextImage(); // Muestra la siguiente imagen
+
     //console.log('increaseScore called');
-    this.soundCatched.play();
     this.score += 1;
     this.scoreText.setText('Score: ' + this.score);
+    
+    // Elimina el temporizador actual
+    this.time.destroy(this.greenCircleTimer);
+    
+    // Crea un nuevo temporizador
+    this.greenCircleTimer = this.time.addEvent({
+      delay: 1000,
+      callback: this.showNextImage,
+      callbackScope: this,
+      loop: true
+    });
+    
+    this.soundCatched.play();
+    
     if (this.sound.context.state === 'suspended') {
       this.sound.context.resume();
+    }
   }
-
-  }
+  
   showNextImage() {
     this.positionImages.forEach(function (positionImage) {
       positionImage.setAlpha(0);
@@ -119,6 +135,7 @@ class PlayGameScene extends Phaser.Scene {
   create() {
     console.log('Create PlayGameScene');
     this.countdown = 30; // Tiempo de juego en segundos
+    this.score = 0;
 
     this.add.image(0, 0, 'congreso').setOrigin(0);
 
