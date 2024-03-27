@@ -1,31 +1,40 @@
-// Configuración del juego
-var config = {
-  type: Phaser.AUTO,
-  width: 611,
-  height: 349,
-  scale: {
-    mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_BOTH
-  },
-  scene: {
-    preload: preload,
-    create: create,
-    update: update
+class GameOverScene extends Phaser.Scene {
+  constructor() {
+    super({ key: 'GameOverScene' });
+    console.log('Constructor GameOverScene');
   }
-};
 
-var game = new Phaser.Game(config);
+  preload() {
+    // Carga los recursos necesarios para esta escena
+  }
 
-var score = 0;
-var scoreText;
-var positionImages = [];
-var imagesToDisplay = ['feijo', 'abascal', 'diaz', 'sanchez'];
-var gameStarted = false; // Bandera para saber si el juego ha comenzado
-var countdown = 30; // Tiempo de juego en segundos
-var countdownText;
-var startButton;
+  create() {
+    // Configura el estado inicial de esta escena
+    this.add.text(0, 0, 'Game Over', { fontSize: '32px', fill: '#FFFF00' });
+  }
 
-function preload() {
+  update() {
+    // Actualiza el estado de esta escena en cada frame
+  }
+}
+
+
+class PlayGameScene extends Phaser.Scene {
+score = 0;
+scoreText;
+positionImages = [];
+imagesToDisplay = ['feijo', 'abascal', 'diaz', 'sanchez'];
+gameStarted = false; // Bandera para saber si el juego ha comenzado
+countdown = 30; // Tiempo de juego en segundos
+countdownText;
+
+constructor() {
+  super({ key: 'PlayGameScene' });
+  console.log('Constructor PlayGameScene');
+
+}
+
+preload() {
   this.load.image('congreso', 'congreso.png');
   this.load.image('feijo', 'feijo.gif');
   this.load.image('abascal', 'abascal.gif');
@@ -33,29 +42,21 @@ function preload() {
   this.load.image('sanchez', 'sanchez.gif');
 }
 
-function create() {
+create() {
   this.add.image(0, 0, 'congreso').setOrigin(0);
 
-    // Pantalla inicial
-  startButton = this.add.text(config.width / 2, config.height / 2, 'Jugar', {
-    fontSize: '32px',
-    fill: '#FFFFFF'
-  }).setOrigin(0.5);
-  startButton.setInteractive();
-  startButton.on('pointerdown', startGame);
-
-  scoreText = this.add.text(16, 16, 'Score: 0',
+  this.scoreText = this.add.text(16, 16, 'Score: 0',
                             { fontSize: '32px', fill: '#FFFF00' });
-  scoreText.setScrollFactor(0);
+  this.scoreText.setScrollFactor(0);
 
-  countdownText = this.add.text(config.width - 16, 16, 'Tiempo: ' + countdown,
+  this.countdownText = this.add.text(300, 16, 'Tiempo: ' + countdown,
                                 { fontSize: '32px', fill: '#FFFF00' });
   //countdownText.setOrigin(1, 0);
-  countdownText.setScrollFactor(0);
+  this.countdownText.setScrollFactor(0);
   
-  positionImages = createPositionImages.call(this);
+  this.positionImages = createPositionImages.call(this);
 
- var style = {
+  style = {
     fontSize: '32px',
     fill: '#FFFF00',
     backgroundColor: '#000000',  // Agrega el color de fondo negro al estilo
@@ -66,8 +67,8 @@ function create() {
       bottom: 5
     }
   };
-scoreText = this.add.text(16, 16, 'Score: 0', style);
-//countdownText = this.add.text(config.width - 16, 16, 'Tiempo: ' + countdown, style);
+  //scoreText = this.add.text(16, 16, 'Score: 0', style);
+  //countdownText = this.add.text(236, 16, 'Tiempo: ' + countdown, style);
 
   greenCircleTimer = this.time.addEvent({
     delay: 1000,
@@ -77,10 +78,10 @@ scoreText = this.add.text(16, 16, 'Score: 0', style);
   });
 }
 
-function createPositionImages() {
-  var images = [];
+createPositionImages() {
+  images = [];
 
-  var positions = [
+  positions = [
     { x: 100, y: 100 },
     { x: 200, y: 100 },
     { x: 300, y: 100 },
@@ -100,8 +101,8 @@ function createPositionImages() {
   ];
 
   for (var i = 0; i < positions.length; i++) {
-    var position = positions[i];
-    var positionImage = this.add.image(position.x, position.y, '').setOrigin(0.5);
+    position = positions[i];
+    positionImage = this.add.image(position.x, position.y, '').setOrigin(0.5);
     positionImage.setDisplaySize(60, 60);
     positionImage.setInteractive();
     positionImage.on('pointerdown', increaseScore);
@@ -111,14 +112,14 @@ function createPositionImages() {
   return images;
 }
 
-function increaseScore() {
+increaseScore() {
   if (gameStarted) {
     score += 1;
     scoreText.setText('Score: ' + score);
   }
 }
 
-function startGame() {
+startGame() {
   if (!gameStarted) {
     gameStarted = true;
     startButton.visible = false;
@@ -150,9 +151,7 @@ function startGame() {
     });
   }
 }
-
-
-function endGame() {
+endGame() {
   gameStarted = false;
   scoreText.visible = false;
   countdownText.visible = false;
@@ -160,7 +159,7 @@ function endGame() {
     positionImage.visible = false;
   });
 
-  var resultText = this.add.text(config.width / 2, config.height / 2 - 50, 'Puntuación: ' + score, {
+  resultText = this.add.text(config.width / 2, config.height / 2 - 50, 'Puntuación: ' + score, {
     fontSize: '32px',
     fill: '#FFFFFF'
   }).setOrigin(0.5);
@@ -171,7 +170,7 @@ function endGame() {
   startButton.on('pointerdown', restartGame);
 }
 
-function restartGame() {
+restartGame() {
   score = 0;
   scoreText.setText('Score: 0');
   countdown = 30;
@@ -183,21 +182,75 @@ function restartGame() {
   });
 }
 
-function showNextImage() {
+showNextImage() {
   if (gameStarted) {
     positionImages.forEach(function (positionImage) {
       positionImage.setAlpha(0);
     });
 
-    var randomImage = Phaser.Math.RND.pick(imagesToDisplay);
-    var randomPositionImage = Phaser.Math.RND.pick(positionImages);
+    randomImage = Phaser.Math.RND.pick(imagesToDisplay);
+    randomPositionImage = Phaser.Math.RND.pick(positionImages);
 
     randomPositionImage.setTexture(randomImage);
     randomPositionImage.setAlpha(1);
+   }
+}
+}
+
+
+
+
+// Configuración del juego
+  config = {
+  type: Phaser.AUTO,
+  width: 611,
+  height: 349,
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH
+  },
+  scene: [{
+    key: 'initialScene',
+    preload: preload,
+    create: create,
+    update: update
+  },
+  GameOverScene,
+  PlayGameScene]
+};
+
+var game = new Phaser.Game(config);
+
+var startButton;
+
+function preload() {
+    this.load.image('congreso', 'congreso.png');
+}
+
+function create() {
+  this.add.image(0, 0, 'congreso').setOrigin(0);
+  console.log('Scene created');
+
+  // Pantalla inicial
+  startButton = this.add.text(config.width / 2, config.height / 2, 'Jugar', {
+    fontSize: '32px',
+    fill: '#FF0000'
+  }).setOrigin(0.5);
+  startButton.setInteractive();
+
+  var startGame = () => {
+    // Cargo escena del juego
+    console.log('PlayGameScene Scene Called');
+  
+    this.scene.start('PlayGameScene');
   }
+
+  startButton.on('pointerdown', startGame);
+  console.log('Start button added');
 }
 
 function update() {
-  // Lógica para el contador y el cambio de colores
-  // Se mueve a la función showNextImage()
+  
 }
+
+
