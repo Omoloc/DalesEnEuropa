@@ -1,10 +1,8 @@
 class GameOverScene extends Phaser.Scene {
-
-  auxcontador = 0;
-  constructor(contador) {
+  constructor() {
     super({ key: 'GameOverScene' });
     console.log('Constructor GameOverScene');
-    auxcontador=contador;
+
     // Vincula el contexto de 'this' en 'startGame' a la instancia de 'GameOverScene'
     this.startGame = this.startGame.bind(this);
 
@@ -22,8 +20,7 @@ class GameOverScene extends Phaser.Scene {
 
   create() {
     // Configura el estado inicial de esta escena
-    this.add.text(120, 10, '¡Enhorabuena!', { fontSize: '32px', fill: '#FFFF00' });
-    this.add.text(120, 100, '¡Has eliminado a ' + contador + 'del Congreso!', { fontSize: '32px', fill: '#FFFF00' });
+    this.add.text(120, 10, 'Game Over', { fontSize: '32px', fill: '#FFFF00' });
 
     this.startButton = this.add.text(config.width / 2, config.height / 2, 'Jugar de nuevo', {
       fontSize: '32px',
