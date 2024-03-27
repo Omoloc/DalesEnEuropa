@@ -21,7 +21,9 @@ class GameOverScene extends Phaser.Scene {
   startGame() {
     // Cargo escena del juego
     console.log('PlayGameScene Scene Called');
-  
+    if (this.sound.context.state === 'suspended') {
+      this.sound.context.resume();
+  }
     this.scene.start('PlayGameScene');
   }
 
@@ -61,6 +63,10 @@ class PlayGameScene extends Phaser.Scene {
     this.soundCatched.play();
     this.score += 1;
     this.scoreText.setText('Score: ' + this.score);
+    if (this.sound.context.state === 'suspended') {
+      this.sound.context.resume();
+  }
+
   }
   showNextImage() {
     this.positionImages.forEach(function (positionImage) {
@@ -284,7 +290,9 @@ function create() {
   var startGame = () => {
     // Cargo escena del juego
     console.log('PlayGameScene Scene Called');
-  
+    if (this.sound.context.state === 'suspended') {
+      this.sound.context.resume();
+  }
     this.scene.start('PlayGameScene');
   }
 
