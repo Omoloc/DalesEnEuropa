@@ -273,7 +273,7 @@ var game = new Phaser.Game(config);
 var startButton;
 
 function preload() {
-    this.load.image('intro', 'intro.png');
+    this.load.image('intro', 'Intro.png');
 }
 
 function create() {
