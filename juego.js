@@ -273,17 +273,18 @@ var game = new Phaser.Game(config);
 var startButton;
 
 function preload() {
-    this.load.image('congreso', 'congreso.png');
+    this.load.image('intro', 'intro.png');
 }
 
 function create() {
-  this.add.image(0, 0, 'congreso').setOrigin(0);
+  this.add.image(0, 0, 'intro').setOrigin(0);
   console.log('Scene created');
 
   // Pantalla inicial
-  startButton = this.add.text(config.width / 2, config.height / 2, 'Jugar', {
+  startButton = this.add.text( config.width / 2, 300 , '¡Vamos!', {
     fontSize: '32px',
-    fill: '#FF0000'
+    fill: '#FFAA00',
+    fontFamily: 'Arial' 
   }).setOrigin(0.5);
   startButton.setInteractive();
 
