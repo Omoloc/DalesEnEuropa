@@ -59,16 +59,23 @@ class PlayGameScene extends Phaser.Scene {
   }
 
   increaseScore() {
+    console.log('1');
     //Cargo una nueva imagen
     this.showNextImage(); // Muestra la siguiente imagen
+
+    console.log('2');
 
     //console.log('increaseScore called');
     this.score += 1;
     this.scoreText.setText('Score: ' + this.score);
     
+    console.log('3');
+
     // Elimina el temporizador actual
     this.time.destroy(this.greenCircleTimer);
     
+    console.log('4');
+
     // Crea un nuevo temporizador
     this.greenCircleTimer = this.time.addEvent({
       delay: 1000,
@@ -76,14 +83,19 @@ class PlayGameScene extends Phaser.Scene {
       callbackScope: this,
       loop: true
     });
-    
+    console.log('5');
+
+
     this.soundCatched.play();
-    
+    console.log('6');
+
     if (this.sound.context.state === 'suspended') {
       this.sound.context.resume();
     }
+    console.log('7');
+
+
   }
-  
   showNextImage() {
     this.positionImages.forEach(function (positionImage) {
       positionImage.setAlpha(0);
