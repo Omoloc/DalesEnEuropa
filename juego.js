@@ -1,12 +1,19 @@
 class GameOverScene extends Phaser.Scene {
+
+  contador = 0;
+
   constructor() {
     super({ key: 'GameOverScene' });
     console.log('Constructor GameOverScene');
 
     // Vincula el contexto de 'this' en 'startGame' a la instancia de 'GameOverScene'
     this.startGame = this.startGame.bind(this);
-
   }
+
+  init(data) {
+    console.log('init GameOverScene ' + data.puntuacion);
+    this.contador = data.puntuacion;
+}
 
   preload() {
     // Carga los recursos necesarios para esta escena
@@ -20,7 +27,8 @@ class GameOverScene extends Phaser.Scene {
 
   create() {
     // Configura el estado inicial de esta escena
-    this.add.text(120, 10, 'Game Over', { fontSize: '32px', fill: '#FFFF00' });
+    this.add.text(120, 10, '¡Enhorabuena!', { fontSize: '32px', fill: '#FFFF00' });
+    this.add.text(20, 50, '¡Has eliminado a '+this.contador+ ' diputados!', { fontSize: '32px', fill: '#FFFF00' });
 
     this.startButton = this.add.text(config.width / 2, config.height / 2, 'Jugar de nuevo', {
       fontSize: '32px',
@@ -49,7 +57,7 @@ class PlayGameScene extends Phaser.Scene {
   }
 
   increaseScore() {
-    console.log('increaseScore called');
+    //console.log('increaseScore called');
     this.score += 1;
     this.scoreText.setText('Score: ' + this.score);
   }
@@ -179,12 +187,12 @@ class PlayGameScene extends Phaser.Scene {
   }
 
   decreaseCountdown() {
-    console.log('decreaseCountdown called');
+    //console.log('decreaseCountdown called');
 
     this.countdown--;
     this.countdownText.setText('Tiempo: ' + this.countdown);
     if (this.countdown === 0) {
-      this.scene.start('GameOverScene');
+      this.scene.start('GameOverScene', { puntuacion: this.score });
     }
 }
 
