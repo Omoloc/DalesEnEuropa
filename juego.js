@@ -17,6 +17,8 @@ class GameOverScene extends Phaser.Scene {
 
   preload() {
     // Carga los recursos necesarios para esta escena
+    this.load.image('background', 'background.png');
+
   }
   startGame() {
     // Cargo escena del juego
@@ -26,19 +28,30 @@ class GameOverScene extends Phaser.Scene {
   }
     this.scene.start('PlayGameScene');
   }
-
+   
   create() {
     // Configura el estado inicial de esta escena
-    this.add.text(120, 10, '¡Enhorabuena!', { fontSize: '32px', fill: '#FFFF00' });
-    this.add.text(20, 50, '¡Has eliminado a '+this.contador+ ' diputados!', { fontSize: '32px', fill: '#FFFF00' });
+    this.add.image(0, 0, 'background').setOrigin(0);
+     // Cambia el color de fondo a blanco
+    this.cameras.main.setBackgroundColor('#FFFFFF');
+  
+    this.add.text(120, 10, '¡Enhorabuena!', { fontSize: '32px', fontFamily: 'Arial', fill: '#000000' });
+    this.add.text(20, 50, '¡Has eliminado a '+this.contador+ ' diputados!', { fontSize: '32px', fontFamily: 'Arial' , fill: '#000000' });
 
-    this.startButton = this.add.text(config.width / 2, config.height / 2, 'Jugar de nuevo', {
+    this.startButton = this.add.text(50, 250, '  Jugar\nde nuevo', {
       fontSize: '32px',
-      fill: '#FF0000'
-    }).setOrigin(0.5);
-    
-    this.startButton.setInteractive();
+      fontFamily: 'Arial' ,
+      fill: '#FFAA00'
+    }).setOrigin(0);
+        this.startButton.setInteractive();
     this.startButton.on('pointerdown', this.startGame);
+
+    let link = this.add.text(350, 250, 'Saber\nmás', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFAA00'});
+    this.link.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
+    this.link.on('pointerup', () => {
+        window.open('http://escanos.org', '_blank'); // Abre el enlace en una nueva pestaña
+    });
+
   }
 
   update() {
@@ -260,6 +273,25 @@ class PlayGameScene extends Phaser.Scene {
 
 }
 
+//Clase para saber más sobre Escaños en Blanco
+class AboutEB extends Phaser.Scene {
+  constructor() {
+    super({ key: 'AboutEB' });
+  }
+
+  preload() {
+    // Carga los recursos necesarios para esta escena
+  }
+
+  create() {
+    // Configura el estado inicial de esta escena
+  }
+
+  update() {
+    // Actualiza el estado de esta escena en cada frame
+  }
+}
+
 
 
 
@@ -278,8 +310,7 @@ class PlayGameScene extends Phaser.Scene {
     create: create,
     update: update
   },
-  GameOverScene,
-  PlayGameScene]
+  GameOverScene, PlayGameScene, AboutEB ]
 };
 
 var game = new Phaser.Game(config);
