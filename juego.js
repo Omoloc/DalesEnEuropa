@@ -38,7 +38,7 @@ class GameOverScene extends Phaser.Scene {
     this.add.text(120, 10, '¡Enhorabuena!', { fontSize: '32px', fontFamily: 'Arial', fill: '#000000' });
     this.add.text(20, 50, '¡Has eliminado a '+this.contador+ ' diputados!', { fontSize: '32px', fontFamily: 'Arial' , fill: '#000000' });
 
-    this.startButton = this.add.text(50, 250, '  Jugar\nde nuevo', {
+    this.startButton = this.add.text(100, 250, '  Jugar\nde nuevo', {
       fontSize: '32px',
       fontFamily: 'Arial' ,
       fill: '#FFAA00'
@@ -46,7 +46,7 @@ class GameOverScene extends Phaser.Scene {
         this.startButton.setInteractive();
     this.startButton.on('pointerdown', this.startGame);
 
-    let link = this.add.text(350, 250, 'Saber\nmás', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFAA00'});
+    this.link = this.add.text(350, 250, 'Saber\nmás', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFAA00'});
     this.link.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.link.on('pointerup', () => {
         window.open('http://escanos.org', '_blank'); // Abre el enlace en una nueva pestaña
