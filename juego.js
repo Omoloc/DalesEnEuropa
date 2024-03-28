@@ -17,7 +17,7 @@ class GameOverScene extends Phaser.Scene {
 
   preload() {
     // Carga los recursos necesarios para esta escena
-    this.load.image('background', 'background.png');
+    this.load.image('background', 'Background.png');
 
   }
   startGame() {
