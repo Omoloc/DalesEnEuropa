@@ -203,7 +203,7 @@ class PlayGameScene extends Phaser.Scene {
 
   create() {
     console.log('Create PlayGameScene');
-    this.countdown = 2; // Tiempo de juego en segundos
+    this.countdown = 20; // Tiempo de juego en segundos
     this.score = 0;
 
     this.add.image(0, 0, 'congreso').setOrigin(0);
