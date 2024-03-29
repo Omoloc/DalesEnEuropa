@@ -348,7 +348,7 @@ function create() {
 }
 
 function update() {
-  
+  this.add.text(600, 340, '1.1', { fontSize: '8px', fontFamily: 'Arial', fill: '#000000' }) 
 }
 
 
