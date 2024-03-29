@@ -328,7 +328,7 @@ function create() {
   // Pantalla inicial
   startButton = this.add.text( config.width / 2, 300 , '¡EMPEZAR!', {
     fontSize: '40px',
-    fontWeight: 'bold' // Hace que el texto sea negrita
+    fontWeight: 'bold', // Hace que el texto sea negrita
     fill: '#FFAA00',
     fontFamily: 'Arial' 
   }).setOrigin(0.5);
