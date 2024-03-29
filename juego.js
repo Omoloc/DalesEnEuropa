@@ -93,6 +93,7 @@ class GameOverScene extends Phaser.Scene {
     switch (this.mensajes) {
       case 1:
         this.textContent.setText('Escaños en Blanco es una alternativa útil al voto en blanco, voto nulo y abstención que permite a los ciudadanos dejar escaños vacíos como forma de rechazo a los candidatos o el sistema');
+        this.moreButton.setText(' Saber\nmás aun');
         break;
       case 2:   
         this.textContent.setText('Escaños en Blanco se presenta a las elecciones con un partido, y no toma posesión de los escaños obtenidos.\nCon ello renuncia al escaño y a cualquier sueldo o subvención que pudiera corresponderle.');
