@@ -202,21 +202,21 @@ class PlayGameScene extends Phaser.Scene {
     this.images = [];
 
     this.positions = [
-      { x: 100, y: 100 },
-      { x: 200, y: 100 },
-      { x: 300, y: 100 },
-      { x: 400, y: 100 },
-      { x: 500, y: 100 },
-      { x: 100, y: 190 },
-      { x: 200, y: 190 },
-      { x: 300, y: 190 },
-      { x: 400, y: 190 },
-      { x: 500, y: 190 },
-      { x: 100, y: 300 },
+      { x: 100, y: 98 },
+      { x: 200, y: 98 },
+      { x: 300, y: 98 },
+      { x: 400, y: 98 },
+      { x: 500, y: 98 },
+      { x: 100, y: 191 },
+      { x: 200, y: 191 },
+      { x: 300, y: 191 },
+      { x: 400, y: 191 },
+      { x: 500, y: 191 },
+      { x: 100, y: 302 },
       { x: 200, y: 300 },
       { x: 300, y: 300 },
-      { x: 400, y: 300 },
-      { x: 500, y: 300 }
+      { x: 400, y: 299 },
+      { x: 500, y: 299 }
       // ... (agrega las demás posiciones aquí)
     ];
 
@@ -326,8 +326,9 @@ function create() {
   console.log('Scene created');
 
   // Pantalla inicial
-  startButton = this.add.text( config.width / 2, 300 , '¡Vamos!', {
-    fontSize: '32px',
+  startButton = this.add.text( config.width / 2, 300 , '¡EMPEZAR!', {
+    fontSize: '40px',
+    fontWeight: 'bold' // Hace que el texto sea negrita
     fill: '#FFAA00',
     fontFamily: 'Arial' 
   }).setOrigin(0.5);
