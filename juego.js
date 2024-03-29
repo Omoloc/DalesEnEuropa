@@ -101,7 +101,7 @@ class GameOverScene extends Phaser.Scene {
         this.textContent.setText('De esa forma de visibiliza a aquellas personas que buscamos cambios profundos en la política y que no nos sentimos representados por los partidos tradicionales.');
         break;
       case 4:   
-        this.textContent.setText('Con esta iniciativa se busca:\n1. Visibilizar el descontento\n2. llamar la atención de los medios\n3.Abrir un debate sobre los deficits de nuestro sistema');
+        this.textContent.setText('Con esta iniciativa se busca:\n1. Visibilizar el descontento\n2. Llamar la atención de los medios\n3. Abrir un debate sobre los deficits de nuestro sistema');
         break;
       case 5:
         window.open('https://escanos.org', '_blank'); // Abre el enlace en una nueva pestaña
@@ -268,7 +268,7 @@ class PlayGameScene extends Phaser.Scene {
       { x: 500, y: 104 },
       { x: 100, y: 195 },
       { x: 200, y: 193 },
-      { x: 300, y: 190 },
+      { x: 300, y: 189 },
       { x: 400, y: 192 },
       { x: 500, y: 192 },
       { x: 100, y: 304 },
