@@ -304,12 +304,12 @@ class PlayGameScene extends Phaser.Scene {
       { x: 500, y: 104 },
       { x: 100, y: 195 },
       { x: 200, y: 193 },
-      { x: 300, y: 189 },
+      { x: 300, y: 191 },
       { x: 400, y: 192 },
       { x: 500, y: 192 },
       { x: 100, y: 304 },
       { x: 200, y: 300 },
-      { x: 300, y: 301 },
+      { x: 300, y: 300 },
       { x: 400, y: 299 },
       { x: 500, y: 299 }
       // ... (agrega las demás posiciones aquí)
@@ -452,7 +452,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(598, 340, '1.11', { fontSize: '8px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(598, 340, '1.12', { fontSize: '8px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
