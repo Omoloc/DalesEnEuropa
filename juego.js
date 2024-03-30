@@ -283,18 +283,6 @@ class PlayGameScene extends Phaser.Scene {
     });
 
 
-    //test animación
-    this.positionImages.forEach(function (positionImage) {
-      let maskShape = new Phaser.Geom.Rectangle(0, positionImage.y + positionImage.height, positionImage.width, positionImage.height);
-      let graphics = this.make.graphics();
-      graphics.fillRectShape(maskShape);
-      let mask = positionImage.createBitmapMask(graphics);
-      positionImage.setMask(mask);
-      positionImage.data.set('maskShape', maskShape);
-    });
-
-
-
     //Comenzamos
     this.soundOpened = this.sound.add('opened');
     this.soundCatched = this.sound.add('catched');
@@ -335,6 +323,16 @@ class PlayGameScene extends Phaser.Scene {
       this.images.push(this.positionImage);
     }
 
+        //test animación
+        this.positionImages.forEach(function (positionImage) {
+          let maskShape = new Phaser.Geom.Rectangle(0, positionImage.y + positionImage.height, positionImage.width, positionImage.height);
+          let graphics = this.make.graphics();
+          graphics.fillRectShape(maskShape);
+          let mask = positionImage.createBitmapMask(graphics);
+          positionImage.setMask(mask);
+          positionImage.data.set('maskShape', maskShape);
+        });
+    
     return this.images;
   }
 
@@ -454,7 +452,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(598, 340, '1.7', { fontSize: '8px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(598, 340, '1.8', { fontSize: '8px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
