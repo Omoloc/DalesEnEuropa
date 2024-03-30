@@ -52,11 +52,11 @@ class GameOverScene extends Phaser.Scene {
     //this.add.text(120, 10, '¡Enhorabuena!', { fontSize: '32px', fontFamily: 'Arial', fill: '#000000' });
     //this.add.text(20, 50, '¡Has eliminado a '+this.contador+ ' diputados!', { fontSize: '32px', fontFamily: 'Arial' , fill: '#000000' });
     if (this.contador === 0) {
-      this.textContent = this.add.text(20, 16, '¡No has eliminado a ningún diputado!\nNo tengas miedo de golpearles, es solo un juego', this.style );
+      this.textContent = this.add.text(20, 16, '¡No has eliminado a ningún diputado!\nNo tengas miedo de golpearles.\nNo les vas a hacer daño.\n\n ¡Es solo un juego!', this.style );
     }
     else
     {
-      this.textContent = this.add.text(20, 16, '      ¡Enhorabuena!\n¡Has eliminado a '+this.contador+ ' diputados!', this.style );
+      this.textContent = this.add.text(20, 16, '      ¡Enhorabuena!\n¡Has eliminado a '+this.contador+ ' diputados!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ ((this.contador*120000)+220000)+'€', this.style );
     }
 
     // Boton de jugar de nuevo  
@@ -105,7 +105,7 @@ class GameOverScene extends Phaser.Scene {
         this.textContent.setText('Escaños en Blanco se presenta a las elecciones con un partido, y no toma posesión de los escaños obtenidos.\nCon ello renuncia al escaño y a cualquier sueldo o subvención que pudiera corresponderle.');
         break;
       case 3:   
-        this.textContent.setText('De esa forma de visibiliza a aquellas personas que buscamos cambios profundos en la política y que no nos sentimos representados por los partidos tradicionales.');
+        this.textContent.setText('De esa forma de visibiliza a aquellas personas que buscamos cambios profundos en la política y se priva a los partidos de sueldos y subvenciones que no se han ganado.');
         break;
       case 4:   
         this.textContent.setText('Con esta iniciativa se busca:\n1. Visibilizar el descontento\n2. Llamar la atención de los medios\n3. Abrir un debate sobre los deficits de nuestro sistema');
@@ -141,15 +141,35 @@ class PlayGameScene extends Phaser.Scene {
   }
 
   increaseScore() {
+    //console.log('increaseScore called');
+    
+    //Si la imagen es la de los escaños decrece el escore y reproduce sonido failed. En caso contrario aumenta el score y reproduce sonido catched
+    if (this.randomImage === 'escanos') {
+      this.score -= 4;
+      this.scoreText.setText('Score: ' + this.score);
+
+      this.soundFail.play();
+      if (this.sound.context.state === 'suspended') {
+        this.sound.context.resume();
+      }
+    } 
+    else {
+      this.score += 1;
+      this.scoreText.setText('Score: ' + this.score);
+
+      this.soundCatched.play();
+      if (this.sound.context.state === 'suspended') {
+        this.sound.context.resume();
+      }
+    }
+
     //Cargo una nueva imagen
     this.showNextImage(); // Muestra la siguiente imagen
-    //console.log('increaseScore called');
-    this.score += 1;
-    this.scoreText.setText('Score: ' + this.score);
+
     // Elimina el temporizador actual
     this.time.removeEvent(this.greenCircleTimer);
 
-// Crea un nuevo temporizador
+    // Crea un nuevo temporizador
     this.greenCircleTimer = this.time.addEvent({
       delay: this.timeup,
       callback: this.showNextImage,
@@ -157,10 +177,6 @@ class PlayGameScene extends Phaser.Scene {
       loop: true
     });
 
-    this.soundCatched.play();
-    if (this.sound.context.state === 'suspended') {
-      this.sound.context.resume();
-    }
   }
 
   //Muestra la siguiente imagen
@@ -201,6 +217,7 @@ class PlayGameScene extends Phaser.Scene {
   countdownText="";
   soundOpened = null;
   soundCatched = null;
+  soundFail = null; 
 
   preload() {
     console.log('Preload PlayGameScene');
@@ -209,8 +226,10 @@ class PlayGameScene extends Phaser.Scene {
     this.load.image('abascal', 'abascal.gif');
     this.load.image('diaz', 'diaz.gif');
     this.load.image('sanchez', 'sanchez.gif');
+    this.load.image('escanos', 'escanos.gif');
     this.load.audio('opened', 'Open.wav');
     this.load.audio('catched', 'Catch.mp3');
+    this.load.audio('failed', 'Replay.wav');
     console.log('this.load.audio(opened, Open.wav)');
         
   }
@@ -267,6 +286,7 @@ class PlayGameScene extends Phaser.Scene {
     //Comenzamos
     this.soundOpened = this.sound.add('opened');
     this.soundCatched = this.sound.add('catched');
+    this.soundFail = this.sound.add('failed');
     this.soundOpened.play();
     console.log('soundpOpened add and played');
     
@@ -432,7 +452,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(598, 340, '1.10', { fontSize: '8px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(598, 340, '1.11', { fontSize: '8px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
