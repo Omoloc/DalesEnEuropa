@@ -81,7 +81,13 @@ class GameOverScene extends Phaser.Scene {
     this.link = this.add.text(420, 260, 'Compartir\nen Twitter', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFAA00'});
     this.link.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.link.on('pointerup', () => {
-        window.open('https://twitter.com/intent/tweet?text=Me ha gustado mucho este juego. Te invito a jugarlo y a seguir a @escanosenblanco http://escanos.org', '_blank'); // Abre el enlace en una nueva pestaña
+      if(this.contador === 0) {
+        window.open('https://twitter.com/intent/tweet?text=¡Me ha hecho mucha gracia este juego de eliminar diputados!%0ATe invito jugarlo en este enlace http://escanos.org y a seguir a @escanosenblanco', '_blank'); // Abre el enlace en una nueva pestaña
+      }
+      else
+      {
+        window.open('https://twitter.com/intent/tweet?text= ¡He eliminado '+this.contador+ ' diputados!%0A%0ASi tú también quieres eliminar algunos diputados pulsa en el enlace http://escanos.org y sigue a @escanosenblanco' , '_blank'); // Abre el enlace en una nueva pestaña
+      }
     });
 
   }
@@ -122,6 +128,8 @@ class GameOverScene extends Phaser.Scene {
 
 
 class PlayGameScene extends Phaser.Scene {
+  
+
   constructor() {
     super({ key: 'PlayGameScene' });
     console.log('Constructor PlayGameScene');
@@ -143,7 +151,7 @@ class PlayGameScene extends Phaser.Scene {
 
 // Crea un nuevo temporizador
     this.greenCircleTimer = this.time.addEvent({
-      delay: 1000,
+      delay: this.timeup,
       callback: this.showNextImage,
       callbackScope: this,
       loop: true
@@ -157,7 +165,6 @@ class PlayGameScene extends Phaser.Scene {
 
   //Muestra la siguiente imagen
   showNextImage() {
-    /*
     this.positionImages.forEach(function (positionImage) {
       positionImage.setAlpha(0);
     });
@@ -167,35 +174,8 @@ class PlayGameScene extends Phaser.Scene {
 
     this.randomPositionImage.setTexture(this.randomImage);
     this.randomPositionImage.setAlpha(1);
-    */
+  }
 
-    //Prueba de animación
-
-      this.positionImages.forEach(function (positionImage) {
-          positionImage.setAlpha(0);
-          // Restablece la posición de la máscara
-          let maskShape = positionImage.data.get('maskShape');
-          maskShape.y = positionImage.y + positionImage.height;
-      });
-
-      this.randomImage = Phaser.Math.RND.pick(this.imagesToDisplay);
-      this.randomPositionImage = Phaser.Math.RND.pick(this.positionImages);
-
-      this.randomPositionImage.setTexture(this.randomImage);
-      this.randomPositionImage.setAlpha(1);
-
-      // Crea un tween que mueve la máscara hacia arriba
-      this.tweens.add({
-          targets: this.randomPositionImage.data.get('maskShape'),
-          y: this.randomPositionImage.y, // la posición final en el eje y
-          duration: 2000, // duración de la animación en milisegundos
-          ease: 'Power2', // tipo de suavizado
-          onUpdate: function () {
-              graphics.clear();
-              graphics.fillRectShape(this.randomPositionImage.data.get('maskShape'));
-          }
-      });
-    }
 
   //Muestra la pantalla de fin de juego
   endGame() {
@@ -212,7 +192,7 @@ class PlayGameScene extends Phaser.Scene {
 
   }
 
-
+  timeup=0
   score = 0;
   positionImages = [];
   imagesToDisplay = ['feijo', 'abascal', 'diaz', 'sanchez'];
@@ -237,8 +217,9 @@ class PlayGameScene extends Phaser.Scene {
 
   create() {
     console.log('Create PlayGameScene');
-    this.countdown = 20; // Tiempo de juego en segundos
+    this.countdown = 15; // Tiempo de juego en segundos
     this.score = 0;
+    this.timeup = 1000;
 
     this.add.image(0, 0, 'congreso').setOrigin(0);
 
@@ -246,7 +227,7 @@ class PlayGameScene extends Phaser.Scene {
                               { fontSize: '32px', fill: '#FFFF00' });
     this.scoreText.setScrollFactor(0);
 
-    this.countdownText = this.add.text(300, 16, 'Tiempo: ' + this.countdown,
+    this.countdownText = this.add.text(210, 16, 'Tiempo: ' + this.countdown,
                                   { fontSize: '32px', fill: '#FFFF00' });
     //countdownText.setOrigin(1, 0);
     this.countdownText.setScrollFactor(0);
@@ -268,7 +249,7 @@ class PlayGameScene extends Phaser.Scene {
     //countdownText = this.add.text(236, 16, 'Tiempo: ' + countdown, style);
 
     this.greenCircleTimer = this.time.addEvent({
-      delay: 1000,
+      delay: this.timeup,
       callback: this.showNextImage,
       callbackScope: this,
       loop: true
@@ -320,33 +301,31 @@ class PlayGameScene extends Phaser.Scene {
       this.positionImage.setDisplaySize(30, 30);
       this.positionImage.setInteractive();
       this.positionImage.on('pointerdown', this.increaseScore);
-      this.positionImage.data = this.positionImage.data || {}; // Test animación. Ensure that data is not null
       this.images.push(this.positionImage);
     }
 
-        //test animación
-        this.positionImages.forEach(function (positionImage) {
-          let maskShape = new Phaser.Geom.Rectangle(0, positionImage.y + positionImage.height, positionImage.width, positionImage.height);
-          let graphics = this.make.graphics();
-          graphics.fillRectShape(maskShape);
-          let mask = positionImage.createBitmapMask(graphics);
-          positionImage.setMask(mask);
-          positionImage.data.set('maskShape', maskShape);
-        });
     
     return this.images;
   }
 
   decreaseCountdown() {
-    //console.log('decreaseCountdown called');
+    console.log(this.countdown);
 
     this.countdown--;
+  
     this.countdownText.setText('Tiempo: ' + this.countdown);
     if (this.countdown === 0) {
       this.scene.start('GameOverScene', { puntuacion: this.score });
     }
-  }
 
+    if (this.countdown <= 5)
+    {
+      this.countdownText.setText(this.countdownText.text + ' ¡Deprisa!');
+      this.timeup=600
+    }
+  
+  }
+  
   startGame() {
     // Elimina el evento de temporizador anterior
     if (this.greenCircleTimer) {
@@ -355,7 +334,7 @@ class PlayGameScene extends Phaser.Scene {
   
     // Crea un nuevo evento de temporizador
     this.greenCircleTimer = this.time.addEvent({
-      delay: 1000,
+      delay: this.timeup,
       callback: this.showNextImage,
       callbackScope: this,
       loop: true
@@ -453,7 +432,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(598, 340, '1.9', { fontSize: '8px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(598, 340, '1.10', { fontSize: '8px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
