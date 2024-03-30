@@ -146,6 +146,9 @@ class PlayGameScene extends Phaser.Scene {
     //Si la imagen es la de los escaños decrece el escore y reproduce sonido failed. En caso contrario aumenta el score y reproduce sonido catched
     if (this.randomImage === 'escanos') {
       this.score -= 4;
+      if (this.score < 0) {
+        this.score = 0;
+      }
       this.scoreText.setText('Score: ' + this.score);
 
       this.soundFail.play();
@@ -225,7 +228,7 @@ class PlayGameScene extends Phaser.Scene {
     this.load.image('feijo', 'feijo.gif');
     this.load.image('abascal', 'abascal.gif');
     this.load.image('diaz', 'diaz.gif');
-    this.load.image('sanchez', 'sanchez.gif');
+    this.load.image('sanchez', 'sanchez.png');
     this.load.image('escanos', 'escanos.gif');
     this.load.audio('opened', 'Open.wav');
     this.load.audio('catched', 'Catch.mp3');
