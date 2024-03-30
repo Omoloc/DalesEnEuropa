@@ -169,32 +169,33 @@ class PlayGameScene extends Phaser.Scene {
     this.randomPositionImage.setAlpha(1);
     */
 
+    //Prueba de animación
 
-  //Prueba de animación
-    this.positionImages.forEach(function (positionImage) {
-      positionImage.setAlpha(0);
-    });
+      this.positionImages.forEach(function (positionImage) {
+          positionImage.setAlpha(0);
+          // Restablece la posición de la máscara
+          let maskShape = positionImage.data.get('maskShape');
+          maskShape.y = positionImage.y + positionImage.height;
+      });
 
-    this.randomImage = Phaser.Math.RND.pick(this.imagesToDisplay);
-    this.randomPositionImage = Phaser.Math.RND.pick(this.positionImages);
+      this.randomImage = Phaser.Math.RND.pick(this.imagesToDisplay);
+      this.randomPositionImage = Phaser.Math.RND.pick(this.positionImages);
 
-    // Guarda la posición original
-    let originalY = this.randomPositionImage.y;
+      this.randomPositionImage.setTexture(this.randomImage);
+      this.randomPositionImage.setAlpha(1);
 
-    // Mueve la imagen a una posición fuera de la vista en la parte inferior
-    this.randomPositionImage.y = this.sys.game.config.height;
-
-    this.randomPositionImage.setTexture(this.randomImage);
-    this.randomPositionImage.setAlpha(1);
-
-    // Crea un tween que mueve la imagen hacia arriba
-    this.tweens.add({
-        targets: this.randomPositionImage,
-        y: originalY, // la posición final en el eje y es la original
-        duration: 2000, // duración de la animación en milisegundos
-        ease: 'Power2' // tipo de suavizado
-    });
-  }
+      // Crea un tween que mueve la máscara hacia arriba
+      this.tweens.add({
+          targets: this.randomPositionImage.data.get('maskShape'),
+          y: this.randomPositionImage.y, // la posición final en el eje y
+          duration: 2000, // duración de la animación en milisegundos
+          ease: 'Power2', // tipo de suavizado
+          onUpdate: function () {
+              graphics.clear();
+              graphics.fillRectShape(this.randomPositionImage.data.get('maskShape'));
+          }
+      });
+    }
 
   //Muestra la pantalla de fin de juego
   endGame() {
@@ -280,6 +281,19 @@ class PlayGameScene extends Phaser.Scene {
       callbackScope: this,
       loop: true
     });
+
+
+    //test animación
+    this.positionImages.forEach(function (positionImage) {
+      let maskShape = new Phaser.Geom.Rectangle(0, positionImage.y + positionImage.height, positionImage.width, positionImage.height);
+      let graphics = this.make.graphics();
+      graphics.fillRectShape(maskShape);
+      let mask = positionImage.createBitmapMask(graphics);
+      positionImage.setMask(mask);
+      positionImage.data.set('maskShape', maskShape);
+    });
+
+
 
     //Comenzamos
     this.soundOpened = this.sound.add('opened');
@@ -440,7 +454,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(598, 340, '1.6', { fontSize: '8px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(598, 340, '1.7', { fontSize: '8px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
