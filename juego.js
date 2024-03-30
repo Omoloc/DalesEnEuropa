@@ -145,7 +145,7 @@ class PlayGameScene extends Phaser.Scene {
     
     //Si la imagen es la de los escaños decrece el escore y reproduce sonido failed. En caso contrario aumenta el score y reproduce sonido catched
     if (this.randomImage === 'escanos') {
-      this.score -= 4;
+      this.score -= 3;
       if (this.score < 0) {
         this.score = 0;
       }
@@ -455,7 +455,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(598, 340, '1.12', { fontSize: '8px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(598, 340, '1.13', { fontSize: '8px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
