@@ -86,7 +86,7 @@ class GameOverScene extends Phaser.Scene {
       }
       else
       {
-        window.open('https://twitter.com/intent/tweet?text= ¡He eliminado '+this.contador+ ' diputados!%0A%0ASi tú también quieres eliminar algunos diputados pulsa en el enlace http://escanos.org y sigue a @escanosenblanco' , '_blank'); // Abre el enlace en una nueva pestaña
+        window.open('https://twitter.com/intent/tweet?text= ¡He eliminado '+this.contador+ ' diputados!%0A%0ASi tú también quieres eliminar algunos diputados, pulsa en el enlace http://escanos.org y sigue a @escanosenblanco' , '_blank'); // Abre el enlace en una nueva pestaña
       }
     });
 
