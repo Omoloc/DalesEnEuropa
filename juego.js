@@ -320,6 +320,7 @@ class PlayGameScene extends Phaser.Scene {
       this.positionImage.setDisplaySize(30, 30);
       this.positionImage.setInteractive();
       this.positionImage.on('pointerdown', this.increaseScore);
+      this.positionImage.data = this.positionImage.data || {}; // Test animación. Ensure that data is not null
       this.images.push(this.positionImage);
     }
 
@@ -452,7 +453,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(598, 340, '1.8', { fontSize: '8px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(598, 340, '1.9', { fontSize: '8px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
