@@ -104,7 +104,8 @@ class GameOverScene extends Phaser.Scene {
       case 4:   
         this.textContent.setText('Con esta iniciativa se busca:\n1. Visibilizar el descontento\n2. Llamar la atención de los medios\n3. Abrir un debate sobre los deficits de nuestro sistema');
         break;
-      case 5:
+        //Se pueden añadir más mensajes 5, 6, 7, etc.
+      default:
         window.open('https://escanos.org', '_blank'); // Abre el enlace en una nueva pestaña
         this.moreButton.setText('');
         this.mensajes = 0;
@@ -154,7 +155,9 @@ class PlayGameScene extends Phaser.Scene {
     }
   }
 
+  //Muestra la siguiente imagen
   showNextImage() {
+    /*
     this.positionImages.forEach(function (positionImage) {
       positionImage.setAlpha(0);
     });
@@ -164,7 +167,36 @@ class PlayGameScene extends Phaser.Scene {
 
     this.randomPositionImage.setTexture(this.randomImage);
     this.randomPositionImage.setAlpha(1);
+    */
+
+
+  //Prueba de animación
+    this.positionImages.forEach(function (positionImage) {
+      positionImage.setAlpha(0);
+    });
+
+    this.randomImage = Phaser.Math.RND.pick(this.imagesToDisplay);
+    this.randomPositionImage = Phaser.Math.RND.pick(this.positionImages);
+
+    // Guarda la posición original
+    let originalY = this.randomPositionImage.y;
+
+    // Mueve la imagen a una posición fuera de la vista en la parte inferior
+    this.randomPositionImage.y = this.sys.game.config.height;
+
+    this.randomPositionImage.setTexture(this.randomImage);
+    this.randomPositionImage.setAlpha(1);
+
+    // Crea un tween que mueve la imagen hacia arriba
+    this.tweens.add({
+        targets: this.randomPositionImage,
+        y: originalY, // la posición final en el eje y es la original
+        duration: 2000, // duración de la animación en milisegundos
+        ease: 'Power2' // tipo de suavizado
+    });
   }
+
+  //Muestra la pantalla de fin de juego
   endGame() {
     this.scoreText.visible = false;
     this.countdownText.visible = false;
