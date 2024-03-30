@@ -440,7 +440,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(598, 340, '1.5', { fontSize: '8px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(598, 340, '1.6', { fontSize: '8px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
