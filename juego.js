@@ -228,8 +228,8 @@ class PlayGameScene extends Phaser.Scene {
     this.load.image('feijo', 'feijo.gif');
     this.load.image('abascal', 'abascal.gif');
     this.load.image('diaz', 'diaz.gif');
-    this.load.image('sanchez', 'sanchez.png');
-    this.load.image('escanos', 'escanos.gif');
+    this.load.image('sanchez', 'sanchez.gif');
+    this.load.image('escanos', 'escanos.png');
     this.load.audio('opened', 'Open.wav');
     this.load.audio('catched', 'Catch.mp3');
     this.load.audio('failed', 'Replay.wav');
@@ -455,7 +455,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(598, 340, '1.13', { fontSize: '8px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(596, 339, '1.14', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
