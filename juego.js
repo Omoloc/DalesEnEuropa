@@ -108,7 +108,7 @@ class GameOverScene extends Phaser.Scene {
         this.textContent.setText('De esa forma de visibiliza a aquellas personas que buscamos cambios profundos en la política y se priva a los partidos de sueldos y subvenciones que no se han ganado.');
         break;
       case 4:   
-        this.textContent.setText('Con esta iniciativa se busca:\n1. Visibilizar el descontento\n2. Llamar la atención de los medios\n3. Abrir un debate sobre los deficits de nuestro sistema');
+        this.textContent.setText('Con esta iniciativa se busca:\n1. Visibilizar el descontento\n2. Llamar la atención de los medios\n3. Abrir un debate sobre los déficits de nuestro sistema');
         break;
         //Se pueden añadir más mensajes 5, 6, 7, etc.
       default:
@@ -211,7 +211,7 @@ class PlayGameScene extends Phaser.Scene {
   timeup=0
   score = 0;
   positionImages = [];
-  imagesToDisplay = ['feijo', 'abascal', 'diaz', 'sanchez'];
+  imagesToDisplay = ['feijo', 'abascal', 'diaz', 'sanchez', 'escanos'];
   countdown = 0; // Tiempo de juego en segundos
   scoreText ="";
   countdownText="";
