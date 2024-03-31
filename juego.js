@@ -507,7 +507,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.26', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.27', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
