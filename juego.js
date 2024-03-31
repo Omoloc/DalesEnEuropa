@@ -266,6 +266,7 @@ class PlayGameScene extends Phaser.Scene {
     //this.countdownText.setScrollFactor(0);
     
     console.log('2');
+    this.loadSounds();
 
     this.style = {
       fontSize: '32px',
@@ -286,7 +287,7 @@ class PlayGameScene extends Phaser.Scene {
     console.log('3');
 
     //Sonidos
-    this.loadSounds();
+    this.playSound('ready');
 
     console.log('4')
     this.startGame();
@@ -343,6 +344,8 @@ class PlayGameScene extends Phaser.Scene {
   
     this.countdownText.setText('Tiempo: ' + this.countdown);
     if (this.countdown === 0) {
+      this.playSound('win');
+      
       this.scene.start('GameOverScene', { puntuacion: this.score });
     }
 
@@ -359,30 +362,22 @@ class PlayGameScene extends Phaser.Scene {
 
     switch (sound) {
       case 'opened':
-        if (this.soundOpened) this.soundOpened.play();
+        if (this.soundOpened) this.soundOpened.play(); else console.log('Sound not found');
         break;  
       case 'catched':
-        if (this.soundCatched) 
-        {
-          this.soundCatched.play();
-        
-        }
-        else
-        {
-          console.log('Sound not found');
-        }
+        if (this.soundCatched) this.soundCatched.play(); else console.log('Sound not found');
         break;
       case 'failed':
-        if (this.soundFail) this.soundFail.play();
+        if (this.soundFail) this.soundFail.play(); else console.log('Sound not found');
         break;
       case 'ready':
-        if (this.soundReady) this.soundReady.play();
+        if (this.soundReady) this.soundReady.play(); else console.log('Sound not found');
         break;
       case 'go':
-        if (this.soundGo) this.soundGo.play();
+        if (this.soundGo) this.soundGo.play(); else console.log('Sound not found');
         break;
       case 'win':
-        if (this.soundWin) this.soundWin.play();
+        if (this.soundWin) this.soundWin.play(); else console.log('Sound not found');
         break;
       default:
         console.log('No sound found');
@@ -519,7 +514,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.18', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.19', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
