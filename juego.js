@@ -67,16 +67,16 @@ class GameOverScene extends Phaser.Scene {
         this.startButton.setInteractive();
     this.startButton.on('pointerdown', this.startGame);
 
-    /*
+    
     //botón de ir a la web
-    this.moreButton = this.add.text(220, 260, 'escanos.org', {
+    this.moreButton = this.add.text(200, 260, 'escanos.org', {
       fontSize: '32px',
       fontFamily: 'Arial' ,
       fill: '#FFAA00'
     }).setOrigin(0);
         this.moreButton.setInteractive();
     this.moreButton.on('pointerdown',gotoWeb); // Abre el enlace en una nueva pestaña);
-*/
+
 
     //Botón de compartir
     this.link = this.add.text(460, 260, 'Compartir\nen Twitter', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFAA00'});
@@ -92,7 +92,7 @@ class GameOverScene extends Phaser.Scene {
     });
 
     this.countdownTimer = this.time.addEvent({
-      delay: 2000,
+      delay: 5000,
       callback: this.updateText,
       callbackScope: this,
       loop: true
@@ -508,7 +508,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.24', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.25', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
