@@ -74,7 +74,8 @@ class GameOverScene extends Phaser.Scene {
       fill: '#FFAA00'
     }).setOrigin(0);
         this.moreButton.setInteractive();
-    this.moreButton.on('pointerdown',window.open('https://escanos.org', '_blank')); // Abre el enlace en una nueva pestaña);
+    this.moreButton.on('pointerdown',gotoWeb); // Abre el enlace en una nueva pestaña);
+
 
     //Botón de compartir
     this.link = this.add.text(460, 260, 'Compartir\nen Twitter', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFAA00'});
@@ -97,7 +98,10 @@ class GameOverScene extends Phaser.Scene {
     });
 
   }
-   
+  gotoWeb() {
+    window.open('https://escanos.org', '_blank'); // Abre el enlace en una nueva pestaña
+  }
+
   updateText() {
     console.log('AboutEB Scene Called');
     // Cargo escena de saber más
@@ -504,7 +508,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.21', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.22', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
