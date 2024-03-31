@@ -52,7 +52,7 @@ class GameOverScene extends Phaser.Scene {
     //this.add.text(120, 10, '¡Enhorabuena!', { fontSize: '32px', fontFamily: 'Arial', fill: '#000000' });
     //this.add.text(20, 50, '¡Has eliminado a '+this.contador+ ' diputados!', { fontSize: '32px', fontFamily: 'Arial' , fill: '#000000' });
     if (this.contador === 0) {
-      this.textContent = this.add.text(20, 16, '¡No has eliminado a ningún diputado!\nNo tengas miedo de golpearles.\nNo les vas a hacer daño.\n\n ¡Es solo un juego!', this.style );
+      this.textContent = this.add.text(20, 16, '¡No has eliminado a ningún diputado!\nNo golpees el logo de Escaños en Blanco solo a los políticos.\nNo les vas a hacer daño.\n\n ¡Es solo un juego!', this.style );
     }
     else
     {
@@ -150,7 +150,7 @@ class PlayGameScene extends Phaser.Scene {
       }
       this.scoreText.setText('Score: ' + this.score);
 
-      playSound('fail');
+      this.playSound('fail');
     } 
     else {
       this.score += 1;
@@ -355,7 +355,7 @@ class PlayGameScene extends Phaser.Scene {
   }
 
   playSound(sound) {
-    console.log('playSound called');
+    console.log('playSound called '+sound);
 
     switch (sound) {
       case 'opened':
@@ -387,8 +387,6 @@ class PlayGameScene extends Phaser.Scene {
 
   startGame() {
     console.log('startGame called');
-
-    this.playSound('ready');
 
     if (this.greenCircleTimer) {
       this.greenCircleTimer.remove();
@@ -513,7 +511,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.15', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.16', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
