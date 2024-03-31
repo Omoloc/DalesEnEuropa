@@ -12,7 +12,6 @@ class GameOverScene extends Phaser.Scene {
     wordWrap: { width: 580, useAdvancedWrap: true }
   }
     
-
   constructor() {
     super({ key: 'GameOverScene' });
     console.log('Constructor GameOverScene');
@@ -68,17 +67,17 @@ class GameOverScene extends Phaser.Scene {
         this.startButton.setInteractive();
     this.startButton.on('pointerdown', this.startGame);
 
-    //botón de saber más
-    this.moreButton = this.add.text(220, 260, 'Saber\n más', {
+    //botón de ir a la web
+    this.moreButton = this.add.text(220, 260, 'escanos.org', {
       fontSize: '32px',
       fontFamily: 'Arial' ,
       fill: '#FFAA00'
     }).setOrigin(0);
         this.moreButton.setInteractive();
-    this.moreButton.on('pointerdown', this.updateText);
+    this.moreButton.on('pointerdown',window.open('https://escanos.org', '_blank')); // Abre el enlace en una nueva pestaña);
 
     //Botón de compartir
-    this.link = this.add.text(420, 260, 'Compartir\nen Twitter', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFAA00'});
+    this.link = this.add.text(460, 260, 'Compartir\nen Twitter', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFAA00'});
     this.link.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.link.on('pointerup', () => {
       if(this.contador === 0) {
@@ -88,6 +87,13 @@ class GameOverScene extends Phaser.Scene {
       {
         window.open('https://twitter.com/intent/tweet?text= ¡He eliminado '+this.contador+ ' diputados!%0A%0ASi tú también quieres eliminar algunos diputados, pulsa en el enlace http://escanos.org y sigue a @escanosenblanco' , '_blank'); // Abre el enlace en una nueva pestaña
       }
+    });
+
+    this.countdownTimer = this.time.addEvent({
+      delay: 2000,
+      callback: this.updateText,
+      callbackScope: this,
+      loop: true
     });
 
   }
@@ -110,9 +116,11 @@ class GameOverScene extends Phaser.Scene {
       case 4:   
         this.textContent.setText('Con esta iniciativa se busca:\n1. Visibilizar el descontento\n2. Llamar la atención de los medios\n3. Abrir un debate sobre los déficits de nuestro sistema');
         break;
+      case 5:   
+        this.textContent.setText('Si quieres saber más, entra en nuestra página web');
+        break;
         //Se pueden añadir más mensajes 5, 6, 7, etc.
       default:
-        window.open('https://escanos.org', '_blank'); // Abre el enlace en una nueva pestaña
         this.moreButton.setText('');
         this.mensajes = 0;
         break;
@@ -188,23 +196,7 @@ class PlayGameScene extends Phaser.Scene {
     this.randomPositionImage.setAlpha(1);
   }
 
-
-  //Muestra la pantalla de fin de juego
-  /*endGame() {
-    this.scoreText.visible = false;
-    this.countdownText.visible = false;
-    this.positionImages.forEach(function (positionImage) {
-      positionImage.visible = false;
-    }.bind(this));
-
-    this.resultText = this.add.text(config.width / 2, config.height / 2 - 50, 'Puntuación: ' + score, {
-      fontSize: '32px',
-      fill: '#FFFFFF'
-    }).setOrigin(0.5);
-
-  }
-  */
-
+  //Variables
   timeup=0
   score = 0;
   positionImages = [];
@@ -342,7 +334,7 @@ class PlayGameScene extends Phaser.Scene {
   
     this.countdownText.setText('Tiempo: ' + this.countdown);
     if (this.countdown === 0) {
-      this.playSound('win');
+      if (this.score >0 ) this.playSound('win'); else this.playSound('failed');
       
       this.scene.start('GameOverScene', { puntuacion: this.score });
     }
@@ -512,7 +504,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.20', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.21', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
