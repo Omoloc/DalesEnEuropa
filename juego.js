@@ -72,16 +72,13 @@ class GameOverScene extends Phaser.Scene {
         this.startButton.setInteractive();
     this.startButton.on('pointerdown', this.startGame);
 
+    //Botón de compartir
+    this.moreButton = this.add.text(200, 260, 'escanos.org', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFAA00'});
+    this.link.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
+    this.link.on('pointerup', () => {
+      window.open('https://escanos.org', '_blank'); // Abre el enlace en una nueva pestaña
+    });
     
-    //botón de ir a la web
-    this.moreButton = this.add.text(200, 260, 'escanos.org', {
-      fontSize: '32px',
-      fontFamily: 'Arial' ,
-      fill: '#FFAA00'
-    }).setOrigin(0);
-        this.moreButton.setInteractive();
-    this.moreButton.on('pointerdown',gotoWeb); // Abre el enlace en una nueva pestaña);
-
 
     //Botón de compartir
     this.link = this.add.text(460, 260, 'Compartir\nen Twitter', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFAA00'});
