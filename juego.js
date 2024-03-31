@@ -362,7 +362,15 @@ class PlayGameScene extends Phaser.Scene {
         if (this.soundOpened) this.soundOpened.play();
         break;  
       case 'catched':
-        if (this.soundCatched)  this.soundCatched.play();
+        if (this.soundCatched) 
+        {
+          this.soundCatched.play();
+        
+        }
+        else
+        {
+          console.log('Sound not found');
+        }
         break;
       case 'failed':
         if (this.soundFail) this.soundFail.play();
@@ -511,7 +519,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.16', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.17', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
