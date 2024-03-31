@@ -150,7 +150,7 @@ class PlayGameScene extends Phaser.Scene {
       }
       this.scoreText.setText('Score: ' + this.score);
 
-      this.playSound('fail');
+      this.playSound('failed');
     } 
     else {
       this.score += 1;
@@ -239,7 +239,7 @@ class PlayGameScene extends Phaser.Scene {
     this.load.audio('ready', 'Ready.mp3');
     this.load.audio('go', 'Go.mp3');
     this.load.audio('win', 'Win.mp3');
-    console.log('this.load.audio(opened, Open.wav)');
+
         
   }
 
@@ -338,8 +338,6 @@ class PlayGameScene extends Phaser.Scene {
   }
 
   decreaseCountdown() {
-    console.log(this.countdown);
-
     this.countdown--;
   
     this.countdownText.setText('Tiempo: ' + this.countdown);
@@ -400,7 +398,7 @@ class PlayGameScene extends Phaser.Scene {
 
     //añadir un contador de tres segundos para empezar el juego
     this.readyTimer = this.time.addEvent({
-      delay: 3000,
+      delay: 2000,
       callback: this.startReady,
       callbackScope: this,
       loop: false
@@ -514,7 +512,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.19', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.20', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
