@@ -56,7 +56,7 @@ class GameOverScene extends Phaser.Scene {
     }
     else
     {
-      this.textContent = this.add.text(20, 16, '      ¡Enhorabuena!\n¡Has eliminado a '+this.contador+ ' diputados!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ ((this.contador*120000)+220000)+'€', this.style );
+      this.textContent = this.add.text(20, 16, '      ¡Enhorabuena!\n¡Has eliminado a '+this.contador+ ' diputados!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ ((this.contador*120000)+220000).toLocaleString('es-ES') +'€', this.style );
     }
 
     // Boton de jugar de nuevo  
@@ -129,7 +129,6 @@ class GameOverScene extends Phaser.Scene {
 
 class PlayGameScene extends Phaser.Scene {
   
-
   constructor() {
     super({ key: 'PlayGameScene' });
     console.log('Constructor PlayGameScene');
@@ -137,7 +136,7 @@ class PlayGameScene extends Phaser.Scene {
     // Bind the context
     this.increaseScore = this.increaseScore.bind(this);
     this.showNextImage = this.showNextImage.bind(this);
-    this.endGame = this.endGame.bind(this);
+    //this.endGame = this.endGame.bind(this);
   }
 
   increaseScore() {
@@ -151,19 +150,13 @@ class PlayGameScene extends Phaser.Scene {
       }
       this.scoreText.setText('Score: ' + this.score);
 
-      this.soundFail.play();
-      if (this.sound.context.state === 'suspended') {
-        this.sound.context.resume();
-      }
+      playSound('fail');
     } 
     else {
       this.score += 1;
       this.scoreText.setText('Score: ' + this.score);
 
-      this.soundCatched.play();
-      if (this.sound.context.state === 'suspended') {
-        this.sound.context.resume();
-      }
+      this.playSound('catched');
     }
 
     //Cargo una nueva imagen
@@ -197,7 +190,7 @@ class PlayGameScene extends Phaser.Scene {
 
 
   //Muestra la pantalla de fin de juego
-  endGame() {
+  /*endGame() {
     this.scoreText.visible = false;
     this.countdownText.visible = false;
     this.positionImages.forEach(function (positionImage) {
@@ -210,6 +203,7 @@ class PlayGameScene extends Phaser.Scene {
     }).setOrigin(0.5);
 
   }
+  */
 
   timeup=0
   score = 0;
@@ -218,21 +212,33 @@ class PlayGameScene extends Phaser.Scene {
   countdown = 0; // Tiempo de juego en segundos
   scoreText ="";
   countdownText="";
+  readyText="";
   soundOpened = null;
   soundCatched = null;
   soundFail = null; 
+  soundReady = null;
+  soundGo = null;
+  soundWin = null;
+  
 
   preload() {
     console.log('Preload PlayGameScene');
+
+    //imagenes
     this.load.image('congreso', 'congreso.png');
     this.load.image('feijo', 'feijo.gif');
     this.load.image('abascal', 'abascal.gif');
     this.load.image('diaz', 'diaz.gif');
     this.load.image('sanchez', 'sanchez.gif');
     this.load.image('escanos', 'escanos.png');
+
+    // Sonidos
     this.load.audio('opened', 'Open.wav');
     this.load.audio('catched', 'Catch.mp3');
     this.load.audio('failed', 'Replay.wav');
+    this.load.audio('ready', 'Ready.mp3');
+    this.load.audio('go', 'Go.mp3');
+    this.load.audio('win', 'Win.mp3');
     console.log('this.load.audio(opened, Open.wav)');
         
   }
@@ -244,17 +250,22 @@ class PlayGameScene extends Phaser.Scene {
     this.timeup = 1000;
 
     this.add.image(0, 0, 'congreso').setOrigin(0);
+    console.log('1');
 
     this.scoreText = this.add.text(16, 16, 'Score: 0',
                               { fontSize: '32px', fill: '#FFFF00' });
-    this.scoreText.setScrollFactor(0);
+    //this.scoreText.setScrollFactor(0);
+
+    this.readyText = this.add.text((config.width / 2)- 150,(config.height / 2)-45, 'Ready?',
+    { fontSize: '80px', fill: '#FFFF00' });
+
 
     this.countdownText = this.add.text(210, 16, 'Tiempo: ' + this.countdown,
                                   { fontSize: '32px', fill: '#FFFF00' });
     //countdownText.setOrigin(1, 0);
-    this.countdownText.setScrollFactor(0);
+    //this.countdownText.setScrollFactor(0);
     
-    this.positionImages = this.createPositionImages();
+    console.log('2');
 
     this.style = {
       fontSize: '32px',
@@ -270,30 +281,24 @@ class PlayGameScene extends Phaser.Scene {
     //scoreText = this.add.text(16, 16, 'Score: 0', style);
     //countdownText = this.add.text(236, 16, 'Tiempo: ' + countdown, style);
 
-    this.greenCircleTimer = this.time.addEvent({
-      delay: this.timeup,
-      callback: this.showNextImage,
-      callbackScope: this,
-      loop: true
-    });
-    this.showNextImage();
-
-    this.countdownTimer = this.time.addEvent({
-      delay: 1000,
-      callback: this.decreaseCountdown,
-      callbackScope: this,
-      loop: true
-    });
-
-
     //Comenzamos
+    
+    console.log('3');
+
+    //Sonidos
+    //this.loadsSounds();
+
+    console.log('4')
+    this.startGame();
+  }
+
+  loadsSounds() {
     this.soundOpened = this.sound.add('opened');
     this.soundCatched = this.sound.add('catched');
     this.soundFail = this.sound.add('failed');
-    this.soundOpened.play();
-    console.log('soundpOpened add and played');
-    
-
+    this.soundReady = this.sound.add('ready');
+    this.soundGo = this.sound.add('go');
+    this.soundWin = this.sound.add('win');
   }
 
   createPositionImages() {
@@ -348,24 +353,76 @@ class PlayGameScene extends Phaser.Scene {
     }
   
   }
-  
+
+  playSound(sound) {
+    console.log('playSound called');
+
+    switch (sound) {
+      case 'opened':
+        if (this.soundOpened) this.soundOpened.play();
+        break;  
+      case 'catched':
+        if (this.soundCatched)  this.soundCatched.play();
+        break;
+      case 'failed':
+        if (this.soundFail) this.soundFail.play();
+        break;
+      case 'ready':
+        if (this.soundReady) this.soundReady.play();
+        break;
+      case 'go':
+        if (this.soundGo) this.soundGo.play();
+        break;
+      case 'win':
+        if (this.soundWin) this.soundWin.play();
+        break;
+      default:
+        console.log('No sound found');
+        break;
+    }
+    if (this.sound.context.state === 'suspended') {
+      this.sound.context.resume();
+    } 
+  }
+
   startGame() {
-    // Elimina el evento de temporizador anterior
+    console.log('startGame called');
+
+    this.playSound('ready');
+
     if (this.greenCircleTimer) {
       this.greenCircleTimer.remove();
     }
+    if (this.countdownTimer) {
+      this.countdownTimer.remove();
+    }
+
+    //añadir un contador de tres segundos para empezar el juego
+    this.readyTimer = this.time.addEvent({
+      delay: 3000,
+      callback: this.startReady,
+      callbackScope: this,
+      loop: false
+    })
+  }
   
-    // Crea un nuevo evento de temporizador
+  
+  startReady() {
+    console.log('startReady called');
+    this.readyText.setText('');
+
+    this.playSound('go');
+    
+    this.positionImages = this.createPositionImages();
+
+
     this.greenCircleTimer = this.time.addEvent({
       delay: this.timeup,
       callback: this.showNextImage,
       callbackScope: this,
       loop: true
     });
-
-    if (this.countdownTimer) {
-      this.countdownTimer.remove();
-    }
+    this.showNextImage();
 
     this.countdownTimer = this.time.addEvent({
       delay: 1000,
@@ -374,9 +431,10 @@ class PlayGameScene extends Phaser.Scene {
       loop: true
     });
 
+    //this.startGame();
+
   }
-  
-  
+
 
 }
 
@@ -455,7 +513,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(596, 339, '1.14', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.15', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
