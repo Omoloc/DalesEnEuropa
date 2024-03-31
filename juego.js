@@ -40,11 +40,6 @@ class GameOverScene extends Phaser.Scene {
     this.scene.start('PlayGameScene');
   }
 
-  gotoWeb() {
-    window.open('https://escanos.org', '_blank'); // Abre el enlace en una nueva pestaña
-  }
-
-
   create() {
 
     this.mensajes = 0;
@@ -74,8 +69,8 @@ class GameOverScene extends Phaser.Scene {
 
     //Botón de compartir
     this.moreButton = this.add.text(200, 260, 'escanos.org', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFAA00'});
-    this.link.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
-    this.link.on('pointerup', () => {
+    this.moreButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
+    this.moreButton.on('pointerup', () => {
       window.open('https://escanos.org', '_blank'); // Abre el enlace en una nueva pestaña
     });
     
@@ -507,7 +502,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.27', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.28', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
