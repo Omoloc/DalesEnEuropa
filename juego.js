@@ -40,6 +40,11 @@ class GameOverScene extends Phaser.Scene {
     this.scene.start('PlayGameScene');
   }
 
+  gotoWeb() {
+    window.open('https://escanos.org', '_blank'); // Abre el enlace en una nueva pestaña
+  }
+
+
   create() {
 
     this.mensajes = 0;
@@ -99,10 +104,7 @@ class GameOverScene extends Phaser.Scene {
     });
 
   }
-  gotoWeb() {
-    window.open('https://escanos.org', '_blank'); // Abre el enlace en una nueva pestaña
-  }
-
+  
   updateText() {
     console.log('AboutEB Scene Called');
     // Cargo escena de saber más
@@ -508,7 +510,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.25', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.26', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
