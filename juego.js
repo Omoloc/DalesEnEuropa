@@ -1,4 +1,4 @@
-const TituloFinal1 = "¡Enhorabuena!";
+let TituloFinal1 = "¡Enhorabuena!";
 
 class GameOverScene extends Phaser.Scene {
 
