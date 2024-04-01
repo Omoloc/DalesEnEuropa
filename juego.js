@@ -1,3 +1,5 @@
+const TituloFinal1 = "¡Enhorabuena!";
+
 class GameOverScene extends Phaser.Scene {
 
   contador = 0;
@@ -55,7 +57,7 @@ class GameOverScene extends Phaser.Scene {
     }
     else
     {
-      this.textContent = this.add.text(20, 16, '      ¡Enhorabuena!\n¡Has eliminado a '+this.contador+ ' diputados!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ ((this.contador*120000)+220000).toLocaleString('es-ES') +'€', this.style );
+      this.textContent = this.add.text(20, 16, TituloFinal1+'\n¡Has eliminado a '+this.contador+ ' diputados!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ ((this.contador*120000)+220000).toLocaleString('es-ES') +'€', this.style );
     }
 
     // Boton de jugar de nuevo  
@@ -76,7 +78,7 @@ class GameOverScene extends Phaser.Scene {
     
 
     //Botón de compartir
-    this.link = this.add.text(460, 260, 'Compartir\nen Twitter', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFAA00'});
+    this.link = this.add.text(445, 260, 'Compartir\nen Twitter', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFAA00'});
     this.link.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.link.on('pointerup', () => {
       if(this.contador === 0) {
@@ -89,7 +91,7 @@ class GameOverScene extends Phaser.Scene {
     });
 
     this.countdownTimer = this.time.addEvent({
-      delay: 5000,
+      delay: 9000,
       callback: this.updateText,
       callbackScope: this,
       loop: true
@@ -109,7 +111,7 @@ class GameOverScene extends Phaser.Scene {
         this.textContent.setText('Escaños en Blanco se presenta a las elecciones con un partido, y no toma posesión de los escaños obtenidos.\nCon ello renuncia al escaño y a cualquier sueldo o subvención que pudiera corresponderle.');
         break;
       case 3:   
-        this.textContent.setText('De esa forma de visibiliza a aquellas personas que buscamos cambios profundos en la política y se priva a los partidos de sueldos y subvenciones que no se han ganado.');
+        this.textContent.setText('De esa forma se visibiliza a aquellas personas que buscamos cambios profundos en la política y se priva a los partidos de sueldos y subvenciones que no se han ganado.');
         break;
       case 4:   
         this.textContent.setText('Con esta iniciativa se busca:\n1. Visibilizar el descontento\n2. Llamar la atención de los medios\n3. Abrir un debate sobre los déficits de nuestro sistema');
@@ -502,7 +504,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.28', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.29', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
