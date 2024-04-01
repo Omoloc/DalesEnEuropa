@@ -108,7 +108,6 @@ class GameOverScene extends Phaser.Scene {
   updateText() {
     console.log('AboutEB Scene Called');
     // Cargo escena de saber más
-    this.mensajes += 1;
     switch (this.mensajes) {
       case 0:
         if (this.contador === 0) {
@@ -150,6 +149,7 @@ class GameOverScene extends Phaser.Scene {
         this.mensajes = 0;
         break;
       }
+      this.mensajes += 1;
   
   }
 
@@ -416,7 +416,7 @@ class PlayGameScene extends Phaser.Scene {
 
     //añadir un contador de tres segundos para empezar el juego
     this.readyTimer = this.time.addEvent({
-      delay: 2000,
+      delay: 1500,
       callback: this.startReady,
       callbackScope: this,
       loop: false
@@ -530,7 +530,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.38', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.40', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
