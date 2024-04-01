@@ -66,12 +66,12 @@ class GameOverScene extends Phaser.Scene {
       this.textContent = this.add.text(20, 56, 'No golpees el logo de Escaños en Blanco solo a los políticos.\nDales donde más les duele.\n\n ¡Dales en el escaño!', this.style );
     }
     else if (this.contador === 1) {
-      this.textTitle = this.add.text(20, 20, TituloFinal1, styleTitle);
+      this.textTitle = this.add.text(20, 20, TituloFinal1, this.styleTitle);
       this.textContent = this.add.text(20, 56, '¡Has eliminado a '+this.contador+ ' diputado!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ (this.contador*120000).toLocaleString('es-ES') +'€', this.style );
     }
     else
     {
-      this.textTitle = this.add.text(20, 20, TituloFinal1);
+      this.textTitle = this.add.text(20, 20, TituloFinal1, this.styleTitle);
       this.textContent = this.add.text(20, 56, + '¡Has eliminado a '+this.contador+ ' diputados!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ ((this.contador*120000)+220000).toLocaleString('es-ES') +'€', this.style );
     }
 
@@ -129,7 +129,7 @@ class GameOverScene extends Phaser.Scene {
         break;
       case 3:   
         this.textTitle.setText('¿Cómo lo hacemos?');
-      this.textContent.setText('Nos presentamos a las elecciones con la única propuesta de dejar vacíos los escaños que nos correspondan en caso de obtenerlos. De esta forma el escañó queda vacío y nadie cobrará ni un euro por él.');
+      this.textContent.setText('Nos presentamos a las elecciones con la única propuesta de dejar vacíos los escaños que nos correspondan en caso de obtenerlos. De esta forma el escaño queda vacío y nadie cobrará ni un euro por él.');
         break;
       case 4:
         this.textTitle.setText('¿Esto es posible?');
@@ -524,7 +524,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.30', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.31', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
