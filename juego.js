@@ -62,17 +62,17 @@ class GameOverScene extends Phaser.Scene {
     //this.add.text(120, 10, '¡Enhorabuena!', { fontSize: '32px', fontFamily: 'Arial', fill: '#000000' });
     //this.add.text(20, 50, '¡Has eliminado a '+this.contador+ ' diputados!', { fontSize: '32px', fontFamily: 'Arial' , fill: '#000000' });
     if (this.contador === 0) {
-      this.textTitle = this.add.text(20, 20, '¡No has eliminado a ningún diputado!', this.styleTitle)
-      this.textContent = this.add.text(20, 56, 'No golpees el logo de Escaños en Blanco solo a los políticos.\nDales donde más les duele.\n\n ¡Dales en el escaño!', this.style );
+      this.textTitle = this.add.text(120, 20, '¡No has eliminado a ningún diputado!', this.styleTitle)
+      this.textContent = this.add.text(20, 66, 'No golpees el logo de Escaños en Blanco solo a los políticos.\nDales donde más les duele.\n\n ¡Dales en el escaño!', this.style );
     }
     else if (this.contador === 1) {
-      this.textTitle = this.add.text(20, 20, TituloFinal1, this.styleTitle);
-      this.textContent = this.add.text(20, 56, '¡Has eliminado a '+ this.contador + ' diputado!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ (this.contador*120000).toLocaleString('es-ES') +'€', this.style );
+      this.textTitle = this.add.text(120, 20, TituloFinal1, this.styleTitle);
+      this.textContent = this.add.text(20, 66, '¡Has eliminado a '+ this.contador + ' diputado!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ (this.contador*120000).toLocaleString('es-ES') +'€', this.style );
     }
     else
     {
-      this.textTitle = this.add.text(20, 20, TituloFinal1, this.styleTitle);
-      this.textContent = this.add.text(20, 56, + '¡Has eliminado a '+ this.contador + ' diputados!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ ((this.contador*120000)+220000).toLocaleString('es-ES') +'€', this.style );
+      this.textTitle = this.add.text(120, 20, TituloFinal1, this.styleTitle);
+      this.textContent = this.add.text(20, 66, + '¡Has eliminado a '+ this.contador + ' diputados!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ ((this.contador*120000)+220000).toLocaleString('es-ES') +'€', this.style );
     }
 
     // Boton de jugar de nuevo  
@@ -524,7 +524,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.32', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.33', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
