@@ -65,15 +65,18 @@ class GameOverScene extends Phaser.Scene {
       this.textTitle = this.add.text(120, 20, '¡No has eliminado a ningún diputado!', this.styleTitle)
       this.textContent = this.add.text(20, 66, 'No golpees el logo de Escaños en Blanco solo a los políticos.\nDales donde más les duele.\n\n ¡Dales en el escaño!', this.style );
     }
-    else if (this.contador === 1) {
-      this.textTitle = this.add.text(120, 20, TituloFinal1, this.styleTitle);
-      this.textContent = this.add.text(20, 66, '¡Has eliminado a '+ this.contador + ' diputado!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ (this.contador*120000).toLocaleString('es-ES') +'€', this.style );
-    }
     else
     {
-      this.textTitle = this.add.text(120, 20, TituloFinal1, this.styleTitle);
-      this.textContent = this.add.text(20, 66, + '¡Has eliminado a '+ this.contador + ' diputados!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ ((this.contador*120000)+220000).toLocaleString('es-ES') +'€', this.style );
-    }
+      if (this.contador === 1) {
+        this.textTitle = this.add.text(120, 20, TituloFinal1, this.styleTitle);
+        this.textContent = this.add.text(20, 66, '¡Has eliminado a '+ this.contador + ' diputado!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ (this.contador*120000).toLocaleString('es-ES') +'€', this.style );
+      }
+      else
+      {
+        this.textTitle = this.add.text(120, 20, TituloFinal1, this.styleTitle);
+        this.textContent = this.add.text(20, 66, + '¡Has eliminado a '+ this.contador + ' diputados!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ ((this.contador*120000)+220000).toLocaleString('es-ES') +'€', this.style );
+      }
+    } 
 
     // Boton de jugar de nuevo  
     this.startButton = this.add.text(20, 260, '   Jugar\nde nuevo', {
@@ -101,7 +104,7 @@ class GameOverScene extends Phaser.Scene {
       }
       else
       {
-        window.open('https://twitter.com/intent/tweet?text= ¡He eliminado '+this.contador+ ' diputados!%0A%0ASi tú también quieres eliminar algunos diputados, pulsa en el enlace http://escanos.org y sigue a @escanosenblanco' , '_blank'); // Abre el enlace en una nueva pestaña
+        window.open('https://twitter.com/intent/tweet?text=¡He eliminado '+this.contador+ ' diputados!%0A%0ASi tú también quieres eliminar algunos diputados, pulsa en el enlace http://escanos.org y sigue a @escanosenblanco' , '_blank'); // Abre el enlace en una nueva pestaña
       }
     });
 
@@ -121,19 +124,19 @@ class GameOverScene extends Phaser.Scene {
     switch (this.mensajes) {
       case 1:
         this.textTitle.setText('¿Quienes somos?');
-        this.textContent.setText('Somos un grupo de ciudadanos cansados de la clase política (y de que nos toman el pelo) que no encontramos utilidad ni en el voto nulo, blanco ni la abstención');
+        this.textContent.setText('Somos un grupo de ciudadanos cansados de la clase política que no encontramos utilidad ni en el voto nulo, blanco ni la abstención');
         break;
       case 2:   
       this.textTitle.setText('¿Qué queremos?');
-      this.textContent.setText('Queremos visibilizar el descontento, llamar la atención de los medios de comunicación y abrir un debate sobre los déficits de nuestro sistema.');
+      this.textContent.setText('Visibilizar el descontento, llamar la atención de los medios y abrir un debate sobre los déficits de nuestro sistema.');
         break;
       case 3:   
         this.textTitle.setText('¿Cómo lo hacemos?');
-      this.textContent.setText('Nos presentamos a las elecciones con la única propuesta de dejar vacíos los escaños que nos correspondan en caso de obtenerlos. De esta forma el escaño queda vacío y nadie cobrará ni un euro por él.');
+      this.textContent.setText('Nos presentamos a las elecciones para dejar escaños vacíos. De esta forma nadie cobrará ni un euro por él.');
         break;
       case 4:
         this.textTitle.setText('¿Esto es posible?');
-        this.textContent.setText('Sí. Ya hemos dejado vacías 14 concejalías y un Ayuntamiento. En las elecciones vascas poodemos conseguir escaño, especialmente en Álava. ¡Ayúdanos!');
+        this.textContent.setText('Sí. Ya hemos dejado vacías 14 concejalías y un Ayuntamiento. ¡Ayúdanos a dejar un escaño vacío en el Parlamento Vasco!');
         break;
       case 5:   
       this.textTitle.setText('¿Cómo puedo ayudar?');
@@ -524,7 +527,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.33', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.34', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
