@@ -4,6 +4,7 @@ class GameOverScene extends Phaser.Scene {
 
   contador = 0;
   textContent = ""
+  textTitle = ""
   mensajes = 0;
   moreButton = "";
 
@@ -14,6 +15,14 @@ class GameOverScene extends Phaser.Scene {
     wordWrap: { width: 580, useAdvancedWrap: true }
   }
     
+  styleTitle = {
+    fontSize: '42px',
+    fontFamily: 'Arial',
+    fontWeight: 'bold', 
+    fill: '#000000',
+    wordWrap: { width: 580, useAdvancedWrap: true }
+  }
+
   constructor() {
     super({ key: 'GameOverScene' });
     console.log('Constructor GameOverScene');
@@ -53,11 +62,17 @@ class GameOverScene extends Phaser.Scene {
     //this.add.text(120, 10, '¡Enhorabuena!', { fontSize: '32px', fontFamily: 'Arial', fill: '#000000' });
     //this.add.text(20, 50, '¡Has eliminado a '+this.contador+ ' diputados!', { fontSize: '32px', fontFamily: 'Arial' , fill: '#000000' });
     if (this.contador === 0) {
-      this.textContent = this.add.text(20, 16, '¡No has eliminado a ningún diputado!\nNo golpees el logo de Escaños en Blanco solo a los políticos.\nNo les vas a hacer daño.\n\n ¡Es solo un juego!', this.style );
+      this.textTitle = this.add.text(20, 20, '¡No has eliminado a ningún diputado!', styleTitle)
+      this.textContent = this.add.text(20, 56, 'No golpees el logo de Escaños en Blanco solo a los políticos.\nDales donde más les duele.\n\n ¡Dales en el escaño!', this.style );
+    }
+    else if (this.contador === 1) {
+      this.textTitle = this.add.text(20, 20, TituloFinal1, styleTitle);
+      this.textContent = this.add.text(20, 56, '¡Has eliminado a '+this.contador+ ' diputado!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ (this.contador*120000).toLocaleString('es-ES') +'€', this.style );
     }
     else
     {
-      this.textContent = this.add.text(20, 16, TituloFinal1+'\n¡Has eliminado a '+this.contador+ ' diputados!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ ((this.contador*120000)+220000).toLocaleString('es-ES') +'€', this.style );
+      this.textTitle = this.add.text(20, 20, TituloFinal1);
+      this.textContent = this.add.text(20, 56, + '¡Has eliminado a '+this.contador+ ' diputados!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ ((this.contador*120000)+220000).toLocaleString('es-ES') +'€', this.style );
     }
 
     // Boton de jugar de nuevo  
@@ -105,19 +120,24 @@ class GameOverScene extends Phaser.Scene {
     this.mensajes += 1;
     switch (this.mensajes) {
       case 1:
-        this.textContent.setText('Escaños en Blanco es una alternativa útil al voto en blanco, voto nulo y abstención que permite a los ciudadanos dejar escaños vacíos como forma de rechazo a los candidatos o el sistema');
+        this.textTitle.setText('¿Quienes somos?');
+        this.textContent.setText('Somos un grupo de ciudadanos cansados de la clase política que estamos cansados de tener que convivir con la sensación de que nos toman el pelo y que no encontramos solución ni en el voto nulo, blanco ni la abstención');
         break;
       case 2:   
-        this.textContent.setText('Escaños en Blanco se presenta a las elecciones con un partido, y no toma posesión de los escaños obtenidos.\nCon ello renuncia al escaño y a cualquier sueldo o subvención que pudiera corresponderle.');
+      this.textTitle.setText('¿Qué queremos?');
+      this.textContent.setText('Queremos visibilizar el descontento, llamar la atención de los medios de comunicación y abrir un debate sobre los déficits de nuestro sistema.');
         break;
       case 3:   
-        this.textContent.setText('De esa forma se visibiliza a aquellas personas que buscamos cambios profundos en la política y se priva a los partidos de sueldos y subvenciones que no se han ganado.');
+        this.textTitle.setText('¿Cómo lo hacemos?');
+      this.textContent.setText('Nos presentamos a las elecciones con la única propuesta de dejar vacíos los escaños que nos correspondan en caso de obtenerlos. De esta forma el escañó queda vacío y nadie cobrará ni un euro por él.');
         break;
-      case 4:   
-        this.textContent.setText('Con esta iniciativa se busca:\n1. Visibilizar el descontento\n2. Llamar la atención de los medios\n3. Abrir un debate sobre los déficits de nuestro sistema');
+      case 4:
+        this.textTitle.setText('¿Esto es posible?');
+        this.textContent.setText('Sí. Ya hemos dejado vacías 14 concejalías y un Ayuntamiento. En las elecciones vascas poodemos conseguir escaño, especialmente en Álava. ¡Ayúdanos!');
         break;
       case 5:   
-        this.textContent.setText('Si quieres saber más, entra en nuestra página web');
+      this.textTitle.setText('¿Cómo puedo ayudar?');
+      this.textContent.setText('Comenta nuestra propuesta con tus amigos, familiares y conocidos. Síguenos en redes sociales y comparte nuestras publicaciones.');
         break;
         //Se pueden añadir más mensajes 5, 6, 7, etc.
       default:
@@ -504,7 +524,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.29', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.30', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
