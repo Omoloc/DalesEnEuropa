@@ -66,17 +66,17 @@ class GameOverScene extends Phaser.Scene {
       this.textTitle = this.add.text(120, 20, '¡No has eliminado a ningún diputado!', this.styleTitle)
       this.textContent = this.add.text(20, 66, 'No golpees el logo de Escaños en Blanco solo a los políticos.\nDales donde más les duele.\n\n ¡Dales en el escaño!', this.style );
     }
-    else if (this.contador > 1) 
+    if (this.contador > 1) 
     {
       console.log('contador='+this.contador);
       this.textTitle = this.add.text(120, 20, TituloFinal1, this.styleTitle);
-      this.textContent = this.add.text(20, 66, '¡Has eliminado a '+ this.contador + ' diputados!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ (this.contador*120000).toLocaleString('es-ES') +'€', this.style );
+      this.textContent = this.add.text(20, 66, '¡Has dejado '+ this.contador + ' escaños vacíos!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ (this.contador*120000).toLocaleString('es-ES') +'€', this.style );
     }
-    else
+    if (this.contador === 1)
     {
       console.log('contador='+this.contador);
       this.textTitle = this.add.text(120, 20, TituloFinal1, this.styleTitle);
-      this.textContent = this.add.text(20, 66, + '¡Has eliminado a '+ this.contador + ' diputado!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ ((this.contador*120000)+220000).toLocaleString('es-ES') +'€', this.style );
+      this.textContent = this.add.text(20, 66, + '¡Has dejado un escaño vacío!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ ((this.contador*120000)+220000).toLocaleString('es-ES') +'€', this.style );
     }
 
     // Boton de jugar de nuevo  
@@ -528,7 +528,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.35', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.36', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
