@@ -225,7 +225,7 @@ class PlayGameScene extends Phaser.Scene {
   timeup=0
   score = 0;
   positionImages = [];
-  imagesToDisplay = ['feijo', 'abascal', 'diaz', 'sanchez', 'escanos'];
+  imagesToDisplay = ['feijo', 'abascal', 'diaz', 'sanchez', 'escanos', '1', '2', '3', '4', '5', '6'];
   countdown = 0; // Tiempo de juego en segundos
   scoreText ="";
   countdownText="";
@@ -248,7 +248,13 @@ class PlayGameScene extends Phaser.Scene {
     this.load.image('diaz', 'diaz.gif');
     this.load.image('sanchez', 'sanchez.gif');
     this.load.image('escanos', 'escanos.png');
-
+    this.load.image('1', '1.webp');
+    this.load.image('2', '2.webp');
+    this.load.image('3', '3.webp');
+    this.load.image('4', '4.webp');
+    this.load.image('5', '5.webp');
+    this.load.image('6', '6.webp');
+ 
     // Sonidos
     this.load.audio('opened', 'Open.wav');
     this.load.audio('catched', 'Catch.mp3');
@@ -337,7 +343,8 @@ class PlayGameScene extends Phaser.Scene {
       { x: 200, y: 300 },
       { x: 300, y: 300 },
       { x: 400, y: 299 },
-      { x: 500, y: 299 }
+      { x: 500, y: 299 },
+      { x: 400, y: 299 }
       // ... (agrega las demás posiciones aquí)
     ];
 
@@ -480,8 +487,8 @@ class AboutEB extends Phaser.Scene {
 // Configuración del juego
   config = {
   type: Phaser.AUTO,
-  width: 611,
-  height: 349,
+  width: 1024,
+  height: 1024,
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH
