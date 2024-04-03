@@ -329,22 +329,22 @@ class PlayGameScene extends Phaser.Scene {
     this.images = [];
 
     this.positions = [
-      { x: 100, y: 105 },
-      { x: 200, y: 104 },
-      { x: 300, y: 103 },
-      { x: 400, y: 103 },
-      { x: 500, y: 104 },
-      { x: 100, y: 195 },
-      { x: 200, y: 193 },
-      { x: 300, y: 191 },
-      { x: 400, y: 192 },
-      { x: 500, y: 192 },
-      { x: 100, y: 304 },
-      { x: 200, y: 300 },
-      { x: 300, y: 300 },
-      { x: 400, y: 299 },
-      { x: 500, y: 299 },
-      { x: 400, y: 299 }
+      { x: 167, y: 237 },
+      { x: 343, y: 237 },
+      { x: 515, y: 237 },
+      { x: 693, y: 237 },
+      { x: 63, y: 409 },
+      { x: 239, y: 409 },
+      { x: 429, y: 409 },
+      { x: 603, y: 409 },
+      { x: 807, y: 409 },
+      { x: 119, y: 589 },
+      { x: 315, y: 589 },
+      { x: 503, y: 589 },
+      { x: 707, y: 589 },
+      { x: 211, y: 735 },
+      { x: 421, y: 735 },
+      { x: 637, y: 735 }
       // ... (agrega las demás posiciones aquí)
     ];
 
@@ -537,7 +537,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.40', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.41', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
