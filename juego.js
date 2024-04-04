@@ -225,7 +225,7 @@ class PlayGameScene extends Phaser.Scene {
   timeup=0
   score = 0;
   positionImages = [];
-  imagesToDisplay = ['feijo', 'abascal', 'diaz', 'sanchez', 'escanos', '1', '2', '3', '4', '5', '6'];
+  imagesToDisplay = ['feijo', 'abascal', 'diaz', 'sanchez', 'escanos', '1', '2', '3', '4', '5', '6','rufian', 'nogueras', 'aitor'];
   countdown = 0; // Tiempo de juego en segundos
   scoreText ="";
   countdownText="";
@@ -254,7 +254,11 @@ class PlayGameScene extends Phaser.Scene {
     this.load.image('4', '4.webp');
     this.load.image('5', '5.webp');
     this.load.image('6', '6.webp');
- 
+    this.load.image('rufian', 'rufian.webp');
+    this.load.image('nogueras', 'casado.webp');
+    this.load.image('aitor', 'iglesias.webp');
+    
+    
     // Sonidos
     this.load.audio('opened', 'Open.wav');
     this.load.audio('catched', 'Catch.mp3');
@@ -329,22 +333,22 @@ class PlayGameScene extends Phaser.Scene {
     this.images = [];
 
     this.positions = [
-      { x: 167, y: 237 },
-      { x: 343, y: 237 },
-      { x: 515, y: 237 },
-      { x: 693, y: 237 },
-      { x: 63, y: 409 },
-      { x: 239, y: 409 },
-      { x: 429, y: 409 },
-      { x: 603, y: 409 },
-      { x: 807, y: 409 },
-      { x: 119, y: 589 },
-      { x: 315, y: 589 },
-      { x: 503, y: 589 },
-      { x: 707, y: 589 },
-      { x: 211, y: 735 },
-      { x: 421, y: 735 },
-      { x: 637, y: 735 }
+      { x: 236, y: 308 },
+      { x: 417, y: 308 },
+      { x: 601, y: 308 },
+      { x: 782, y: 308 },
+      { x: 124, y: 478 },
+      { x: 319, y: 478 },
+      { x: 506, y: 478 },
+      { x: 697, y: 478 },
+      { x: 894, y: 478 },
+      { x: 200, y: 648 },
+      { x: 398, y: 648 },
+      { x: 598, y: 648 },
+      { x: 798, y: 648 },
+      { x: 316, y: 835 },
+      { x: 524, y: 835 },
+      { x: 734, y: 835 }
       // ... (agrega las demás posiciones aquí)
     ];
 
@@ -515,7 +519,7 @@ function create() {
   console.log('Scene created');
 
   // Pantalla inicial
-  startButton = this.add.text( config.width / 2, 300 , '¡EMPEZAR!', {
+  startButton = this.add.text( config.width / 2, 300 , 'JUGAR', {
     fontSize: '40px',
     fontWeight: 'bold', // Hace que el texto sea negrita
     fill: '#FFAA00',
@@ -537,7 +541,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.41', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.42', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
