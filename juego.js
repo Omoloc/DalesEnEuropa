@@ -519,8 +519,8 @@ function create() {
   console.log('Scene created');
 
   // Pantalla inicial
-  startButton = this.add.text( config.width / 2, 300 , 'JUGAR', {
-    fontSize: '40px',
+  startButton = this.add.text( 608, 817 , 'JUGAR', {
+    fontSize: '120px',
     fontWeight: 'bold', // Hace que el texto sea negrita
     fill: '#FFAA00',
     fontFamily: 'Arial' 
