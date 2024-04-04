@@ -176,7 +176,7 @@ class PlayGameScene extends Phaser.Scene {
     //console.log('increaseScore called');
     
     //Si la imagen es la de los escaños decrece el escore y reproduce sonido failed. En caso contrario aumenta el score y reproduce sonido catched
-    if (this.randomImage === 'escanos') {
+    if (this.randomImage === '0') {
       this.score -= 3;
       if (this.score < 0) {
         this.score = 0;
@@ -225,7 +225,7 @@ class PlayGameScene extends Phaser.Scene {
   timeup=0
   score = 0;
   positionImages = [];
-  imagesToDisplay = ['feijo', 'abascal', 'diaz', 'sanchez', 'escanos', '1', '2', '3', '4', '5', '6','rufian', 'nogueras', 'aitor'];
+  imagesToDisplay = ['feijo', 'abascal', 'diaz', 'sanchez', '0', '1', '2', '3', '4', '5', '6','rufian', 'nogueras', 'aitor'];
   countdown = 0; // Tiempo de juego en segundos
   scoreText ="";
   countdownText="";
@@ -247,7 +247,7 @@ class PlayGameScene extends Phaser.Scene {
     this.load.image('abascal', 'abascal.gif');
     this.load.image('diaz', 'diaz.gif');
     this.load.image('sanchez', 'sanchez.gif');
-    this.load.image('escanos', 'escanos.png');
+    this.load.image('0', '0.webp');
     this.load.image('1', '1.webp');
     this.load.image('2', '2.webp');
     this.load.image('3', '3.webp');
@@ -519,7 +519,7 @@ function create() {
   console.log('Scene created');
 
   // Pantalla inicial
-  startButton = this.add.text( 608, 817 , 'JUGAR', {
+  startButton = this.add.text( 808, 817 , 'JUGAR', {
     fontSize: '120px',
     fontWeight: 'bold', // Hace que el texto sea negrita
     fill: '#FFAA00',
@@ -541,7 +541,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.43', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.44', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
