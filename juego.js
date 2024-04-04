@@ -255,8 +255,8 @@ class PlayGameScene extends Phaser.Scene {
     this.load.image('5', '5.webp');
     this.load.image('6', '6.webp');
     this.load.image('rufian', 'rufian.webp');
-    this.load.image('nogueras', 'casado.webp');
-    this.load.image('aitor', 'iglesias.webp');
+    this.load.image('nogueras', 'nogueras.webp');
+    this.load.image('aitor', 'aitor.webp');
     
     
     // Sonidos
@@ -333,22 +333,22 @@ class PlayGameScene extends Phaser.Scene {
     this.images = [];
 
     this.positions = [
-      { x: 236, y: 308 },
-      { x: 417, y: 308 },
-      { x: 601, y: 308 },
-      { x: 782, y: 308 },
-      { x: 124, y: 478 },
-      { x: 319, y: 478 },
-      { x: 506, y: 478 },
-      { x: 697, y: 478 },
-      { x: 894, y: 478 },
-      { x: 200, y: 648 },
-      { x: 398, y: 648 },
-      { x: 598, y: 648 },
-      { x: 798, y: 648 },
-      { x: 316, y: 835 },
-      { x: 524, y: 835 },
-      { x: 734, y: 835 }
+      { x: 236, y: 334 },
+      { x: 417, y: 334 },
+      { x: 601, y: 334 },
+      { x: 782, y: 334 },
+      { x: 124, y: 494 },
+      { x: 319, y: 494 },
+      { x: 506, y: 494 },
+      { x: 697, y: 494 },
+      { x: 894, y: 494 },
+      { x: 200, y: 664 },
+      { x: 398, y: 664 },
+      { x: 598, y: 664 },
+      { x: 798, y: 664 },
+      { x: 316, y: 851 },
+      { x: 524, y: 851 },
+      { x: 734, y: 851 }
       // ... (agrega las demás posiciones aquí)
     ];
 
@@ -541,7 +541,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.42', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.43', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
