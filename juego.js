@@ -9,18 +9,18 @@ class GameOverScene extends Phaser.Scene {
   moreButton = "";
 
   style = {
-    fontSize: '70px',
+    fontSize: '50px',
     fontFamily: 'Arial',
     fill: '#FFFFFF',
-    wordWrap: { width: 950, useAdvancedWrap: true }
+    wordWrap: { width: 850, useAdvancedWrap: true }
   }
     
   styleTitle = {
-    fontSize: '90 px',
+    fontSize: '75px',
     fontFamily: 'Arial',
     fontWeight: 'bold', 
     fill: '#FFFF66',
-    wordWrap: { width: 580, useAdvancedWrap: true }
+    wordWrap: { width: 850, useAdvancedWrap: true }
   }
 
   constructor() {
@@ -67,7 +67,7 @@ class GameOverScene extends Phaser.Scene {
     this.updateText(); 
 
     // Boton de jugar de nuevo  
-    this.startButton = this.add.text(400, 860, 'Jugar', {
+    this.startButton = this.add.text(500, 845, 'Jugar', {
       fontSize: '32px',
       fontFamily: 'Arial' ,
       fill: '#FFAA00'
@@ -75,8 +75,8 @@ class GameOverScene extends Phaser.Scene {
         this.startButton.setInteractive();
     this.startButton.on('pointerdown', this.startGame);
 
-    //Botón de compartir
-    this.moreButton = this.add.text(120, 860, 'escanos.org', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFAA00'});
+    //Enlace a la web de Escaños en Blanco
+    this.moreButton = this.add.text(120, 845, 'escanos.org', { fontSize: '42px', fontFamily: 'Arial', fill: '#FFFFFF'});
     this.moreButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.moreButton.on('pointerup', () => {
       window.open('https://escanos.org', '_blank'); // Abre el enlace en una nueva pestaña
@@ -84,7 +84,7 @@ class GameOverScene extends Phaser.Scene {
     
 
     //Botón de compartir
-    this.link = this.add.text(745, 860, 'Compartir\nen Twitter', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFAA00'});
+    this.link = this.add.text(900, 845, 'Twitter', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFFFFF'});
     this.link.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.link.on('pointerup', () => {
       if(this.contador === 0) {
@@ -288,7 +288,7 @@ class PlayGameScene extends Phaser.Scene {
     { fontSize: '80px', fill: '#FFFF00' });
 
 
-    this.countdownText = this.add.text(410, 16, 'Tiempo: ' + this.countdown,
+    this.countdownText = this.add.text(380, 16, 'Tiempo: ' + this.countdown,
                                   { fontSize: '52px', fill: '#FFFF00' });
     //countdownText.setOrigin(1, 0);
     //this.countdownText.setScrollFactor(0);
@@ -334,19 +334,19 @@ class PlayGameScene extends Phaser.Scene {
     this.images = [];
 
     this.positions = [
-      { x: 236, y: 329 },
-      { x: 417, y: 329 },
-      { x: 601, y: 329 },
-      { x: 782, y: 329 },
-      { x: 124, y: 495 },
-      { x: 319, y: 495 },
-      { x: 506, y: 495 },
-      { x: 697, y: 495 },
-      { x: 894, y: 495 },
-      { x: 200, y: 665 },
-      { x: 398, y: 665 },
-      { x: 598, y: 665 },
-      { x: 798, y: 665 },
+      { x: 236, y: 326 },
+      { x: 417, y: 326 },
+      { x: 601, y: 326 },
+      { x: 782, y: 326 },
+      { x: 124, y: 496 },
+      { x: 319, y: 496 },
+      { x: 506, y: 496 },
+      { x: 697, y: 496 },
+      { x: 894, y: 496 },
+      { x: 200, y: 666 },
+      { x: 398, y: 6665 },
+      { x: 598, y: 666 },
+      { x: 798, y: 666 },
       { x: 316, y: 853 },
       { x: 524, y: 853 },
       { x: 734, y: 853 }
@@ -373,7 +373,7 @@ class PlayGameScene extends Phaser.Scene {
 
     if (this.countdown <= 5)
     {
-      this.countdownText.setText(this.countdownText.text + '   ¡Deprisa!');
+      this.countdownText.setText(this.countdownText.text + '  ¡Deprisa!');
       this.timeup=600
     }
 
@@ -520,8 +520,8 @@ function create() {
   console.log('Scene created');
 
   // Pantalla inicial
-  startButton = this.add.text( 720, 480 , 'JUGAR', {
-    fontSize: '120px',
+  startButton = this.add.text( 480, 820 , 'JUGAR', {
+    fontSize: '100px',
     fontWeight: 'bold', // Hace que el texto sea negrita
     fill: '#FFFFFF',
     fontFamily: 'Arial' 
@@ -542,7 +542,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.48', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.49', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
