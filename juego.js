@@ -9,10 +9,10 @@ class GameOverScene extends Phaser.Scene {
   moreButton = "";
 
   style = {
-    fontSize: '80px',
+    fontSize: '70px',
     fontFamily: 'Arial',
     fill: '#FFFFFF',
-    wordWrap: { width: 580, useAdvancedWrap: true }
+    wordWrap: { width: 950, useAdvancedWrap: true }
   }
     
   styleTitle = {
@@ -62,7 +62,7 @@ class GameOverScene extends Phaser.Scene {
     //this.add.text(120, 10, '¡Enhorabuena!', { fontSize: '32px', fontFamily: 'Arial', fill: '#000000' });
     //this.add.text(20, 50, '¡Has eliminado a '+this.contador+ ' diputados!', { fontSize: '32px', fontFamily: 'Arial' , fill: '#000000' });
     this.textTitle = this.add.text(120, 320, '', this.styleTitle)
-    this.textContent = this.add.text(120, 466, '', this.style );
+    this.textContent = this.add.text(120, 406, '', this.style );
 
     this.updateText(); 
 
@@ -281,15 +281,15 @@ class PlayGameScene extends Phaser.Scene {
     console.log('1');
 
     this.scoreText = this.add.text(16, 16, 'Score: 0',
-                              { fontSize: '32px', fill: '#FFFF00' });
+                              { fontSize: '52px', fill: '#FFFF00' });
     //this.scoreText.setScrollFactor(0);
 
     this.readyText = this.add.text((config.width / 2)- 150,(config.height / 2)-45, 'Ready?',
     { fontSize: '80px', fill: '#FFFF00' });
 
 
-    this.countdownText = this.add.text(210, 16, 'Tiempo: ' + this.countdown,
-                                  { fontSize: '32px', fill: '#FFFF00' });
+    this.countdownText = this.add.text(410, 16, 'Tiempo: ' + this.countdown,
+                                  { fontSize: '52px', fill: '#FFFF00' });
     //countdownText.setOrigin(1, 0);
     //this.countdownText.setScrollFactor(0);
     
@@ -373,7 +373,7 @@ class PlayGameScene extends Phaser.Scene {
 
     if (this.countdown <= 5)
     {
-      this.countdownText.setText(this.countdownText.text + ' ¡Deprisa!');
+      this.countdownText.setText(this.countdownText.text + '   ¡Deprisa!');
       this.timeup=600
     }
 
@@ -542,7 +542,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.47', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.48', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
