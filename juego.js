@@ -225,7 +225,7 @@ class PlayGameScene extends Phaser.Scene {
   timeup=0
   score = 0;
   positionImages = [];
-  imagesToDisplay = ['feijo', 'abascal', 'diaz', 'sanchez', '0', '1', '2', '3', '4', '5', '6','rufian', 'nogueras', 'aitor'];
+  imagesToDisplay = ['feijo', 'abascal', 'diaz', 'sanchez', '0', '1', '2', '3', '4', '5', '6', 'aitor'];
   countdown = 0; // Tiempo de juego en segundos
   scoreText ="";
   countdownText="";
@@ -254,8 +254,8 @@ class PlayGameScene extends Phaser.Scene {
     this.load.image('4', '4.webp');
     this.load.image('5', '5.webp');
     this.load.image('6', '6.webp');
-    this.load.image('rufian', 'rufian.webp');
-    this.load.image('nogueras', 'nogueras.webp');
+    //this.load.image('rufian', 'rufian.webp');
+    //this.load.image('nogueras', 'nogueras.webp');
     this.load.image('aitor', 'aitor.webp');
     
     
@@ -266,7 +266,8 @@ class PlayGameScene extends Phaser.Scene {
     this.load.audio('ready', 'Ready.mp3');
     this.load.audio('go', 'Go.mp3');
     this.load.audio('win', 'Win.mp3');
-
+    this.load.audio('monedas', 'monedas01.mp3');
+     
         
   }
 
@@ -322,7 +323,7 @@ class PlayGameScene extends Phaser.Scene {
 
   loadSounds() {
     this.soundOpened = this.sound.add('opened');
-    this.soundCatched = this.sound.add('catched');
+    this.soundCatched = this.sound.add('monedas');
     this.soundFail = this.sound.add('failed');
     this.soundReady = this.sound.add('ready');
     this.soundGo = this.sound.add('go');
@@ -541,7 +542,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.44', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.45', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
