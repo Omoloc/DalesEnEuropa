@@ -9,17 +9,17 @@ class GameOverScene extends Phaser.Scene {
   moreButton = "";
 
   style = {
-    fontSize: '32px',
+    fontSize: '102px',
     fontFamily: 'Arial',
-    fill: '#000000',
+    fill: '#FFFFFF',
     wordWrap: { width: 580, useAdvancedWrap: true }
   }
     
   styleTitle = {
-    fontSize: '42px',
+    fontSize: '122px',
     fontFamily: 'Arial',
     fontWeight: 'bold', 
-    fill: '#000000',
+    fill: '#FFFF66',
     wordWrap: { width: 580, useAdvancedWrap: true }
   }
 
@@ -61,13 +61,13 @@ class GameOverScene extends Phaser.Scene {
   
     //this.add.text(120, 10, '¡Enhorabuena!', { fontSize: '32px', fontFamily: 'Arial', fill: '#000000' });
     //this.add.text(20, 50, '¡Has eliminado a '+this.contador+ ' diputados!', { fontSize: '32px', fontFamily: 'Arial' , fill: '#000000' });
-    this.textTitle = this.add.text(120, 20, '', this.styleTitle)
-    this.textContent = this.add.text(20, 66, '', this.style );
+    this.textTitle = this.add.text(320, 420, '', this.styleTitle)
+    this.textContent = this.add.text(220, 566, '', this.style );
 
     this.updateText(); 
 
     // Boton de jugar de nuevo  
-    this.startButton = this.add.text(20, 260, '   Jugar\nde nuevo', {
+    this.startButton = this.add.text(400, 860, 'Jugar', {
       fontSize: '32px',
       fontFamily: 'Arial' ,
       fill: '#FFAA00'
@@ -76,7 +76,7 @@ class GameOverScene extends Phaser.Scene {
     this.startButton.on('pointerdown', this.startGame);
 
     //Botón de compartir
-    this.moreButton = this.add.text(200, 260, 'escanos.org', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFAA00'});
+    this.moreButton = this.add.text(120, 860, 'escanos.org', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFAA00'});
     this.moreButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.moreButton.on('pointerup', () => {
       window.open('https://escanos.org', '_blank'); // Abre el enlace en una nueva pestaña
@@ -84,7 +84,7 @@ class GameOverScene extends Phaser.Scene {
     
 
     //Botón de compartir
-    this.link = this.add.text(445, 260, 'Compartir\nen Twitter', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFAA00'});
+    this.link = this.add.text(745, 860, 'Compartir\nen Twitter', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFAA00'});
     this.link.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.link.on('pointerup', () => {
       if(this.contador === 0) {
@@ -542,7 +542,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.45', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.46', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
