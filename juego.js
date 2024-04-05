@@ -9,14 +9,14 @@ class GameOverScene extends Phaser.Scene {
   moreButton = "";
 
   style = {
-    fontSize: '102px',
+    fontSize: '80px',
     fontFamily: 'Arial',
     fill: '#FFFFFF',
     wordWrap: { width: 580, useAdvancedWrap: true }
   }
     
   styleTitle = {
-    fontSize: '122px',
+    fontSize: '90 px',
     fontFamily: 'Arial',
     fontWeight: 'bold', 
     fill: '#FFFF66',
@@ -61,8 +61,8 @@ class GameOverScene extends Phaser.Scene {
   
     //this.add.text(120, 10, '¡Enhorabuena!', { fontSize: '32px', fontFamily: 'Arial', fill: '#000000' });
     //this.add.text(20, 50, '¡Has eliminado a '+this.contador+ ' diputados!', { fontSize: '32px', fontFamily: 'Arial' , fill: '#000000' });
-    this.textTitle = this.add.text(320, 420, '', this.styleTitle)
-    this.textContent = this.add.text(220, 566, '', this.style );
+    this.textTitle = this.add.text(120, 320, '', this.styleTitle)
+    this.textContent = this.add.text(120, 466, '', this.style );
 
     this.updateText(); 
 
@@ -334,22 +334,22 @@ class PlayGameScene extends Phaser.Scene {
     this.images = [];
 
     this.positions = [
-      { x: 236, y: 334 },
-      { x: 417, y: 334 },
-      { x: 601, y: 334 },
-      { x: 782, y: 334 },
-      { x: 124, y: 494 },
-      { x: 319, y: 494 },
-      { x: 506, y: 494 },
-      { x: 697, y: 494 },
-      { x: 894, y: 494 },
-      { x: 200, y: 664 },
-      { x: 398, y: 664 },
-      { x: 598, y: 664 },
-      { x: 798, y: 664 },
-      { x: 316, y: 851 },
-      { x: 524, y: 851 },
-      { x: 734, y: 851 }
+      { x: 236, y: 329 },
+      { x: 417, y: 329 },
+      { x: 601, y: 329 },
+      { x: 782, y: 329 },
+      { x: 124, y: 495 },
+      { x: 319, y: 495 },
+      { x: 506, y: 495 },
+      { x: 697, y: 495 },
+      { x: 894, y: 495 },
+      { x: 200, y: 665 },
+      { x: 398, y: 665 },
+      { x: 598, y: 665 },
+      { x: 798, y: 665 },
+      { x: 316, y: 853 },
+      { x: 524, y: 853 },
+      { x: 734, y: 853 }
       // ... (agrega las demás posiciones aquí)
     ];
 
@@ -520,10 +520,10 @@ function create() {
   console.log('Scene created');
 
   // Pantalla inicial
-  startButton = this.add.text( 808, 817 , 'JUGAR', {
+  startButton = this.add.text( 720, 480 , 'JUGAR', {
     fontSize: '120px',
     fontWeight: 'bold', // Hace que el texto sea negrita
-    fill: '#FFAA00',
+    fill: '#FFFFFF',
     fontFamily: 'Arial' 
   }).setOrigin(0.5);
   startButton.setInteractive();
@@ -542,7 +542,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.46', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.47', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
