@@ -2,7 +2,7 @@ let TituloFinal1 = "¡Enhorabuena!";
 let Quepaso = "¿Qué ha pasado?";
 let vuelveajugar = "Vuelve a jugar y no pulses en el Escaño en Blanco sólo a los políticos.\n\n ¡Dales en el escaño!";
 let Hasdejado = "¡Has dejado ";
-let escanosovacios = " escaño vacío!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de ";
+let escanosovacios = " escaños vacío!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de ";
 let unescanovacio = " ¡Has dejado un escaño vacío!\n\n Si esto fuera el Parlamento Vasco, habrías ahorrado más de ";
 let euros = "€";
 let Quienessomos = "¿Quienes somos?";
@@ -619,7 +619,7 @@ function create() {
   startButton.on('pointerdown', startGame);
   console.log('Start button added');
 
-  this.add.text(980, 1000, '1.58', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.59', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 function update() {
