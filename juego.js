@@ -598,8 +598,8 @@ function create() {
   console.log('Scene created');
 
   // Pantalla inicial
-  startButton = this.add.text( 480, 820 , 'JUGAR', {
-    fontSize: '100px',
+  startButton = this.add.text( 500, 850 , 'JUGAR', {
+    fontSize: '85px',
     fontWeight: 'bold', // Hace que el texto sea negrita
     fill: '#FFFFFF',
     fontFamily: 'Arial' 
@@ -611,14 +611,60 @@ function create() {
     console.log('PlayGameScene Scene Called');
     if (this.sound.context.state === 'suspended') {
       this.sound.context.resume();
-  }
+    }
     this.scene.start('PlayGameScene');
+  }
+
+  var showInfo = () => {
+    // Muestra información sobre el juego
+    console.log('Showinfo Called');
+    //this.scene.start('PlayGameScene');
+  }
+
+  var changeLenguage = () => {
+    // Cambia el idioma del juego
+    console.log('ChangeLenguage Called');
+     TituloFinal1 = "Zorionak!";
+     Quepaso = "Zer gertatu da?";
+     vuelveajugar = "Jokatu berriro, eta ez sakatu Aulki Zurian, politikariei bakarrik.\n\nEman euren eserlekuan!";
+     Hasdejado = "Utzi duzu ";
+     escanosovacios = " aulki hutsa!\n\nHau Eusko Legebiltzarra balitz, kopuru hau baino gehiago aurreztuko zenuen: ";
+     unescanovacio = "Aulki bat hutsik utzi duzu!\n\nHau Eusko Legebiltzarra balitz, kopuru hau baino gehiago aurreztuko zenuen: ";
+     Quienessomos = "Nor gara?";
+     Somosungrupo = "Klase politikoarekin nekatuta gauden herritar talde bat gara, eta ez diogu baliorik aurkitzen boto nuloari, zuriari edo abstentzioari";
+     Quequeremos = "Zer nahi dugu?";
+     Visibilizar = "Errepresentazio-falta ikusaraztea, komunikabideen arreta erakartzea eta gure sistemaren gabeziei buruzko eztabaida sortzea.";
+     Comolo = "Nola egiten dugu?";
+     Nospresentamos = "Hauteskundeetara aurkezten gara eserleku hutsak uzteko. Horrela, inork ez du kobratuko eserleku horrengatik. Guk ere ez.";
+     Estoes = "Hau posible da?";
+     Siyahay14 = "Bai. Hutsik utzi ditugu 14 zinegotzigo eta udal bat. Lagun iezaguzu Eusko Legebiltzarrean aulki huts bat uzten!";
+     Comopuedo = "Nola lagundu dezaket?";
+     Comenta = "Aipatu gure proposamena zure lagun, senide eta ezagunei. Jarraitu sare sozialetan, eta partekatu gure argitalpenak.";
   }
 
   startButton.on('pointerdown', startGame);
   console.log('Start button added');
 
-  this.add.text(980, 1000, '1.60', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  // Boton de información 
+  infoButton = this.add.text(850, 850, 'i', {
+      fontSize: '100px',
+      fontFamily: 'Arial' ,
+      fill: '#FFFFFF'
+    }).setOrigin(0);
+  infoButton.setInteractive();
+  infoButton.on('pointerdown', showInfo);
+
+  // Boton de cambio de idioma
+  lenguageButton = this.add.text(910, 850, '+', {
+    fontSize: '100px',
+    fontFamily: 'Arial' ,
+    fill: '#FFFFFF'
+  }).setOrigin(0);
+  lenguageButton.setInteractive();
+  lenguageButton.on('pointerdown', this.startGame);
+
+
+  this.add.text(980, 1000, '1.61', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 function update() {
