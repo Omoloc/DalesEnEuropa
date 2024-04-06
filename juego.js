@@ -2,9 +2,8 @@ let TituloFinal1 = "¡Enhorabuena!";
 let Quepaso = "¿Qué ha pasado?";
 let vuelveajugar = "Vuelve a jugar y no pulses en el Escaño en Blanco sólo a los políticos.\n\n ¡Dales en el escaño!";
 let Hasdejado = "¡Has dejado ";
-let escanosovacios = " escaños vacío!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de ";
+let escanosovacios = " escaños vacíos!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de ";
 let unescanovacio = " ¡Has dejado un escaño vacío!\n\n Si esto fuera el Parlamento Vasco, habrías ahorrado más de ";
-let euros = "€";
 let Quienessomos = "¿Quienes somos?";
 let Somosungrupo = "Somos un grupo de ciudadanos cansados de la clase política que no encontramos utilidad ni en el voto nulo, blanco ni la abstención";
 let Quequeremos = "¿Qué queremos?";
@@ -619,7 +618,7 @@ function create() {
   startButton.on('pointerdown', startGame);
   console.log('Start button added');
 
-  this.add.text(980, 1000, '1.59', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.60', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 function update() {
