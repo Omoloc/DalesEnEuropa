@@ -67,10 +67,10 @@ class GameOverScene extends Phaser.Scene {
     this.updateText(); 
 
     // Boton de jugar de nuevo  
-    this.startButton = this.add.text(500, 845, 'Jugar', {
+    this.startButton = this.add.text(550, 845, 'Jugar', {
       fontSize: '32px',
       fontFamily: 'Arial' ,
-      fill: '#FFAA00'
+      fill: '#FFFFFF'
     }).setOrigin(0);
         this.startButton.setInteractive();
     this.startButton.on('pointerdown', this.startGame);
@@ -84,7 +84,7 @@ class GameOverScene extends Phaser.Scene {
     
 
     //Botón de compartir
-    this.link = this.add.text(900, 845, 'Twitter', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFFFFF'});
+    this.link = this.add.text(890, 845, 'X', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFFFFF'});
     this.link.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.link.on('pointerup', () => {
       if(this.contador === 0) {
@@ -190,6 +190,7 @@ class PlayGameScene extends Phaser.Scene {
       this.scoreText.setText('Score: ' + this.score);
 
       this.playSound('catched');
+      this.playSound('monedas');
     }
 
     //Cargo una nueva imagen
@@ -210,12 +211,15 @@ class PlayGameScene extends Phaser.Scene {
 
   //Muestra la siguiente imagen
   showNextImage() {
+    
     this.positionImages.forEach(function (positionImage) {
       positionImage.setAlpha(0);
     });
 
     this.randomImage = Phaser.Math.RND.pick(this.imagesToDisplay);
     this.randomPositionImage = Phaser.Math.RND.pick(this.positionImages);
+    
+    console.log('showNextImage called '+this.randomImage);
 
     this.randomPositionImage.setTexture(this.randomImage);
     this.randomPositionImage.setAlpha(1);
@@ -232,6 +236,7 @@ class PlayGameScene extends Phaser.Scene {
   readyText="";
   soundOpened = null;
   soundCatched = null;
+  soundMonedas = null;
   soundFail = null; 
   soundReady = null;
   soundGo = null;
@@ -280,7 +285,7 @@ class PlayGameScene extends Phaser.Scene {
     this.add.image(0, 0, 'congreso').setOrigin(0);
     console.log('1');
 
-    this.scoreText = this.add.text(16, 16, 'Score: 0',
+    this.scoreText = this.add.text(16, 36, 'Score: 0',
                               { fontSize: '52px', fill: '#FFFF00' });
     //this.scoreText.setScrollFactor(0);
 
@@ -288,7 +293,7 @@ class PlayGameScene extends Phaser.Scene {
     { fontSize: '80px', fill: '#FFFF00' });
 
 
-    this.countdownText = this.add.text(380, 16, 'Tiempo: ' + this.countdown,
+    this.countdownText = this.add.text(380, 36, 'Tiempo: ' + this.countdown,
                                   { fontSize: '52px', fill: '#FFFF00' });
     //countdownText.setOrigin(1, 0);
     //this.countdownText.setScrollFactor(0);
@@ -323,7 +328,8 @@ class PlayGameScene extends Phaser.Scene {
 
   loadSounds() {
     this.soundOpened = this.sound.add('opened');
-    this.soundCatched = this.sound.add('monedas');
+    this.soundCatched = this.sound.add('catched');
+    this.soundMonedas = this.sound.add('monedas');
     this.soundFail = this.sound.add('failed');
     this.soundReady = this.sound.add('ready');
     this.soundGo = this.sound.add('go');
@@ -394,6 +400,9 @@ class PlayGameScene extends Phaser.Scene {
         break;  
       case 'catched':
         if (this.soundCatched) this.soundCatched.play(); else console.log('Sound not found');
+        break;
+      case 'monedas':
+        if (this.soundMonedas) this.soundMonedas.play(); else console.log('Sound not found');
         break;
       case 'failed':
         if (this.soundFail) this.soundFail.play(); else console.log('Sound not found');
@@ -542,7 +551,7 @@ function create() {
 }
 
 function update() {
-  this.add.text(586, 339, '1.49', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(586, 339, '1.50', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
