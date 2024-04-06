@@ -416,7 +416,7 @@ class PlayGameScene extends Phaser.Scene {
       this.positionImage.setDisplaySize(30, 30);
       this.positionImage.setInteractive();
       console.log('ADDED IMAGE');
-      this.positionImage.on('pointerdown', this.increaseScore(this.position.x, this.position.y));
+      this.positionImage.on('pointerdown', () => this.increaseScore(this.position.x, this.position.y));
       this.images.push(this.positionImage);
     }
 
@@ -601,7 +601,7 @@ function create() {
   startButton.on('pointerdown', startGame);
   console.log('Start button added');
 
-  this.add.text(990, 990, '1.55', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(990, 990, '1.56', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 function update() {
