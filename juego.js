@@ -606,6 +606,24 @@ function create() {
   }).setOrigin(0.5);
   startButton.setInteractive();
 
+  // Boton de información 
+  infoButton = this.add.text(850, 850, 'i', {
+    fontSize: '100px',
+    fontFamily: 'Arial' ,
+    fill: '#FFFFFF'
+  }).setOrigin(0.5);
+infoButton.setInteractive();
+
+// Boton de cambio de idioma
+lenguageButton = this.add.text(910, 850, '+', {
+  fontSize: '100px',
+  fontFamily: 'Arial' ,
+  fill: '#FFFFFF'
+}).setOrigin(0.5);
+lenguageButton.setInteractive();
+
+
+
   var startGame = () => {
     // Cargo escena del juego
     console.log('PlayGameScene Scene Called');
@@ -645,26 +663,11 @@ function create() {
   startButton.on('pointerdown', startGame);
   console.log('Start button added');
 
-  // Boton de información 
-  infoButton = this.add.text(850, 850, 'i', {
-      fontSize: '100px',
-      fontFamily: 'Arial' ,
-      fill: '#FFFFFF'
-    }).setOrigin(0);
-  infoButton.setInteractive();
   infoButton.on('pointerdown', showInfo);
+  lenguageButton.on('pointerdown', changeLenguage);
+  
 
-  // Boton de cambio de idioma
-  lenguageButton = this.add.text(910, 850, '+', {
-    fontSize: '100px',
-    fontFamily: 'Arial' ,
-    fill: '#FFFFFF'
-  }).setOrigin(0);
-  lenguageButton.setInteractive();
-  lenguageButton.on('pointerdown', this.startGame);
-
-
-  this.add.text(980, 1000, '1.61', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.62', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 function update() {
