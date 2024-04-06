@@ -237,7 +237,7 @@ class PlayGameScene extends Phaser.Scene {
       positionImage.setAlpha(0);
     });
 
-    console.log('Images to display '+this.imagesToDisplay.length());
+    console.log('Images to display '+this.imagesToDisplay.length);
     this.randomImage = Phaser.Math.RND.pick(this.imagesToDisplay);
 
     this.randomPositionImage = Phaser.Math.RND.pick(this.positionImages);
@@ -600,7 +600,7 @@ function create() {
   startButton.on('pointerdown', startGame);
   console.log('Start button added');
 
-  this.add.text(1000, 1000, '1.54', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(1000, 1000, '1.55', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 function update() {
