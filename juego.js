@@ -1,4 +1,21 @@
 let TituloFinal1 = "¡Enhorabuena!";
+let Quepaso = "¿Qué ha pasado?";
+let vuelveajugar = "Vuelve a jugar y no pulses en el Escaño en Blanco sólo a los políticos.\n\n ¡Dales en el escaño!";
+let Hasdejado = "¡Has dejado ";
+let escanosovacios = " escaño vacío!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de ";
+let unescanovacio = " ¡Has dejado un escaño vacío!\n\n Si esto fuera el Parlamento Vasco, habrías ahorrado más de ";
+let euros = "€";
+let Quienessomos = "¿Quienes somos?";
+let Somosungrupo = "Somos un grupo de ciudadanos cansados de la clase política que no encontramos utilidad ni en el voto nulo, blanco ni la abstención";
+let Quequeremos = "¿Qué queremos?";
+let Visibilizar = "Visibilizar la falta de representación, llamar la atención de los medios y abrir un debate sobre las carencias de nuestro sistema.";
+let Comolo = "¿Cómo lo hacemos?";
+let Nospresentamos = "Nos presentamos a las elecciones para dejar escaños vacíos. De esta forma nadie cobrará por ese escaño. Nosotros tampoco.";
+let Estoes = "¿Esto es posible?";
+let Siyahay14 = "Sí. Ya hemos dejado vacías 14 concejalías y un Ayuntamiento. ¡Ayúdanos a dejar un escaño vacío en el Parlamento Vasco!";
+let Comopuedo = "¿Cómo puedo ayudar?";
+let Comenta = "Comenta nuestra propuesta con tus amigos, familiares y conocidos. Síguenos en redes sociales y comparte nuestras publicaciones.";
+
 
 class GameOverScene extends Phaser.Scene {
 
@@ -88,11 +105,11 @@ class GameOverScene extends Phaser.Scene {
     this.link.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.link.on('pointerup', () => {
       if(this.contador === 0) {
-        window.open('https://twitter.com/intent/tweet?text=¡Me ha hecho mucha gracia este juego de eliminar diputados!%0ATe invito jugarlo en este enlace http://escanos.org y a seguir a @escanosenblanco', '_blank'); // Abre el enlace en una nueva pestaña
+        window.open('https://twitter.com/intent/tweet?text=¡Me ha hecho mucha gracia este juego de eliminar diputados!%0ATe invito a jugarlo en este enlace http://escanos.org y a seguir a @escanosenblanco #dalesenlosescaños', '_blank'); // Abre el enlace en una nueva pestaña
       }
       else
       {
-        window.open('https://twitter.com/intent/tweet?text=¡He eliminado '+this.contador+ ' diputados!%0A%0ASi tú también quieres eliminar algunos diputados, pulsa en el enlace http://escanos.org y sigue a @escanosenblanco' , '_blank'); // Abre el enlace en una nueva pestaña
+        window.open('https://twitter.com/intent/tweet?text=¡He eliminado '+this.contador+ ' diputados!%0A%0ASi tú también quieres eliminar algunos diputados, pulsa en el enlace http://escanos.org y sigue a @escanosenblanco #dalesenlosescaños' , '_blank'); // Abre el enlace en una nueva pestaña
       }
     });
 
@@ -112,37 +129,37 @@ class GameOverScene extends Phaser.Scene {
       case 0:
         if (this.contador === 0) {
           console.log('contador='+this.contador);
-          this.textTitle.setText('¿Qué ha pasado?', this.styleTitle)
-          this.textContent.setText('Vuelve a jugar y no pulses en el Escaño en Blanco sólo a los políticos.\n\n ¡Dales en el escaño!');
+          this.textTitle.setText(Quepaso, this.styleTitle);
+          this.textContent.setText( vuelveajugar);
         } else if (this.contador > 1) {
           console.log('contador='+this.contador);
           this.textTitle.setText(TituloFinal1);
-          this.textContent.setText('¡Has dejado '+ this.contador + ' escaños vacíos!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ (this.contador*120000).toLocaleString('es-ES') +'€');
+          this.textContent.setText( Hasdejado + this.contador + escanosovacios + (this.contador*120000).toLocaleString('es-ES') +'€');
         } else {
           console.log('contador='+this.contador);
           this.textTitle.setText(TituloFinal1);
-          this.textContent.setText('¡Has dejado un escaño vacío!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de '+ ((this.contador*120000)+220000).toLocaleString('es-ES') +'€');
+          this.textContent.setText(unescanovacio+ ((this.contador*120000)+220000).toLocaleString('es-ES') +'€');
         }
         break;
       case 1:
-        this.textTitle.setText('¿Quienes somos?');
-        this.textContent.setText('Somos un grupo de ciudadanos cansados de la clase política que no encontramos utilidad ni en el voto nulo, blanco ni la abstención');
+        this.textTitle.setText(Quienessomos);
+        this.textContent.setText(Somosungrupo);
         break;
       case 2:   
-      this.textTitle.setText('¿Qué queremos?');
-      this.textContent.setText('Visibilizar el descontento, llamar la atención de los medios y abrir un debate sobre las carencias de nuestro sistema.');
+      this.textTitle.setText(Quequeremos);
+      this.textContent.setText( Visibilizar );
         break;
       case 3:   
-        this.textTitle.setText('¿Cómo lo hacemos?');
-      this.textContent.setText('Nos presentamos a las elecciones para dejar escaños vacíos. De esta forma nadie cobrará por ese escaño. Nosotros tampoco.');
+        this.textTitle.setText(Comolo);
+      this.textContent.setText( Nospresentamos );
         break;
       case 4:
-        this.textTitle.setText('¿Esto es posible?');
-        this.textContent.setText('Sí. Ya hemos dejado vacías 14 concejalías y un Ayuntamiento. ¡Ayúdanos a dejar un escaño vacío en el Parlamento Vasco!');
+        this.textTitle.setText(Estoes);
+        this.textContent.setText(Siyahay14);
         break;
       case 5:   
-      this.textTitle.setText('¿Cómo puedo ayudar?');
-      this.textContent.setText('Comenta nuestra propuesta con tus amigos, familiares y conocidos. Síguenos en redes sociales y comparte nuestras publicaciones.');
+      this.textTitle.setText(Comopuedo);
+      this.textContent.setText( Comenta );
         break;
         //Se pueden añadir más mensajes 5, 6, 7, etc.
       default:
@@ -172,9 +189,9 @@ class PlayGameScene extends Phaser.Scene {
     //this.endGame = this.endGame.bind(this);
   }
 
-  increaseScore() {
+  increaseScore(posX, posY) {
     //console.log('increaseScore called');
-    
+
     //Si la imagen es la de los escaños decrece el escore y reproduce sonido failed. En caso contrario aumenta el score y reproduce sonido catched
     if (this.randomImage === '0') {
       this.score -= 3;
@@ -186,6 +203,10 @@ class PlayGameScene extends Phaser.Scene {
       this.playSound('failed');
     } 
     else {
+
+      let coin = this.add.sprite(posX, posY , 'coin1');
+      coin.play('spin');
+  
       this.score += 1;
       this.scoreText.setText('Score: ' + this.score);
 
@@ -263,6 +284,10 @@ class PlayGameScene extends Phaser.Scene {
     //this.load.image('nogueras', 'nogueras.webp');
     this.load.image('aitor', 'aitor.webp');
     
+    // Cargar imágenes animación monedas
+    for(let i = 1; i <= 11; i++) {
+        this.load.image(`coin${i}`, `monedas/${i.toString().padStart(3, '0')}.png`);
+    }
     
     // Sonidos
     this.load.audio('opened', 'Open.wav');
@@ -298,6 +323,20 @@ class PlayGameScene extends Phaser.Scene {
     //countdownText.setOrigin(1, 0);
     //this.countdownText.setScrollFactor(0);
     
+// Paso 2: Crear la animación en la función create
+    let frames = this.anims.generateFrameNames('', {
+        start: 1, end: 11, zeroPad: 3,
+        prefix: 'coin', suffix: '.png'
+    });
+
+    this.anims.create({
+        key: 'spin',
+        frames: frames,
+        frameRate: 10,
+        repeat: -1
+    });
+
+
     console.log('2');
     this.loadSounds();
 
@@ -364,7 +403,7 @@ class PlayGameScene extends Phaser.Scene {
       this.positionImage = this.add.image(this.position.x, this.position.y -10, '').setOrigin(0.5);
       this.positionImage.setDisplaySize(30, 30);
       this.positionImage.setInteractive();
-      this.positionImage.on('pointerdown', this.increaseScore);
+      this.positionImage.on('pointerdown', this.increaseScore (this.position.x, this.position.y));
       this.images.push(this.positionImage);
     }
 
@@ -548,10 +587,11 @@ function create() {
 
   startButton.on('pointerdown', startGame);
   console.log('Start button added');
+
+  this.add.text(586, 339, '1.51', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 function update() {
-  this.add.text(586, 339, '1.50', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 
