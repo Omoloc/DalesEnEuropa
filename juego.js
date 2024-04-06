@@ -52,7 +52,7 @@ class GameOverScene extends Phaser.Scene {
   init(data) {
     console.log('init GameOverScene ' + data.puntuacion);
     this.contador = data.puntuacion;
-}
+  }
 
   preload() {
     // Carga los recursos necesarios para esta escena
@@ -237,13 +237,23 @@ class PlayGameScene extends Phaser.Scene {
       positionImage.setAlpha(0);
     });
 
+    console.log('Images to display '+this.imagesToDisplay.length());
     this.randomImage = Phaser.Math.RND.pick(this.imagesToDisplay);
+
     this.randomPositionImage = Phaser.Math.RND.pick(this.positionImages);
     
-    console.log('showNextImage called '+this.randomImage);
+    if (this.randomImage)
+    {
+      console.log('showNextImage called '+this.randomImage);
 
-    this.randomPositionImage.setTexture(this.randomImage);
-    this.randomPositionImage.setAlpha(1);
+      this.randomPositionImage.setTexture(this.randomImage);
+      this.randomPositionImage.setAlpha(1);
+     }
+     else
+      {
+        console.log('No image to display');
+      }
+
   }
 
   //Variables
@@ -590,7 +600,7 @@ function create() {
   startButton.on('pointerdown', startGame);
   console.log('Start button added');
 
-  this.add.text(1000, 1000, '1.53', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(1000, 1000, '1.54', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 function update() {
