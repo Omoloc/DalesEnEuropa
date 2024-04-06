@@ -308,7 +308,7 @@ class PlayGameScene extends Phaser.Scene {
     this.load.image('aitor', 'aitor.webp');
     
     // Cargar imágenes animación monedas
-    for(let i = 1; i <= 11; i++) {
+    for(let i = 1; i <= 12; i++) {
         this.load.image(`coin${i}`, `monedas/${i.toString().padStart(3, '0')}.png`);
     }
     
@@ -349,7 +349,7 @@ class PlayGameScene extends Phaser.Scene {
     
 // Paso 2: Crear la animación en la función create
     let frames = [];
-    for(let i = 1; i <= 11; i++) {
+    for(let i = 1; i <= 12; i++) {
         frames.push({ key: `coin${i}` });
     }
     console.log('3');
@@ -619,7 +619,7 @@ function create() {
   startButton.on('pointerdown', startGame);
   console.log('Start button added');
 
-  this.add.text(1000, 980, '1.57', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.58', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 function update() {
