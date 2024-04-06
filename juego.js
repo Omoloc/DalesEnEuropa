@@ -104,11 +104,11 @@ class GameOverScene extends Phaser.Scene {
     this.link.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.link.on('pointerup', () => {
       if(this.contador === 0) {
-        window.open('https://twitter.com/intent/tweet?text=¡Me ha hecho mucha gracia este juego de eliminar diputados!%0ATe invito a jugarlo en este enlace http://escanos.org y a seguir a @escanosenblanco #dalesenlosescaños', '_blank'); // Abre el enlace en una nueva pestaña
+        window.open('https://twitter.com/intent/tweet?text=¡Me ha hecho mucha gracia este juego de eliminar diputados!%0ATe invito a jugarlo en este enlace http://escanos.org y a seguir a @escanosenblanco %23dalesenlosescaños', '_blank'); // Abre el enlace en una nueva pestaña
       }
       else
       {
-        window.open('https://twitter.com/intent/tweet?text=¡He eliminado '+this.contador+ ' diputados!%0A%0ASi tú también quieres eliminar algunos diputados, pulsa en el enlace http://escanos.org y sigue a @escanosenblanco #dalesenlosescaños' , '_blank'); // Abre el enlace en una nueva pestaña
+        window.open('https://twitter.com/intent/tweet?text=¡He eliminado '+this.contador+ ' diputados!%0A%0ASi tú también quieres eliminar algunos diputados, pulsa en el enlace http://escanos.org y sigue a @escanosenblanco %23dalesenlosescaños' , '_blank'); // Abre el enlace en una nueva pestaña
       }
     });
 
@@ -667,7 +667,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.62', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.63', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 function update() {
