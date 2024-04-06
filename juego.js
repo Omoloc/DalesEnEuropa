@@ -190,7 +190,7 @@ class PlayGameScene extends Phaser.Scene {
   }
 
   increaseScore(posX, posY) {
-    //console.log('increaseScore called');
+    console.log('increaseScore called');
 
     //Si la imagen es la de los escaños decrece el escore y reproduce sonido failed. En caso contrario aumenta el score y reproduce sonido catched
     if (this.randomImage === '0') {
@@ -415,7 +415,8 @@ class PlayGameScene extends Phaser.Scene {
       this.positionImage = this.add.image(this.position.x, this.position.y -10, '').setOrigin(0.5);
       this.positionImage.setDisplaySize(30, 30);
       this.positionImage.setInteractive();
-      this.positionImage.on('pointerdown', this.increaseScore (this.position.x, this.position.y));
+      console.log('ADDED IMAGE');
+      this.positionImage.on('pointerdown', this.increaseScore(this.position.x, this.position.y));
       this.images.push(this.positionImage);
     }
 
@@ -600,7 +601,7 @@ function create() {
   startButton.on('pointerdown', startGame);
   console.log('Start button added');
 
-  this.add.text(1000, 1000, '1.55', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(990, 990, '1.55', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 function update() {
