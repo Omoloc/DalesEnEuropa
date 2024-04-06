@@ -322,12 +322,14 @@ class PlayGameScene extends Phaser.Scene {
                                   { fontSize: '52px', fill: '#FFFF00' });
     //countdownText.setOrigin(1, 0);
     //this.countdownText.setScrollFactor(0);
+    console.log('2');
     
 // Paso 2: Crear la animación en la función create
     let frames = this.anims.generateFrameNames('', {
         start: 1, end: 11, zeroPad: 3,
         prefix: 'coin', suffix: '.png'
     });
+    console.log('3');
 
     this.anims.create({
         key: 'spin',
@@ -337,7 +339,7 @@ class PlayGameScene extends Phaser.Scene {
     });
 
 
-    console.log('2');
+    console.log('4');
     this.loadSounds();
 
     this.style = {
@@ -356,12 +358,12 @@ class PlayGameScene extends Phaser.Scene {
 
     //Comenzamos
     
-    console.log('3');
+    console.log('5');
 
     //Sonidos
     this.playSound('ready');
 
-    console.log('4')
+    console.log('6')
     this.startGame();
   }
 
@@ -588,7 +590,7 @@ function create() {
   startButton.on('pointerdown', startGame);
   console.log('Start button added');
 
-  this.add.text(586, 339, '1.51', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(1000, 1000, '1.52', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 function update() {
