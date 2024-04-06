@@ -325,10 +325,10 @@ class PlayGameScene extends Phaser.Scene {
     console.log('2');
     
 // Paso 2: Crear la animación en la función create
-    let frames = this.anims.generateFrameNames('', {
-        start: 1, end: 11, zeroPad: 3,
-        prefix: 'coin', suffix: '.png'
-    });
+    let frames = [];
+    for(let i = 1; i <= 11; i++) {
+        frames.push({ key: `coin${i}` });
+    }
     console.log('3');
 
     this.anims.create({
@@ -590,7 +590,7 @@ function create() {
   startButton.on('pointerdown', startGame);
   console.log('Start button added');
 
-  this.add.text(1000, 1000, '1.52', { fontSize: '9px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(1000, 1000, '1.53', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 function update() {
