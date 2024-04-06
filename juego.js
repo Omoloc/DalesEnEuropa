@@ -201,6 +201,19 @@ class PlayGameScene extends Phaser.Scene {
       this.scoreText.setText('Score: ' + this.score);
 
       this.playSound('failed');
+
+      //Fogonazo rojo
+      // Crea un rectángulo que cubra toda la pantalla
+      let flash = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0xff0000);
+      flash.setOrigin(0, 0); // Asegúrate de que el origen esté en la esquina superior izquierda
+
+      // Configura la opacidad del rectángulo para que sea semitransparente
+      flash.alpha = 0.5;
+
+      // Haz que el fogonazo desaparezca después de un corto período de tiempo
+      this.time.delayedCall(100, () => {
+          flash.destroy();
+      });
     } 
     else {
 
@@ -345,9 +358,15 @@ class PlayGameScene extends Phaser.Scene {
         key: 'spin',
         frames: frames,
         frameRate: 10,
-        repeat: -1
+        repeat: 0
     });
 
+    // Agrega un evento de finalización de animación para eliminar la moneda una vez que la animación haya terminado
+    this.anims.on('animationcomplete', (anim, frame, gameObject) => {
+      if (anim.key === 'spin') {
+          gameObject.destroy();
+      }
+    }, this);
 
     console.log('4');
     this.loadSounds();
@@ -401,7 +420,7 @@ class PlayGameScene extends Phaser.Scene {
       { x: 697, y: 496 },
       { x: 894, y: 496 },
       { x: 200, y: 666 },
-      { x: 398, y: 6665 },
+      { x: 398, y: 665 },
       { x: 598, y: 666 },
       { x: 798, y: 666 },
       { x: 316, y: 853 },
@@ -410,16 +429,15 @@ class PlayGameScene extends Phaser.Scene {
       // ... (agrega las demás posiciones aquí)
     ];
 
-    for (var i = 0; i < this.positions.length; i++) {
-      this.position = this.positions[i];
-      this.positionImage = this.add.image(this.position.x, this.position.y -10, '').setOrigin(0.5);
-      this.positionImage.setDisplaySize(30, 30);
-      this.positionImage.setInteractive();
-      console.log('ADDED IMAGE');
-      this.positionImage.on('pointerdown', () => this.increaseScore(this.position.x, this.position.y));
-      this.images.push(this.positionImage);
-    }
-
+  for (var i = 0; i < this.positions.length; i++) {
+    let currentPosition = this.positions[i];
+    this.positionImage = this.add.image(currentPosition.x, currentPosition.y -10, '').setOrigin(0.5);
+    this.positionImage.setDisplaySize(30, 30);
+    this.positionImage.setInteractive();
+    console.log('ADDED IMAGE');
+    this.positionImage.on('pointerdown', () => this.increaseScore(currentPosition.x, currentPosition.y));
+    this.images.push(this.positionImage);
+  }
     
     return this.images;
   }
@@ -601,7 +619,7 @@ function create() {
   startButton.on('pointerdown', startGame);
   console.log('Start button added');
 
-  this.add.text(990, 990, '1.56', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(1000, 980, '1.57', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
 }
 
 function update() {
