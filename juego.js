@@ -224,7 +224,7 @@ class PlayGameScene extends Phaser.Scene {
     } 
     else {
 
-      let coin = this.add.sprite(posX, posY-200 , 'coin1');
+      let coin = this.add.sprite(posX, posY-120 , 'coin1');
       coin.play('spin');
   
       this.score += 1;
@@ -252,7 +252,8 @@ class PlayGameScene extends Phaser.Scene {
 
   //Muestra la siguiente imagen
   showNextImage() {
-    
+    // En showNextImage(), destruye los tweens anteriores antes de crear uno nuevo
+
     this.positionImages.forEach(function (positionImage) {
       positionImage.setAlpha(0);
     });
@@ -272,6 +273,11 @@ class PlayGameScene extends Phaser.Scene {
       this.originalY = this.randomPositionImage.y;
 
       // Crea un tween que mueve la imagen hacia arriba
+      // En showNextImage(), destruye los tweens anteriores antes de crear uno nuevo
+      if (this.tweenUp) {
+        this.tweenUp.stop();
+        this.tweenUp.remove(); // Destruye el tween
+      }
       this.tweenUp = this.tweens.add({
           targets: this.randomPositionImage,
           y: '-=' + this.randomPositionImage.height,
@@ -280,11 +286,15 @@ class PlayGameScene extends Phaser.Scene {
       });
 
       // Crea un tween que mueve la imagen hacia abajo
+      if (this.tweenDown) {
+        this.tweenDown.stop();
+        this.tweenDown.remove(); // Destruye el tween
+      }
       this.tweenDown = this.tweens.add({
-          targets: this.randomPositionImage,
-          y: '+=' + this.randomPositionImage.height,
-          duration: 250,
-          paused: true,
+        targets: this.randomPositionImage,
+        y: '+=' + this.randomPositionImage.height,
+        duration: 250,
+        paused: true,
       });
 
       // Crea una función para iniciar la animación
@@ -744,7 +754,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.79', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.80', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
