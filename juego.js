@@ -12,9 +12,12 @@ let Comolo = "¿Cómo lo hacemos?";
 let Nospresentamos = "Nos presentamos a las elecciones para dejar escaños vacíos. De esta forma nadie cobrará por ese escaño. Nosotros tampoco.";
 let Estoes = "¿Esto es posible?";
 let Siyahay14 = "Sí. Ya hemos dejado vacías 14 concejalías y un Ayuntamiento. ¡Ayúdanos a dejar un escaño vacío en el Parlamento Vasco!";
-let Comopuedo = "¿Cómo puedo ayudar?";
+let Comopuedo = "¿Cómo ayudar?";
 let Comenta = "Comenta nuestra propuesta con tus amigos, familiares y conocidos. Síguenos en redes sociales y comparte nuestras publicaciones.";
-
+let Puntuacion = "Puntuación";
+let Tiempo = "Tiempo";
+let Atencion = "¡Atención!";
+let Deprisa = "¡Deprisa!";
 
 class GameOverScene extends Phaser.Scene {
 
@@ -198,7 +201,7 @@ class PlayGameScene extends Phaser.Scene {
       if (this.score < 0) {
         this.score = 0;
       }
-      this.scoreText.setText('Score: ' + this.score);
+      this.scoreText.setText(Puntuacion+': ' + this.score);
 
       this.playSound('failed');
 
@@ -221,7 +224,7 @@ class PlayGameScene extends Phaser.Scene {
       coin.play('spin');
   
       this.score += 1;
-      this.scoreText.setText('Score: ' + this.score);
+      this.scoreText.setText( Puntuacion + ': ' + this.score);
 
       this.playSound('catched');
       this.playSound('monedas');
@@ -422,7 +425,7 @@ class PlayGameScene extends Phaser.Scene {
 
     //console.log('1');
 
-    this.scoreText = this.add.text(16, 36, 'Score: 0',
+    this.scoreText = this.add.text(16, 36, Puntuacion+': 0',
                               { fontSize: '52px', fontFamily: 'MyFont', fill: '#FFFF00' });
     //this.scoreText.setScrollFactor(0);
 
@@ -430,11 +433,11 @@ class PlayGameScene extends Phaser.Scene {
                               { fontSize: '52px', fontFamily: 'Arial', fill: '#FFFF00' });
     //this.scoreText.setScrollFactor(0);
 
-    this.readyText = this.add.text((config.width / 2)- 150,(config.height / 2)-45, 'Ready?',
+    this.readyText = this.add.text((config.width / 2)- 150,(config.height / 2)-45, Atencion,
     { fontSize: '80px',fontFamily: 'MyFont', fill: '#FFFF00' });
 
 
-    this.countdownText = this.add.text(380, 36, 'Tiempo: ' + this.countdown,
+    this.countdownText = this.add.text(380, 36, Tiempo +': ' + this.countdown,
                                   { fontSize: '52px',fontFamily: 'MyFont', fill: '#FFFF00' });
     //countdownText.setOrigin(1, 0);
     //this.countdownText.setScrollFactor(0);
@@ -544,11 +547,11 @@ class PlayGameScene extends Phaser.Scene {
   decreaseCountdown() {
     this.countdown--;
   
-    this.countdownText.setText('Tiempo: ' + this.countdown);
+    this.countdownText.setText(Tiempo+': ' + this.countdown);
 
     if (this.countdown <= 5)
     {
-      this.countdownText.setText(this.countdownText.text + '  ¡Deprisa!');
+      this.countdownText.setText(this.countdownText.text + '  '+ Deprisa);
       this.timeup=600
     }
 
@@ -772,8 +775,13 @@ lenguageButton.setInteractive();
       Nospresentamos = "Hauteskundeetara aurkezten gara eserleku hutsak uzteko. Horrela, inork ez du kobratuko eserleku horrengatik. Guk ere ez.";
       Estoes = "Hau posible da?";
       Siyahay14 = "Bai. Hutsik utzi ditugu 14 zinegotzigo eta udal bat. Lagun iezaguzu Eusko Legebiltzarrean aulki huts bat uzten!";
-      Comopuedo = "Nola lagundu dezaket?";
+      Comopuedo = "Nola lagundu?";
       Comenta = "Aipatu gure proposamena zure lagun, senide eta ezagunei. Jarraitu sare sozialetan, eta partekatu gure argitalpenak.";
+      Puntuacion = "Puntuazioa";
+      Tiempo = "Denbora";
+      Atencion = "Arreta!";
+      Deprisa = "Azkar ibili!";
+
       startButton.setText('JOLASTU');
       this.bandera.setAlpha(1);
     }
@@ -793,8 +801,12 @@ lenguageButton.setInteractive();
       Nospresentamos = "Nos presentamos a las elecciones para dejar escaños vacíos. De esta forma nadie cobrará por ese escaño. Nosotros tampoco.";
       Estoes = "¿Esto es posible?";
       Siyahay14 = "Sí. Ya hemos dejado vacías 14 concejalías y un Ayuntamiento. ¡Ayúdanos a dejar un escaño vacío en el Parlamento Vasco!";
-      Comopuedo = "¿Cómo puedo ayudar?";
+      Comopuedo = "¿Cómo ayudar?";
       Comenta = "Comenta nuestra propuesta con tus amigos, familiares y conocidos. Síguenos en redes sociales y comparte nuestras publicaciones.";
+      Puntuacion = "Puntuación";
+      Tiempo = "Tiempo";
+      Atencion = "¡Atención!";
+      Deprisa = "¡Deprisa!";
       startButton.setText('JUGAR');
       this.bandera.setAlpha(2);
     }
@@ -808,7 +820,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.05', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.06', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
