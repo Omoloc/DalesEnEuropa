@@ -417,8 +417,8 @@ class PlayGameScene extends Phaser.Scene {
                               { fontSize: '52px', fontFamily: 'MyFont', fill: '#FFFF00' });
     //this.scoreText.setScrollFactor(0);
 
-    this.HelpText = this.add.text(56, 36, '',
-                              { fontSize: '52px', fontFamily: 'MyFont', fill: '#FFFF00' });
+    this.HelpText = this.add.text(16, 96, '',
+                              { fontSize: '52px', fontFamily: 'Arial', fill: '#FFFF00' });
     //this.scoreText.setScrollFactor(0);
 
     this.readyText = this.add.text((config.width / 2)- 150,(config.height / 2)-45, 'Ready?',
@@ -766,7 +766,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.95', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.96', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
