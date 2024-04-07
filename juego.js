@@ -192,10 +192,6 @@ class PlayGameScene extends Phaser.Scene {
   increaseScore(posX, posY) {
     console.log('increaseScore called');
 
-    // Detiene la animación
-    this.tweenUp.stop();
-    this.tweenDown.stop();
-
     // Reinicia la posición de la imagen
     this.randomPositionImage.y = this.originalY;
 
@@ -253,6 +249,10 @@ class PlayGameScene extends Phaser.Scene {
   //Muestra la siguiente imagen
   showNextImage() {
     // En showNextImage(), destruye los tweens anteriores antes de crear uno nuevo
+    this.originalY = this.randomPositionImage.y;
+    // Detiene la animación
+    this.tweenUp.stop();
+    this.tweenDown.stop();
 
     this.positionImages.forEach(function (positionImage) {
       positionImage.setAlpha(0);
@@ -269,8 +269,6 @@ class PlayGameScene extends Phaser.Scene {
 
       this.randomPositionImage.setTexture(this.randomImage);
       this.randomPositionImage.setAlpha(1);
-
-      this.originalY = this.randomPositionImage.y;
 
       // Crea un tween que mueve la imagen hacia arriba
       // En showNextImage(), destruye los tweens anteriores antes de crear uno nuevo
@@ -754,7 +752,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.80', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.81', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
