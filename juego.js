@@ -217,7 +217,7 @@ class PlayGameScene extends Phaser.Scene {
     } 
     else {
 
-      let coin = this.add.sprite(posX, posY , 'coin1');
+      let coin = this.add.sprite(posX, posY+5 , 'coin1');
       coin.play('spin');
   
       this.score += 1;
@@ -606,6 +606,33 @@ function preload() {
 }
 
 function create() {
+
+//TEST DE ANIMACION
+let sun = this.add.image(400, 600, 'escanos.png');
+
+// Define un rectángulo de recorte que cubre toda la imagen
+let cropRect = new Phaser.Geom.Rectangle(0, 0, sun.width, sun.height);
+sun.setCrop(cropRect);
+
+// Crea un tween que anima la posición 'y' del sol desde la parte inferior de la pantalla hasta su posición final durante 3000 milisegundos
+this.tweens.add({
+    targets: sun,
+    y: { value: 300, duration: 1000, ease: 'Power1' },
+});
+
+// Crea un tween que anima la altura del rectángulo de recorte de la altura total del sol a 0 durante 3000 milisegundos
+this.tweens.add({
+    targets: cropRect,
+    y: { from: 0, to: sun.height, duration: 1000, ease: 'Power1' },
+    onUpdate: () => sun.setCrop(cropRect)
+});
+
+// FIN TEST DE ANIMACIÖN
+
+
+
+
+
   this.add.image(0, 0, 'intro').setOrigin(0);
   console.log('Scene created');
 
@@ -679,7 +706,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.67', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.68', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
