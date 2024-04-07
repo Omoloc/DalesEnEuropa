@@ -251,17 +251,17 @@ class PlayGameScene extends Phaser.Scene {
     if (this.tweenUp)
     {
       this.tweenUp.stop();
-      this.tweenUp.remove(); // Destruye el tween
+      this.tweenUp.destroy(); // Destruye el tween
     } 
     if (this.tweenStay)
     {
       this.tweenStay.stop();
-      this.tweenStay.remove(); // Destruye el tween
+      this.tweenStay.destroy(); // Destruye el tween
     } 
     if (this.tweenDown)
     {
       this.tweenDown.stop();
-      this.tweenDown.remove(); // Destruye el tween
+      this.tweenDown.destroy(); // Destruye el tween
     }
     // Reinicia la posición de la imagen
     if (this.randomPositionImage) this.randomPositionImage.y = this.originalY;
@@ -287,7 +287,7 @@ class PlayGameScene extends Phaser.Scene {
       this.tweenDown = this.tweens.add({
         targets: this.randomPositionImage,
         y: '+=' + this.randomPositionImage.height,
-        duration: 350,
+        duration: 340,
         paused: true,
       });
       
@@ -296,7 +296,7 @@ class PlayGameScene extends Phaser.Scene {
       this.tweenStay = this.tweens.add({
         targets: this.Rufian,
         y: '-=' + this.Rufian.height,
-        duration: 350,
+        duration: 340,
         paused: true,
         onComplete: () => {
             this.tweenDown.play();
@@ -307,7 +307,7 @@ class PlayGameScene extends Phaser.Scene {
       this.tweenUp = this.tweens.add({
         targets: this.randomPositionImage,
         y: '-=' + this.randomPositionImage.height,
-        duration: 350,
+        duration: 300,
         paused: true,
         onComplete: () => {
           this.tweenStay.play();
@@ -762,7 +762,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.92', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.93', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
