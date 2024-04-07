@@ -229,7 +229,7 @@ class PlayGameScene extends Phaser.Scene {
 
     //Cargo una nueva imagen
     this.showNextImage(); // Muestra la siguiente imagen
-/*
+
     // Elimina el temporizador actual
     this.time.removeEvent(this.greenCircleTimer);
 
@@ -240,7 +240,7 @@ class PlayGameScene extends Phaser.Scene {
       callbackScope: this,
       loop: true
     });
-*/
+
   }
 
   //Muestra la siguiente imagen
@@ -277,6 +277,7 @@ class PlayGameScene extends Phaser.Scene {
     
     if (this.randomImage)
     {
+      this.HelpText.setText(this.randomPositionImage.x+', '+this.randomPositionImage.y+' '+this.randomImage);
       console.log('showNextImage called '+this.randomImage);
 
       this.randomPositionImage.setTexture(this.randomImage);
@@ -352,7 +353,6 @@ class PlayGameScene extends Phaser.Scene {
     this.load.image('fila1', 'fila1.png');
     this.load.image('fila2', 'fila2.png');
     this.load.image('fila3', 'fila3.png');
-    this.load.image('fila4', 'fila4.png');
     this.load.image('feijo', 'feijo.gif');
     this.load.image('abascal', 'abascal.gif');
     this.load.image('diaz', 'diaz.gif');
@@ -414,6 +414,10 @@ class PlayGameScene extends Phaser.Scene {
     //console.log('1');
 
     this.scoreText = this.add.text(16, 36, 'Score: 0',
+                              { fontSize: '52px', fontFamily: 'MyFont', fill: '#FFFF00' });
+    //this.scoreText.setScrollFactor(0);
+
+    this.HelpText = this.add.text(56, 36, '',
                               { fontSize: '52px', fontFamily: 'MyFont', fill: '#FFFF00' });
     //this.scoreText.setScrollFactor(0);
 
@@ -609,13 +613,13 @@ class PlayGameScene extends Phaser.Scene {
     
     this.positionImages = this.createPositionImages();
 
-/*
+
     this.greenCircleTimer = this.time.addEvent({
       delay: this.timeup,
       callback: this.showNextImage,
       callbackScope: this,
       loop: true
-    });*/
+    });
     this.showNextImage();
 
     this.countdownTimer = this.time.addEvent({
@@ -762,7 +766,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.94', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.95', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
