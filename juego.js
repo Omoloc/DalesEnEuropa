@@ -808,7 +808,7 @@ lenguageButton.setInteractive();
       Atencion = "¡Atención!";
       Deprisa = "¡Deprisa!";
       startButton.setText('JUGAR');
-      this.bandera.setAlpha(2);
+      this.bandera.setAlpha(0);
     }
      
   }
@@ -820,7 +820,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.06', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.07', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
