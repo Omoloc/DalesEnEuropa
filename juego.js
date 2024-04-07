@@ -333,7 +333,9 @@ class PlayGameScene extends Phaser.Scene {
   timeup=0
   score = 0;
   positionImages = [];
-  imagesToDisplay = ['feijo', 'abascal', 'diaz', 'sanchez', '0', '1', '2', '3', '4', '5', '6', 'aitor'];
+  imagesToDisplay = ['abascalvox', 'aitorpnv', 'albasumar', 'amaiavox', 'belarrapodemos', 
+                      'diazsumar', 'enekopsoe', 'escanoblanco', 'feijoopp', 'Imanolpnv', 
+                      'javierpp', 'mertxebildu', 'mirenpodemos', 'sanchezpsoe'];
   countdown = 0; // Tiempo de juego en segundos
   scoreText ="";
   countdownText="";
@@ -351,26 +353,29 @@ class PlayGameScene extends Phaser.Scene {
     console.log('Preload PlayGameScene');
 
     //imagenes
-    this.load.image('congreso', 'congreso.png');
+    this.load.image('abascalvox', 'diputados/abascalvox.webp');
+    this.load.image('aitorpnv', 'diputados/aitorpnv.webp');
+    this.load.image('albasumar', 'diputados/albasumar.webp');
+    this.load.image('amaiavox', 'diputados/amaiavox.webp');
+    this.load.image('belarrapodemos', 'diputados/belarrapodemos.webp');
+    this.load.image('diazsumar', 'diputados/diazsumar.webp');
+    this.load.image('enekopsoe', 'diputados/enekopsoe.webp');
+    this.load.image('escanoblanco', 'diputados/escanoblanco.webp');
+    this.load.image('feijoopp', 'diputados/feijoopp.webp');
+    this.load.image('imanolpnv', 'diputados/imanolpnv.webp');
+    this.load.image('javierpp', 'diputados/javierpp.webp');
+    this.load.image('mertxebildu', 'diputados/mertxebildu.webp');
+    this.load.image('mirenpodemos', 'diputados/mirenpodemos.webp');
+    this.load.image('sanchezpsoe', 'diputados/sanchezpsoe.webp');
+
+    this.load.image('congreso', 'diputados/congreso.png');
     this.load.image('fila0', 'fila0.png');
     this.load.image('fila1', 'fila1.png');
     this.load.image('fila2', 'fila2.png');
     this.load.image('fila3', 'fila3.png');
     this.load.image('feijo', 'feijo.gif');
-    this.load.image('abascal', 'abascal.gif');
-    this.load.image('diaz', 'diaz.gif');
-    this.load.image('sanchez', 'sanchez.gif');
-    this.load.image('0', '0.webp');
-    this.load.image('1', '1.webp');
-    this.load.image('2', '2.webp');
-    this.load.image('3', '3.webp');
-    this.load.image('4', '4.webp');
-    this.load.image('5', '5.webp');
-    this.load.image('6', '6.webp');
+    
     this.load.image('rufian', 'rufian.webp');
-    this.load.image('bandera', 'bandera.png');
-    //this.load.image('nogueras', 'nogueras.webp');
-    this.load.image('aitor', 'aitor.webp');
     
     // Cargar imágenes animación monedas
     for(let i = 1; i <= 12; i++) {
@@ -693,6 +698,8 @@ var startButton;
 
 function preload() {
     this.load.image('intro', 'Intro.png');
+    this.load.image('bandera', 'bandera.png');
+
     //this.load.css('myfont', 'myfont.css');
 }
 
@@ -701,7 +708,7 @@ function create() {
   //console.log('Scene created');
 
   // Pantalla inicial
-  startButton = this.add.text( 500, 855 , 'JUGAR', {
+  startButton = this.add.text( 550, 865 , 'JUGAR', {
     fontSize: '65px',
     fontWeight: 'bold', // Hace que el texto sea negrita
     fill: '#FFFFFF',
@@ -800,7 +807,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.00', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.01', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
