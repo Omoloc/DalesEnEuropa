@@ -285,15 +285,15 @@ class PlayGameScene extends Phaser.Scene {
       this.tweenDown = this.tweens.add({
         targets: this.randomPositionImage,
         y: '+=' + this.randomPositionImage.height,
-        duration: 250,
+        duration: 350,
         paused: true,
       });
       
       //Crear un tween que mantiene la imagen en su posición
       this.tweenStay = this.tweens.add({
-              targets: this.randomPositionImage,
-              duration: 450,
-              paused: true,
+        targets: this.randomPositionImage,
+        duration: 850,
+        paused: true,
         onComplete: () => {
             this.tweenDown.play();
         }
@@ -303,7 +303,7 @@ class PlayGameScene extends Phaser.Scene {
       this.tweenUp = this.tweens.add({
         targets: this.randomPositionImage,
         y: '-=' + this.randomPositionImage.height,
-        duration: 250,
+        duration: 350,
         paused: true,
         onComplete: () => {
           this.tweenStay.play();
@@ -766,7 +766,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.86', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.87', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
