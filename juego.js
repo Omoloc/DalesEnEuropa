@@ -84,16 +84,16 @@ class GameOverScene extends Phaser.Scene {
     this.updateText(); 
 
     // Boton de jugar de nuevo  
-    this.startButton = this.add.text(550, 845, 'Jugar', {
-      fontSize: '32px',
+    this.startButton = this.add.text(565, 845, 'Jugar', {
+      fontSize: '42px',
       fontFamily: 'MyFont',
-      fill: '#FFFFFF'
+      fill: '#FFFFFF10'
     }).setOrigin(0);
         this.startButton.setInteractive();
     this.startButton.on('pointerdown', this.startGame);
 
     //Enlace a la web de Escaños en Blanco
-    this.moreButton = this.add.text(120, 845, 'escanos.org', { fontSize: '42px', fontFamily: 'MyFont', fill: '#FFFFFF'});
+    this.moreButton = this.add.text(120, 845, 'escanos.org', { fontSize: '42px', fontFamily: 'MyFont', fill: '#FFFFFF10'});
     this.moreButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.moreButton.on('pointerup', () => {
       window.open('https://escanos.org', '_blank'); // Abre el enlace en una nueva pestaña
@@ -101,7 +101,7 @@ class GameOverScene extends Phaser.Scene {
     
 
     //Botón de compartir
-    this.link = this.add.text(890, 845, 'X', { fontSize: '32px', fontFamily: 'MyFont', fill: '#FFFFFF'});
+    this.link = this.add.text(880, 845, 'X', { fontSize: '42px', fontFamily: 'MyFont', fill: '#FFFFFF10'});
     this.link.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.link.on('pointerup', () => {
       if(this.contador === 0) {
@@ -278,7 +278,7 @@ class PlayGameScene extends Phaser.Scene {
 
     if (this.randomImage)
     {
-      this.HelpText.setText(this.randomPositionImage.x+', '+this.randomPositionImage.y+' '+this.randomImage);
+      //this.HelpText.setText(this.randomPositionImage.x+', '+this.randomPositionImage.y+' '+this.randomImage);
       console.log('showNextImage called '+this.randomImage);
 
       this.randomPositionImage.setTexture(this.randomImage);
@@ -293,7 +293,7 @@ class PlayGameScene extends Phaser.Scene {
         paused: true,
       });
       
-      if (this.countdown <=5) this.staytime=100; else this.staytime=700;
+      if (this.countdown <=5) this.staytime=300; else this.staytime=700;
       
       //Crear un tween que mantiene la imagen en su posición
       this.tweenStay = this.tweens.add({
@@ -700,8 +700,8 @@ function create() {
   //console.log('Scene created');
 
   // Pantalla inicial
-  startButton = this.add.text( 500, 850 , 'JUGAR', {
-    fontSize: '85px',
+  startButton = this.add.text( 500, 855 , 'JUGAR', {
+    fontSize: '65px',
     fontWeight: 'bold', // Hace que el texto sea negrita
     fill: '#FFFFFF',
     fontFamily: 'MyFont' 
@@ -709,18 +709,18 @@ function create() {
   startButton.setInteractive();
 
   // Boton de información 
-  infoButton = this.add.text(790, 850, 'i', {
-    fontSize: '100px',
+  infoButton = this.add.text(770, 855, 'i', {
+    fontSize: '65px',
     fontFamily: 'MyFont',
-    fill: '#FFFFFF'
+    fill: '#FFFFFF10'
   }).setOrigin(0.5);
 infoButton.setInteractive();
 
 // Boton de cambio de idioma
-lenguageButton = this.add.text(900, 850, '+', {
+lenguageButton = this.add.text(900, 855, '+', {
   fontSize: '100px',
   fontFamily: 'MyFont',
-  fill: '#FFFFFF'
+  fill: '#FFFFFF10'
 }).setOrigin(0.5);
 lenguageButton.setInteractive();
 
@@ -744,22 +744,48 @@ lenguageButton.setInteractive();
   var changeLenguage = () => {
     // Cambia el idioma del juego
     console.log('ChangeLenguage Called');
-     TituloFinal1 = "Zorionak!";
-     Quepaso = "Zer gertatu da?";
-     vuelveajugar = "Jokatu berriro, eta ez sakatu Aulki Zurian, politikariei bakarrik.\n\nEman euren eserlekuan!";
-     Hasdejado = "Utzi duzu ";
-     escanosovacios = " aulki hutsa!\n\nHau Eusko Legebiltzarra balitz, kopuru hau baino gehiago aurreztuko zenuen: ";
-     unescanovacio = "Aulki bat hutsik utzi duzu!\n\nHau Eusko Legebiltzarra balitz, kopuru hau baino gehiago aurreztuko zenuen: ";
-     Quienessomos = "Nor gara?";
-     Somosungrupo = "Klase politikoarekin nekatuta gauden herritar talde bat gara, eta ez diogu baliorik aurkitzen boto nuloari, zuriari edo abstentzioari";
-     Quequeremos = "Zer nahi dugu?";
-     Visibilizar = "Errepresentazio-falta ikusaraztea, komunikabideen arreta erakartzea eta gure sistemaren gabeziei buruzko eztabaida sortzea.";
-     Comolo = "Nola egiten dugu?";
-     Nospresentamos = "Hauteskundeetara aurkezten gara eserleku hutsak uzteko. Horrela, inork ez du kobratuko eserleku horrengatik. Guk ere ez.";
-     Estoes = "Hau posible da?";
-     Siyahay14 = "Bai. Hutsik utzi ditugu 14 zinegotzigo eta udal bat. Lagun iezaguzu Eusko Legebiltzarrean aulki huts bat uzten!";
-     Comopuedo = "Nola lagundu dezaket?";
-     Comenta = "Aipatu gure proposamena zure lagun, senide eta ezagunei. Jarraitu sare sozialetan, eta partekatu gure argitalpenak.";
+
+    if (TituloFinal1 === "¡Enhorabuena!")
+    {
+      TituloFinal1 = "Zorionak!";
+      Quepaso = "Zer gertatu da?";
+      vuelveajugar = "Jokatu berriro, eta ez sakatu Aulki Zurian, politikariei bakarrik.\n\nEman euren eserlekuan!";
+      Hasdejado = "Utzi duzu ";
+      escanosovacios = " aulki hutsa!\n\nHau Eusko Legebiltzarra balitz, kopuru hau baino gehiago aurreztuko zenuen: ";
+      unescanovacio = "Aulki bat hutsik utzi duzu!\n\nHau Eusko Legebiltzarra balitz, kopuru hau baino gehiago aurreztuko zenuen: ";
+      Quienessomos = "Nor gara?";
+      Somosungrupo = "Klase politikoarekin nekatuta gauden herritar talde bat gara, eta ez diogu baliorik aurkitzen boto nuloari, zuriari edo abstentzioari";
+      Quequeremos = "Zer nahi dugu?";
+      Visibilizar = "Errepresentazio-falta ikusaraztea, komunikabideen arreta erakartzea eta gure sistemaren gabeziei buruzko eztabaida sortzea.";
+      Comolo = "Nola egiten dugu?";
+      Nospresentamos = "Hauteskundeetara aurkezten gara eserleku hutsak uzteko. Horrela, inork ez du kobratuko eserleku horrengatik. Guk ere ez.";
+      Estoes = "Hau posible da?";
+      Siyahay14 = "Bai. Hutsik utzi ditugu 14 zinegotzigo eta udal bat. Lagun iezaguzu Eusko Legebiltzarrean aulki huts bat uzten!";
+      Comopuedo = "Nola lagundu dezaket?";
+      Comenta = "Aipatu gure proposamena zure lagun, senide eta ezagunei. Jarraitu sare sozialetan, eta partekatu gure argitalpenak.";
+      startButton.setText('JOLASTU');
+    }
+    else
+    {
+      TituloFinal1 = "¡Enhorabuena!";
+      Quepaso = "¿Qué ha pasado?";
+      vuelveajugar = "Vuelve a jugar y no pulses en el Escaño en Blanco sólo a los políticos.\n\n ¡Dales en el escaño!";
+      Hasdejado = "¡Has dejado ";
+      escanosovacios = " escaños vacíos!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de ";
+      unescanovacio = " ¡Has dejado un escaño vacío!\n\n Si esto fuera el Parlamento Vasco, habrías ahorrado más de ";
+      Quienessomos = "¿Quienes somos?";
+      Somosungrupo = "Somos un grupo de ciudadanos cansados de la clase política que no encontramos utilidad ni en el voto nulo, blanco ni la abstención";
+      Quequeremos = "¿Qué queremos?";
+      Visibilizar = "Visibilizar la falta de representación, llamar la atención de los medios y abrir un debate sobre las carencias de nuestro sistema.";
+      Comolo = "¿Cómo lo hacemos?";
+      Nospresentamos = "Nos presentamos a las elecciones para dejar escaños vacíos. De esta forma nadie cobrará por ese escaño. Nosotros tampoco.";
+      Estoes = "¿Esto es posible?";
+      Siyahay14 = "Sí. Ya hemos dejado vacías 14 concejalías y un Ayuntamiento. ¡Ayúdanos a dejar un escaño vacío en el Parlamento Vasco!";
+      Comopuedo = "¿Cómo puedo ayudar?";
+      Comenta = "Comenta nuestra propuesta con tus amigos, familiares y conocidos. Síguenos en redes sociales y comparte nuestras publicaciones.";
+      startButton.setText('JUGAR');
+    }
+     
   }
 
   startButton.on('pointerdown', startGame);
@@ -769,7 +795,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.98', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.99', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
