@@ -190,10 +190,7 @@ class PlayGameScene extends Phaser.Scene {
   }
 
   increaseScore(posX, posY) {
-    console.log('increaseScore called');
-
-    // Reinicia la posición de la imagen
-    if (this.randomPositionImage) this.randomPositionImage.y = this.originalY;
+    //console.log('increaseScore called');
 
     //Si la imagen es la de los escaños decrece el escore y reproduce sonido failed. En caso contrario aumenta el score y reproduce sonido catched
     if (this.randomImage === '0') {
@@ -248,16 +245,24 @@ class PlayGameScene extends Phaser.Scene {
 
   //Muestra la siguiente imagen
   showNextImage() {
-    // En showNextImage(), destruye los tweens anteriores antes de crear uno nuevo
-    if (this.randomPositionImage)
-    {
-      this.originalY = this.randomPositionImage.y;
-      console.log('position'+ this.randomPositionImage.y);
-    } 
-
     // Detiene la animación
-    if (this.tweenUp) this.tweenUp.stop();
-    if (this.tweenDown) this.tweenDown.stop();
+    if (this.tweenUp)
+    {
+      this.tweenUp.stop();
+      this.tweenUp.remove(); // Destruye el tween
+    } 
+    if (this.tweenStay)
+    {
+      this.tweenStay.stop();
+      this.tweenStay.remove(); // Destruye el tween
+    } 
+    if (this.tweenDown)
+    {
+      this.tweenDown.stop();
+      this.tweenDown.remove(); // Destruye el tween
+    }
+    // Reinicia la posición de la imagen
+    if (this.randomPositionImage) this.randomPositionImage.y = this.originalY;
 
     this.positionImages.forEach(function (positionImage) {
       positionImage.setAlpha(0);
@@ -275,41 +280,49 @@ class PlayGameScene extends Phaser.Scene {
       this.randomPositionImage.setTexture(this.randomImage);
       this.randomPositionImage.setAlpha(1);
 
-      // Crea un tween que mueve la imagen hacia arriba
-      // En showNextImage(), destruye los tweens anteriores antes de crear uno nuevo
-      if (this.tweenUp) {
-        this.tweenUp.stop();
-        this.tweenUp.remove(); // Destruye el tween
-      }
-      this.tweenUp = this.tweens.add({
-          targets: this.randomPositionImage,
-          y: '-=' + this.randomPositionImage.height,
-          duration: 250,
-          paused: true,
-      });
 
       // Crea un tween que mueve la imagen hacia abajo
-      if (this.tweenDown) {
-        this.tweenDown.stop();
-        this.tweenDown.remove(); // Destruye el tween
-      }
       this.tweenDown = this.tweens.add({
         targets: this.randomPositionImage,
         y: '+=' + this.randomPositionImage.height,
         duration: 250,
         paused: true,
       });
+      
+      //Crear un tween que mantiene la imagen en su posición
+      this.tweenStay = this.tweens.add({
+              targets: this.randomPositionImage,
+              duration: 450,
+              paused: true,
+        onComplete: () => {
+            this.tweenDown.play();
+        }
+      });
 
+      //Crear un tween que mueve la imagen hacia arriba
+      this.tweenUp = this.tweens.add({
+        targets: this.randomPositionImage,
+        y: '-=' + this.randomPositionImage.height,
+        duration: 250,
+        paused: true,
+        onComplete: () => {
+          this.tweenStay.play();
+        }
+      });
+              
+      /*  Sobra ¿NO?
       // Crea una función para iniciar la animación
       this.startAnimation = () => {
           this.tweenUp.play();
-          this.time.delayedCall(4900, () => {
-              this.tweenDown.play();
-          });
       };
 
       // Inicia la animación
       this.startAnimation();
+      */
+
+      //comienza la animación
+      this.tweenUp.play();
+
      }
      else
       {
@@ -753,7 +766,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.85', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.86', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
