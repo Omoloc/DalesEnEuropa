@@ -217,7 +217,7 @@ class PlayGameScene extends Phaser.Scene {
     } 
     else {
 
-      let coin = this.add.sprite(posX, posY+5 , 'coin1');
+      let coin = this.add.sprite(posX, posY+15 , 'coin1');
       coin.play('spin');
   
       this.score += 1;
@@ -321,7 +321,7 @@ class PlayGameScene extends Phaser.Scene {
     this.load.audio('win', 'Win.mp3');
     this.load.audio('monedas', 'monedas01.mp3');
      
-    this.load.css('myfont', 'myfont.css');
+    //this.load.css('myfont', 'myfont.css');
 
         
   }
@@ -557,7 +557,7 @@ class AboutEB extends Phaser.Scene {
 
   preload() {
     // Carga los recursos necesarios para esta escena
-    this.load.css('myfont', 'myfont.css');
+    //this.load.css('myfont', 'myfont.css');
 
   }
 
@@ -602,7 +602,7 @@ var startButton;
 
 function preload() {
     this.load.image('intro', 'Intro.png');
-    this.load.css('myfont', 'myfont.css');
+    //this.load.css('myfont', 'myfont.css');
 }
 
 function create() {
@@ -706,7 +706,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.68', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.69', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
