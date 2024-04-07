@@ -217,7 +217,7 @@ class PlayGameScene extends Phaser.Scene {
     } 
     else {
 
-      let coin = this.add.sprite(posX, posY+15 , 'coin1');
+      let coin = this.add.sprite(posX, posY+35 , 'coin1');
       coin.play('spin');
   
       this.score += 1;
@@ -292,6 +292,11 @@ class PlayGameScene extends Phaser.Scene {
 
     //imagenes
     this.load.image('congreso', 'congreso.png');
+    this.load.image('fila0', 'fila0.png');
+    this.load.image('fila1', 'fila1.png');
+    this.load.image('fila2', 'fila2.png');
+    this.load.image('fila3', 'fila3.png');
+    this.load.image('fila4', 'fila4.png');
     this.load.image('feijo', 'feijo.gif');
     this.load.image('abascal', 'abascal.gif');
     this.load.image('diaz', 'diaz.gif');
@@ -332,7 +337,26 @@ class PlayGameScene extends Phaser.Scene {
     this.score = 0;
     this.timeup = 1000;
 
-    this.add.image(0, 0, 'congreso').setOrigin(0);
+//establezco los contenedores
+    
+    //Fila 4. Diputados en cuarta fila y fondo
+    this.fila4 = this.add.container(0, 0);
+    //Fila 3. Diputados en tercera fila
+    this.fila3 = this.add.container(0, 0);
+    //Fila 2. Diputados en segunda fila
+    this.fila2 = this.add.container(0, 0);
+    //Fila 1. Diputados en primera fila
+    this.fila1 = this.add.container(0, 0);
+    //frontal. Esto se pintará delante de todo
+    this.fila0 = this.add.container(0, 0);
+
+    //this.add.image(0, 0, 'congreso').setOrigin(0);
+    this.fila4.add(this.add.image(0, 0, 'congreso').setOrigin(0));
+    this.fila3.add(this.add.image(0, 0, 'fila3').setOrigin(0.1));
+    this.fila2.add(this.add.image(0, 0, 'fila2').setOrigin(0.1));
+    this.fila1.add(this.add.image(0, 0, 'fila1').setOrigin(0.1));
+    this.fila0.add(this.add.image(0, 0, 'fila0').setOrigin(0.1));
+
     console.log('1');
 
     this.scoreText = this.add.text(16, 36, 'Score: 0',
@@ -435,6 +459,11 @@ class PlayGameScene extends Phaser.Scene {
   for (var i = 0; i < this.positions.length; i++) {
     let currentPosition = this.positions[i];
     this.positionImage = this.add.image(currentPosition.x, currentPosition.y -10, '').setOrigin(0.5);
+    if (currentPosition.y === 326) this.fila4.add(this.positionImage);
+    if (currentPosition.y === 496) this.fila3.add(this.positionImage);
+    if (currentPosition.y === 666) this.fila2.add(this.positionImage);
+    if (currentPosition.y === 853) this.fila1.add(this.positionImage);
+
     this.positionImage.setDisplaySize(30, 30);
     this.positionImage.setInteractive();
     console.log('ADDED IMAGE');
@@ -606,33 +635,6 @@ function preload() {
 }
 
 function create() {
-
-//TEST DE ANIMACION
-let sun = this.add.image(400, 600, 'escanos.png');
-
-// Define un rectángulo de recorte que cubre toda la imagen
-let cropRect = new Phaser.Geom.Rectangle(0, 0, sun.width, sun.height);
-sun.setCrop(cropRect);
-
-// Crea un tween que anima la posición 'y' del sol desde la parte inferior de la pantalla hasta su posición final durante 3000 milisegundos
-this.tweens.add({
-    targets: sun,
-    y: { value: 300, duration: 1000, ease: 'Power1' },
-});
-
-// Crea un tween que anima la altura del rectángulo de recorte de la altura total del sol a 0 durante 3000 milisegundos
-this.tweens.add({
-    targets: cropRect,
-    y: { from: 0, to: sun.height, duration: 1000, ease: 'Power1' },
-    onUpdate: () => sun.setCrop(cropRect)
-});
-
-// FIN TEST DE ANIMACIÖN
-
-
-
-
-
   this.add.image(0, 0, 'intro').setOrigin(0);
   console.log('Scene created');
 
@@ -706,7 +708,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.69', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.71', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
