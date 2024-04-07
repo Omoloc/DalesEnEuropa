@@ -483,12 +483,12 @@ class PlayGameScene extends Phaser.Scene {
       { x: 697, y: 696 },
       { x: 894, y: 696 },
       { x: 200, y: 866 },
-      { x: 398, y: 865 },
+      { x: 398, y: 866 },
       { x: 598, y: 866 },
       { x: 798, y: 866 },
       { x: 316, y: 1053 },
-      { x: 524, y: 10853 },
-      { x: 734, y: 10853 }
+      { x: 524, y: 1053 },
+      { x: 734, y: 1053 }
       // ... (agrega las demás posiciones aquí)
     ];
 
@@ -744,7 +744,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.78', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.79', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
