@@ -294,9 +294,9 @@ class PlayGameScene extends Phaser.Scene {
       
       //Crear un tween que mantiene la imagen en su posición
       this.tweenStay = this.tweens.add({
-        targets: this.auxcount,
-        value: 0,
-        duration: 850,
+        targets: this.Rufian,
+        y: '-=' + this.Rufian.height,
+        duration: 350,
         paused: true,
         onComplete: () => {
             this.tweenDown.play();
@@ -310,9 +310,7 @@ class PlayGameScene extends Phaser.Scene {
         duration: 350,
         paused: true,
         onComplete: () => {
-          this.time.delayedCall(450, () => {
-            this.tweenDown.play();
-          });
+          this.tweenStay.play();
         }
       });
               
@@ -366,7 +364,7 @@ class PlayGameScene extends Phaser.Scene {
     this.load.image('4', '4.webp');
     this.load.image('5', '5.webp');
     this.load.image('6', '6.webp');
-    //this.load.image('rufian', 'rufian.webp');
+    this.load.image('rufian', 'rufian.webp');
     //this.load.image('nogueras', 'nogueras.webp');
     this.load.image('aitor', 'aitor.webp');
     
@@ -391,6 +389,8 @@ class PlayGameScene extends Phaser.Scene {
     this.score = 0;
     this.timeup = 1000;
 
+
+    this.Rufian= this.add.image(0, 0, 'rufian').setOrigin(0);
 //establezco los contenedores
     
     //Fila 4. Diputados en cuarta fila y fondo
@@ -762,7 +762,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.91', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.92', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
