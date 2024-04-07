@@ -577,7 +577,7 @@ window.onload = function() {
       // Por ejemplo:
 
       // Configuración del juego
-      var config = {
+      config = {
         type: Phaser.AUTO,
         width: 1024,
         height: 1024,
@@ -679,7 +679,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.66', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.67', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
