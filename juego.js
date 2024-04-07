@@ -56,7 +56,7 @@ class GameOverScene extends Phaser.Scene {
   preload() {
     // Carga los recursos necesarios para esta escena
     this.load.image('background', 'Background.png');
-    this.load.css('myfont', 'myfont.css');
+    //this.load.css('myfont', 'myfont.css');
 
   }
   startGame() {
@@ -571,27 +571,32 @@ class AboutEB extends Phaser.Scene {
 }
 
 
+window.onload = function() {
+  document.fonts.load('10pt "MyFont"').then(function() {
+      // Aquí va el código para iniciar tu juego
+      // Por ejemplo:
 
+      // Configuración del juego
+      var config = {
+        type: Phaser.AUTO,
+        width: 1024,
+        height: 1024,
+        scale: {
+          mode: Phaser.Scale.FIT,
+          autoCenter: Phaser.Scale.CENTER_BOTH
+        },
+        scene: [{
+          key: 'initialScene',
+          preload: preload,
+          create: create,
+          update: update
+        },
+        GameOverScene, PlayGameScene, AboutEB ]
+      };
 
-// Configuración del juego
-  config = {
-  type: Phaser.AUTO,
-  width: 1024,
-  height: 1024,
-  scale: {
-    mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_BOTH
-  },
-  scene: [{
-    key: 'initialScene',
-    preload: preload,
-    create: create,
-    update: update
-  },
-  GameOverScene, PlayGameScene, AboutEB ]
+      var game = new Phaser.Game(config);
+  });
 };
-
-var game = new Phaser.Game(config);
 
 var startButton;
 
@@ -674,7 +679,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.65', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.66', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
