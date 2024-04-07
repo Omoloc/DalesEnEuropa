@@ -708,7 +708,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.71', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.72', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
