@@ -192,6 +192,13 @@ class PlayGameScene extends Phaser.Scene {
   increaseScore(posX, posY) {
     console.log('increaseScore called');
 
+    // Detiene la animación
+    this.tweenUp.stop();
+    this.tweenDown.stop();
+
+    // Reinicia la posición de la imagen
+    this.randomPositionImage.y = this.originalY;
+
     //Si la imagen es la de los escaños decrece el escore y reproduce sonido failed. En caso contrario aumenta el score y reproduce sonido catched
     if (this.randomImage === '0') {
       this.score -= 3;
@@ -217,7 +224,7 @@ class PlayGameScene extends Phaser.Scene {
     } 
     else {
 
-      let coin = this.add.sprite(posX, posY+35 , 'coin1');
+      let coin = this.add.sprite(posX, posY-200 , 'coin1');
       coin.play('spin');
   
       this.score += 1;
@@ -261,6 +268,8 @@ class PlayGameScene extends Phaser.Scene {
 
       this.randomPositionImage.setTexture(this.randomImage);
       this.randomPositionImage.setAlpha(1);
+
+      this.originalY = this.randomPositionImage.y;
 
       // Crea un tween que mueve la imagen hacia arriba
       this.tweenUp = this.tweens.add({
@@ -735,7 +744,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.77', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.78', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
