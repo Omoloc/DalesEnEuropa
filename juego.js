@@ -193,7 +193,7 @@ class PlayGameScene extends Phaser.Scene {
     //console.log('increaseScore called');
 
     //Si la imagen es la de los escaños decrece el escore y reproduce sonido failed. En caso contrario aumenta el score y reproduce sonido catched
-    if (this.randomImage === '0') {
+    if (this.randomImage === 'escanoblanco') {
       this.score -= 3;
       if (this.score < 0) {
         this.score = 0;
@@ -808,7 +808,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.02', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.03', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
