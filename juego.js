@@ -368,6 +368,7 @@ class PlayGameScene extends Phaser.Scene {
     this.load.image('5', '5.webp');
     this.load.image('6', '6.webp');
     this.load.image('rufian', 'rufian.webp');
+    this.load.image('bandera', 'bandera.png');
     //this.load.image('nogueras', 'nogueras.webp');
     this.load.image('aitor', 'aitor.webp');
     
@@ -714,7 +715,9 @@ function create() {
     fontFamily: 'MyFont',
     fill: '#FFFFFF10'
   }).setOrigin(0.5);
-infoButton.setInteractive();
+  infoButton.setInteractive();
+
+this.bandera=this.add.image(861, 844, 'bandera').setOrigin(0);
 
 // Boton de cambio de idioma
 lenguageButton = this.add.text(900, 855, '+', {
@@ -764,6 +767,7 @@ lenguageButton.setInteractive();
       Comopuedo = "Nola lagundu dezaket?";
       Comenta = "Aipatu gure proposamena zure lagun, senide eta ezagunei. Jarraitu sare sozialetan, eta partekatu gure argitalpenak.";
       startButton.setText('JOLASTU');
+      this.bandera.setAlpha(1);
     }
     else
     {
@@ -784,6 +788,7 @@ lenguageButton.setInteractive();
       Comopuedo = "¿Cómo puedo ayudar?";
       Comenta = "Comenta nuestra propuesta con tus amigos, familiares y conocidos. Síguenos en redes sociales y comparte nuestras publicaciones.";
       startButton.setText('JUGAR');
+      this.bandera.setAlpha(1);
     }
      
   }
@@ -795,7 +800,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.99', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.00', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
