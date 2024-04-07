@@ -352,10 +352,10 @@ class PlayGameScene extends Phaser.Scene {
 
     //this.add.image(0, 0, 'congreso').setOrigin(0);
     this.fila4.add(this.add.image(0, 0, 'congreso').setOrigin(0));
-    this.fila3.add(this.add.image(0, 0, 'fila3').setOrigin(0.1));
-    this.fila2.add(this.add.image(0, 0, 'fila2').setOrigin(0.1));
-    this.fila1.add(this.add.image(0, 0, 'fila1').setOrigin(0.1));
-    this.fila0.add(this.add.image(0, 0, 'fila0').setOrigin(0.1));
+    this.fila3.add(this.add.image(0, 0, 'fila3').setOrigin(0));
+    this.fila2.add(this.add.image(0, 0, 'fila2').setOrigin(0));
+    this.fila1.add(this.add.image(0, 0, 'fila1').setOrigin(0));
+    this.fila0.add(this.add.image(0, 0, 'fila0').setOrigin(0));
 
     console.log('1');
 
@@ -708,7 +708,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.72', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.73', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
