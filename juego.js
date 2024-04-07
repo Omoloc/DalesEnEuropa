@@ -123,7 +123,7 @@ class GameOverScene extends Phaser.Scene {
   }
   
   updateText() {
-    console.log('AboutEB Scene Called');
+    //console.log('AboutEB Scene Called');
     // Cargo escena de saber más
     switch (this.mensajes) {
       case 0:
@@ -181,7 +181,7 @@ class PlayGameScene extends Phaser.Scene {
   
   constructor() {
     super({ key: 'PlayGameScene' });
-    console.log('Constructor PlayGameScene');
+    //console.log('Constructor PlayGameScene');
 
     // Bind the context
     this.increaseScore = this.increaseScore.bind(this);
@@ -310,7 +310,9 @@ class PlayGameScene extends Phaser.Scene {
         duration: 350,
         paused: true,
         onComplete: () => {
-          this.tweenStay.play();
+          this.time.delayedCall(450, () => {
+            this.tweenDown.play();
+          });
         }
       });
               
@@ -409,7 +411,7 @@ class PlayGameScene extends Phaser.Scene {
     this.fila1.add(this.add.image(0, 0, 'fila1').setOrigin(0));
     this.fila0.add(this.add.image(0, 0, 'fila0').setOrigin(0));
 
-    console.log('1');
+    //console.log('1');
 
     this.scoreText = this.add.text(16, 36, 'Score: 0',
                               { fontSize: '52px', fontFamily: 'MyFont', fill: '#FFFF00' });
@@ -423,14 +425,14 @@ class PlayGameScene extends Phaser.Scene {
                                   { fontSize: '52px',fontFamily: 'MyFont', fill: '#FFFF00' });
     //countdownText.setOrigin(1, 0);
     //this.countdownText.setScrollFactor(0);
-    console.log('2');
+    //console.log('2');
     
 // Paso 2: Crear la animación en la función create
     let frames = [];
     for(let i = 1; i <= 12; i++) {
         frames.push({ key: `coin${i}` });
     }
-    console.log('3');
+    //console.log('3');
 
     this.anims.create({
         key: 'spin',
@@ -446,7 +448,7 @@ class PlayGameScene extends Phaser.Scene {
       }
     }, this);
 
-    console.log('4');
+    //console.log('4');
     this.loadSounds();
 
     this.style = {
@@ -466,12 +468,12 @@ class PlayGameScene extends Phaser.Scene {
 
     //Comenzamos
     
-    console.log('5');
+    //console.log('5');
 
     //Sonidos
     this.playSound('ready');
 
-    console.log('6')
+    //console.log('6')
     this.startGame();
   }
 
@@ -518,7 +520,7 @@ class PlayGameScene extends Phaser.Scene {
 
     this.positionImage.setDisplaySize(30, 30);
     this.positionImage.setInteractive();
-    console.log('ADDED IMAGE');
+    //console.log('ADDED IMAGE');
     this.positionImage.on('pointerdown', () => this.increaseScore(currentPosition.x, currentPosition.y));
     this.images.push(this.positionImage);
   }
@@ -546,7 +548,7 @@ class PlayGameScene extends Phaser.Scene {
   }
 
   playSound(sound) {
-    console.log('playSound called '+sound);
+    //console.log('playSound called '+sound);
 
     switch (sound) {
       case 'opened':
@@ -600,7 +602,7 @@ class PlayGameScene extends Phaser.Scene {
   
   
   startReady() {
-    console.log('startReady called');
+    //console.log('startReady called');
     this.readyText.setText('');
 
     this.playSound('go');
@@ -688,7 +690,7 @@ function preload() {
 
 function create() {
   this.add.image(0, 0, 'intro').setOrigin(0);
-  console.log('Scene created');
+  //console.log('Scene created');
 
   // Pantalla inicial
   startButton = this.add.text( 500, 850 , 'JUGAR', {
@@ -719,7 +721,7 @@ lenguageButton.setInteractive();
 
   var startGame = () => {
     // Cargo escena del juego
-    console.log('PlayGameScene Scene Called');
+    //console.log('PlayGameScene Scene Called');
     if (this.sound.context.state === 'suspended') {
       this.sound.context.resume();
     }
@@ -760,7 +762,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.90', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.91', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
