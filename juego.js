@@ -264,16 +264,16 @@ class PlayGameScene extends Phaser.Scene {
 
       // Crea un tween que mueve la imagen hacia arriba
       this.tweenUp = this.tweens.add({
-          targets: this.randomImage,
-          y: '-=' + this.randomImage.height,
+          targets: this.randomPositionImage,
+          y: '-=' + this.randomPositionImage.height,
           duration: 250,
           paused: true,
       });
 
       // Crea un tween que mueve la imagen hacia abajo
       this.tweenDown = this.tweens.add({
-          targets: this.randomImage,
-          y: '+=' + this.randomImage.height,
+          targets: this.randomPositionImage,
+          y: '+=' + this.randomPositionImage.height,
           duration: 250,
           paused: true,
       });
@@ -735,7 +735,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.75', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.76', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
