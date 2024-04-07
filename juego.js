@@ -334,7 +334,7 @@ class PlayGameScene extends Phaser.Scene {
   score = 0;
   positionImages = [];
   imagesToDisplay = ['abascalvox', 'aitorpnv', 'albasumar', 'amaiavox', 'belarrapodemos', 
-                      'diazsumar', 'enekopsoe', 'escanoblanco', 'feijoopp', 'Imanolpnv', 
+                      'diazsumar', 'enekopsoe', 'escanoblanco', 'feijoopp', 'imanolpnv', 
                       'javierpp', 'mertxebildu', 'mirenpodemos', 'sanchezpsoe'];
   countdown = 0; // Tiempo de juego en segundos
   scoreText ="";
@@ -368,7 +368,7 @@ class PlayGameScene extends Phaser.Scene {
     this.load.image('mirenpodemos', 'diputados/mirenpodemos.webp');
     this.load.image('sanchezpsoe', 'diputados/sanchezpsoe.webp');
 
-    this.load.image('congreso', 'diputados/congreso.png');
+    this.load.image('congreso', 'congreso.png');
     this.load.image('fila0', 'fila0.png');
     this.load.image('fila1', 'fila1.png');
     this.load.image('fila2', 'fila2.png');
@@ -708,7 +708,7 @@ function create() {
   //console.log('Scene created');
 
   // Pantalla inicial
-  startButton = this.add.text( 550, 865 , 'JUGAR', {
+  startButton = this.add.text( 500, 865 , 'JUGAR', {
     fontSize: '65px',
     fontWeight: 'bold', // Hace que el texto sea negrita
     fill: '#FFFFFF',
@@ -725,6 +725,7 @@ function create() {
   infoButton.setInteractive();
 
 this.bandera=this.add.image(861, 844, 'bandera').setOrigin(0);
+this.bandera.setAlpha(0);
 
 // Boton de cambio de idioma
 lenguageButton = this.add.text(900, 855, '+', {
@@ -807,7 +808,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.01', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.02', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
