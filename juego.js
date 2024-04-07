@@ -26,14 +26,14 @@ class GameOverScene extends Phaser.Scene {
 
   style = {
     fontSize: '50px',
-    fontFamily: 'Arial',
+    fontFamily: 'MyFont',
     fill: '#FFFFFF',
     wordWrap: { width: 850, useAdvancedWrap: true }
   }
     
   styleTitle = {
     fontSize: '75px',
-    fontFamily: 'Arial',
+    fontFamily: 'MyFont',
     fontWeight: 'bold', 
     fill: '#FFFF66',
     wordWrap: { width: 850, useAdvancedWrap: true }
@@ -56,6 +56,7 @@ class GameOverScene extends Phaser.Scene {
   preload() {
     // Carga los recursos necesarios para esta escena
     this.load.image('background', 'Background.png');
+    this.load.css('myfont', 'myfont.css');
 
   }
   startGame() {
@@ -85,14 +86,14 @@ class GameOverScene extends Phaser.Scene {
     // Boton de jugar de nuevo  
     this.startButton = this.add.text(550, 845, 'Jugar', {
       fontSize: '32px',
-      fontFamily: 'Arial' ,
+      fontFamily: 'MyFont',
       fill: '#FFFFFF'
     }).setOrigin(0);
         this.startButton.setInteractive();
     this.startButton.on('pointerdown', this.startGame);
 
     //Enlace a la web de Escaños en Blanco
-    this.moreButton = this.add.text(120, 845, 'escanos.org', { fontSize: '42px', fontFamily: 'Arial', fill: '#FFFFFF'});
+    this.moreButton = this.add.text(120, 845, 'escanos.org', { fontSize: '42px', fontFamily: 'MyFont', fill: '#FFFFFF'});
     this.moreButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.moreButton.on('pointerup', () => {
       window.open('https://escanos.org', '_blank'); // Abre el enlace en una nueva pestaña
@@ -100,7 +101,7 @@ class GameOverScene extends Phaser.Scene {
     
 
     //Botón de compartir
-    this.link = this.add.text(890, 845, 'X', { fontSize: '32px', fontFamily: 'Arial', fill: '#FFFFFF'});
+    this.link = this.add.text(890, 845, 'X', { fontSize: '32px', fontFamily: 'MyFont', fill: '#FFFFFF'});
     this.link.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.link.on('pointerup', () => {
       if(this.contador === 0) {
@@ -320,6 +321,8 @@ class PlayGameScene extends Phaser.Scene {
     this.load.audio('win', 'Win.mp3');
     this.load.audio('monedas', 'monedas01.mp3');
      
+    this.load.css('myfont', 'myfont.css');
+
         
   }
 
@@ -333,15 +336,15 @@ class PlayGameScene extends Phaser.Scene {
     console.log('1');
 
     this.scoreText = this.add.text(16, 36, 'Score: 0',
-                              { fontSize: '52px', fill: '#FFFF00' });
+                              { fontSize: '52px', fontFamily: 'MyFont', fill: '#FFFF00' });
     //this.scoreText.setScrollFactor(0);
 
     this.readyText = this.add.text((config.width / 2)- 150,(config.height / 2)-45, 'Ready?',
-    { fontSize: '80px', fill: '#FFFF00' });
+    { fontSize: '80px',fontFamily: 'MyFont', fill: '#FFFF00' });
 
 
     this.countdownText = this.add.text(380, 36, 'Tiempo: ' + this.countdown,
-                                  { fontSize: '52px', fill: '#FFFF00' });
+                                  { fontSize: '52px',fontFamily: 'MyFont', fill: '#FFFF00' });
     //countdownText.setOrigin(1, 0);
     //this.countdownText.setScrollFactor(0);
     console.log('2');
@@ -372,6 +375,7 @@ class PlayGameScene extends Phaser.Scene {
 
     this.style = {
       fontSize: '32px',
+      fontFamily: 'MyFont',
       fill: '#FFFF00',
       backgroundColor: '#000000',  // Agrega el color de fondo negro al estilo
       padding: {
@@ -553,6 +557,8 @@ class AboutEB extends Phaser.Scene {
 
   preload() {
     // Carga los recursos necesarios para esta escena
+    this.load.css('myfont', 'myfont.css');
+
   }
 
   create() {
@@ -591,6 +597,7 @@ var startButton;
 
 function preload() {
     this.load.image('intro', 'Intro.png');
+    this.load.css('myfont', 'myfont.css');
 }
 
 function create() {
@@ -602,14 +609,14 @@ function create() {
     fontSize: '85px',
     fontWeight: 'bold', // Hace que el texto sea negrita
     fill: '#FFFFFF',
-    fontFamily: 'Arial' 
+    fontFamily: 'MyFont' 
   }).setOrigin(0.5);
   startButton.setInteractive();
 
   // Boton de información 
   infoButton = this.add.text(790, 850, 'i', {
     fontSize: '100px',
-    fontFamily: 'Arial' ,
+    fontFamily: 'MyFont',
     fill: '#FFFFFF'
   }).setOrigin(0.5);
 infoButton.setInteractive();
@@ -617,7 +624,7 @@ infoButton.setInteractive();
 // Boton de cambio de idioma
 lenguageButton = this.add.text(900, 850, '+', {
   fontSize: '100px',
-  fontFamily: 'Arial' ,
+  fontFamily: 'MyFont',
   fill: '#FFFFFF'
 }).setOrigin(0.5);
 lenguageButton.setInteractive();
@@ -667,7 +674,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.64', { fontSize: '19px', fontFamily: 'Arial', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.65', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
