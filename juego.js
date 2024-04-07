@@ -249,7 +249,12 @@ class PlayGameScene extends Phaser.Scene {
   //Muestra la siguiente imagen
   showNextImage() {
     // En showNextImage(), destruye los tweens anteriores antes de crear uno nuevo
-    if (this.randomPositionImage) this.originalY = this.randomPositionImage.y;
+    if (this.randomPositionImage)
+    {
+      this.originalY = this.randomPositionImage.y;
+      console.log('position'+ this.randomPositionImage.y);
+    } 
+
     // Detiene la animación
     if (this.tweenUp) this.tweenUp.stop();
     if (this.tweenDown) this.tweenDown.stop();
@@ -369,10 +374,6 @@ class PlayGameScene extends Phaser.Scene {
     this.load.audio('go', 'Go.mp3');
     this.load.audio('win', 'Win.mp3');
     this.load.audio('monedas', 'monedas01.mp3');
-     
-    //this.load.css('myfont', 'myfont.css');
-
-        
   }
 
   create() {
@@ -752,7 +753,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.83', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.84', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
