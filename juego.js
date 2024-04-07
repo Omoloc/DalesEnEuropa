@@ -249,10 +249,10 @@ class PlayGameScene extends Phaser.Scene {
   //Muestra la siguiente imagen
   showNextImage() {
     // En showNextImage(), destruye los tweens anteriores antes de crear uno nuevo
-    this.originalY = this.randomPositionImage.y;
+    if (this.randomPositionImage) this.originalY = this.randomPositionImage.y;
     // Detiene la animación
-    this.tweenUp.stop();
-    this.tweenDown.stop();
+    if (this.tweenUp) this.tweenUp.stop();
+    if (this.tweenDown) this.tweenDown.stop();
 
     this.positionImages.forEach(function (positionImage) {
       positionImage.setAlpha(0);
@@ -752,7 +752,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.82', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.83', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
