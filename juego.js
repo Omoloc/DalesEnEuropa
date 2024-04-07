@@ -193,7 +193,7 @@ class PlayGameScene extends Phaser.Scene {
     console.log('increaseScore called');
 
     // Reinicia la posición de la imagen
-    this.randomPositionImage.y = this.originalY;
+    if (this.randomPositionImage) this.randomPositionImage.y = this.originalY;
 
     //Si la imagen es la de los escaños decrece el escore y reproduce sonido failed. En caso contrario aumenta el score y reproduce sonido catched
     if (this.randomImage === '0') {
@@ -752,7 +752,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.81', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.82', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
