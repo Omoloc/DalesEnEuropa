@@ -303,7 +303,7 @@ class PlayGameScene extends Phaser.Scene {
       // Crea una función para iniciar la animación
       this.startAnimation = () => {
           this.tweenUp.play();
-          this.time.delayedCall(750, () => {
+          this.time.delayedCall(4900, () => {
               this.tweenDown.play();
           });
       };
@@ -753,7 +753,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.84', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.85', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
