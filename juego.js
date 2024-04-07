@@ -464,32 +464,32 @@ class PlayGameScene extends Phaser.Scene {
     this.images = [];
 
     this.positions = [
-      { x: 236, y: 326 },
-      { x: 417, y: 326 },
-      { x: 601, y: 326 },
-      { x: 782, y: 326 },
-      { x: 124, y: 496 },
-      { x: 319, y: 496 },
-      { x: 506, y: 496 },
-      { x: 697, y: 496 },
-      { x: 894, y: 496 },
-      { x: 200, y: 666 },
-      { x: 398, y: 665 },
-      { x: 598, y: 666 },
-      { x: 798, y: 666 },
-      { x: 316, y: 853 },
-      { x: 524, y: 853 },
-      { x: 734, y: 853 }
+      { x: 236, y: 526 },
+      { x: 417, y: 526 },
+      { x: 601, y: 526 },
+      { x: 782, y: 526 },
+      { x: 124, y: 696 },
+      { x: 319, y: 696 },
+      { x: 506, y: 696 },
+      { x: 697, y: 696 },
+      { x: 894, y: 696 },
+      { x: 200, y: 866 },
+      { x: 398, y: 865 },
+      { x: 598, y: 866 },
+      { x: 798, y: 866 },
+      { x: 316, y: 1053 },
+      { x: 524, y: 10853 },
+      { x: 734, y: 10853 }
       // ... (agrega las demás posiciones aquí)
     ];
 
   for (var i = 0; i < this.positions.length; i++) {
     let currentPosition = this.positions[i];
     this.positionImage = this.add.image(currentPosition.x, currentPosition.y -10, '').setOrigin(0.5);
-    if (currentPosition.y === 326) this.fila4.add(this.positionImage);
-    if (currentPosition.y === 496) this.fila3.add(this.positionImage);
-    if (currentPosition.y === 666) this.fila2.add(this.positionImage);
-    if (currentPosition.y === 853) this.fila1.add(this.positionImage);
+    if (currentPosition.y === 526) this.fila4.add(this.positionImage);
+    if (currentPosition.y === 696) this.fila3.add(this.positionImage);
+    if (currentPosition.y === 866) this.fila2.add(this.positionImage);
+    if (currentPosition.y === 1053) this.fila1.add(this.positionImage);
 
     this.positionImage.setDisplaySize(30, 30);
     this.positionImage.setInteractive();
@@ -735,7 +735,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.76', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.77', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
