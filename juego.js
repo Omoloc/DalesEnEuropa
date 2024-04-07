@@ -245,6 +245,8 @@ class PlayGameScene extends Phaser.Scene {
 
   //Muestra la siguiente imagen
   showNextImage() {
+    this.auxcount=0; 
+
     // Detiene la animación
     if (this.tweenUp)
     {
@@ -289,10 +291,11 @@ class PlayGameScene extends Phaser.Scene {
         paused: true,
       });
       
+      
       //Crear un tween que mantiene la imagen en su posición
       this.tweenStay = this.tweens.add({
-        targets: this.randomPositionImage,
-        y: this.randomPositionImage.y+1,
+        targets: this.auxcount,
+        value: 0,
         duration: 850,
         paused: true,
         onComplete: () => {
@@ -311,16 +314,6 @@ class PlayGameScene extends Phaser.Scene {
         }
       });
               
-      /*  Sobra ¿NO?
-      // Crea una función para iniciar la animación
-      this.startAnimation = () => {
-          this.tweenUp.play();
-      };
-
-      // Inicia la animación
-      this.startAnimation();
-      */
-
       //comienza la animación
       this.tweenUp.play();
 
@@ -767,7 +760,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.89', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.90', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
