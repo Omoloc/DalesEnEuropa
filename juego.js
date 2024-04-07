@@ -292,6 +292,7 @@ class PlayGameScene extends Phaser.Scene {
       //Crear un tween que mantiene la imagen en su posición
       this.tweenStay = this.tweens.add({
         targets: this.randomPositionImage,
+        y: this.randomPositionImage.y,
         duration: 850,
         paused: true,
         onComplete: () => {
@@ -766,7 +767,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '1.87', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '1.88', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
