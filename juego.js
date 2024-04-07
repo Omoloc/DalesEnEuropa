@@ -708,7 +708,7 @@ function create() {
   //console.log('Scene created');
 
   // Pantalla inicial
-  startButton = this.add.text( 500, 865 , 'JUGAR', {
+  startButton = this.add.text( 505, 865 , 'JUGAR', {
     fontSize: '65px',
     fontWeight: 'bold', // Hace que el texto sea negrita
     fill: '#FFFFFF',
@@ -775,7 +775,7 @@ lenguageButton.setInteractive();
       Comopuedo = "Nola lagundu dezaket?";
       Comenta = "Aipatu gure proposamena zure lagun, senide eta ezagunei. Jarraitu sare sozialetan, eta partekatu gure argitalpenak.";
       startButton.setText('JOLASTU');
-      this.bandera.setAlpha(1);
+      this.bandera.setAlpha(0);
     }
     else
     {
@@ -808,7 +808,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.03', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.04', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
