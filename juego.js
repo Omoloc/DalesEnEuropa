@@ -18,6 +18,7 @@ let Puntuacion = "Puntuación";
 let Tiempo = "Tiempo";
 let Atencion = "¡Atención!";
 let Deprisa = "¡Deprisa!";
+let Jugar = "Jugar";
 
 class GameOverScene extends Phaser.Scene {
 
@@ -87,10 +88,10 @@ class GameOverScene extends Phaser.Scene {
     this.updateText(); 
 
     // Boton de jugar de nuevo  
-    this.startButton = this.add.text(565, 845, 'Jugar', {
+    this.startButton = this.add.text(549, 845, Jugar, {
       fontSize: '42px',
       fontFamily: 'MyFont',
-      fill: '#FFFFFF10'
+      fill: '#FFFFFF'
     }).setOrigin(0);
         this.startButton.setInteractive();
     this.startButton.on('pointerdown', this.startGame);
@@ -108,11 +109,11 @@ class GameOverScene extends Phaser.Scene {
     this.link.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.link.on('pointerup', () => {
       if(this.contador === 0) {
-        window.open('https://twitter.com/intent/tweet?text=¡Me ha hecho mucha gracia este juego de eliminar diputados!%0ATe invito a jugarlo en este enlace http://escanos.org y a seguir a @escanosenblanco&hashtags=dalesenlosescaños', '_blank'); // Abre el enlace en una nueva pestaña
+        window.open('https://twitter.com/intent/tweet?text=¡Me ha hecho mucha gracia este juego de eliminar diputados!%0ATe invito a jugarlo en este enlace http://escanos.org/dalesenlosescanos y a seguir a @escanosenblanco&hashtags=dalesenlosescaños', '_blank'); // Abre el enlace en una nueva pestaña
       }
       else
       {
-        window.open('https://twitter.com/intent/tweet?text=¡He eliminado '+this.contador+ ' diputados!%0A%0ASi tú también quieres eliminar algunos diputados, pulsa en el enlace http://escanos.org y sigue a @escanosenblanco&hashtags=dalesenlosescaños' , '_blank'); // Abre el enlace en una nueva pestaña
+        window.open('https://twitter.com/intent/tweet?text=¡He eliminado '+this.contador+ ' diputados!%0A%0ASi tú también quieres eliminar algunos diputados, pulsa en el enlace http://escanos.org/dalesenlosescanos y sigue a @escanosenblanco&hashtags=dalesenlosescaños' , '_blank'); // Abre el enlace en una nueva pestaña
       }
     });
 
@@ -292,7 +293,7 @@ class PlayGameScene extends Phaser.Scene {
       this.tweenDown = this.tweens.add({
         targets: this.randomPositionImage,
         y: '+=' + this.randomPositionImage.height,
-        duration: 150,
+        duration: this.timeup/2,
         paused: true,
       });
       
@@ -314,7 +315,7 @@ class PlayGameScene extends Phaser.Scene {
       this.tweenUp = this.tweens.add({
         targets: this.randomPositionImage,
         y: '-=' + this.randomPositionImage.height,
-        duration: 150,
+        duration: this.timeup/2,
         paused: true,
         onComplete: () => {
           this.tweenStay.play();
@@ -350,6 +351,7 @@ class PlayGameScene extends Phaser.Scene {
   soundReady = null;
   soundGo = null;
   soundWin = null;
+  showtime = 800; //tiempo de permanencia de cada diputado
   
 
   preload() {
@@ -399,7 +401,7 @@ class PlayGameScene extends Phaser.Scene {
     console.log('Create PlayGameScene');
     this.countdown = 15; // Tiempo de juego en segundos
     this.score = 0;
-    this.timeup = 1000;
+    this.timeup = 800;
 
 
     this.Rufian= this.add.image(0, 0, 'rufian').setOrigin(0);
@@ -552,7 +554,8 @@ class PlayGameScene extends Phaser.Scene {
     if (this.countdown <= 5)
     {
       this.countdownText.setText(this.countdownText.text + '  '+ Deprisa);
-      this.timeup=600
+      this.timeup=200
+      this.staytime=100;
     }
 
     if (this.countdown === 0) {
@@ -627,7 +630,7 @@ class PlayGameScene extends Phaser.Scene {
 
 
     this.greenCircleTimer = this.time.addEvent({
-      delay: this.timeup,
+      delay: this.timeup+this.staytime
       callback: this.showNextImage,
       callbackScope: this,
       loop: true
@@ -781,8 +784,9 @@ lenguageButton.setInteractive();
       Tiempo = "Denbora";
       Atencion = "Arreta!";
       Deprisa = "Azkar ibili!";
+      Jugar = "Jolastu";
 
-      startButton.setText('JOLASTU');
+      startButton.setText(Jugar);
       this.bandera.setAlpha(1);
     }
     else
@@ -807,7 +811,10 @@ lenguageButton.setInteractive();
       Tiempo = "Tiempo";
       Atencion = "¡Atención!";
       Deprisa = "¡Deprisa!";
-      startButton.setText('JUGAR');
+      Jugar = "Jugar";
+
+      startButton.setText(Jugar);
+
       this.bandera.setAlpha(0);
     }
      
@@ -820,7 +827,7 @@ lenguageButton.setInteractive();
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.09', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.10', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
