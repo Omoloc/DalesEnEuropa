@@ -112,7 +112,7 @@ class GameOverScene extends Phaser.Scene {
     this.textTitle = this.add.text(120, 320, '', this.styleTitle)
     this.textContent = this.add.text(120, 406, '', this.style );
 
-    this.messagesindicator = this.add.text(340, 770, '🟠 ⚪ ⚪ ⚪ ⚪ ⚪', { fontSize: '16px', fill: '#FFFFFF80' });
+    this.messagesindicator = this.add.text(390, 770, '🟠 ⚪ ⚪ ⚪ ⚪ ⚪', { fontSize: '16px', fill: '#FFFFFF80' });
     
     this.nextButton = this.add.text(960, 546, '▶', { fontSize: '52px', fill: '#FFFFFF' });
     this.nextButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
@@ -162,12 +162,14 @@ class GameOverScene extends Phaser.Scene {
       }
     });
 
+    /*
     this.countdownTimer = this.time.addEvent({
       delay: 9000,
       callback: this.nextText,
       callbackScope: this,
       loop: true
     });
+    */
 
   }
   
@@ -879,7 +881,7 @@ function create() {
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.17', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.18', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
