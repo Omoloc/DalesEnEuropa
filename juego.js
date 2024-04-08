@@ -88,7 +88,7 @@ class GameOverScene extends Phaser.Scene {
     this.updateText(); 
 
     // Boton de jugar de nuevo  
-    this.startButton = this.add.text(549, 845, Jugar, {
+    this.startButton = this.add.text(549, 842, Jugar, {
       fontSize: '42px',
       fontFamily: 'MyFont',
       fill: '#FFFFFF'
@@ -556,7 +556,7 @@ class PlayGameScene extends Phaser.Scene {
     {
       this.countdownText.setText(this.countdownText.text + '  '+ Deprisa);
       this.timeup=200
-      this.staytime=100;
+      this.staytime=50;
     }
 
     if (this.countdown === 0) {
@@ -826,7 +826,7 @@ function create() {
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.11', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.12', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
