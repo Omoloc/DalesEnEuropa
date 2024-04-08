@@ -73,23 +73,15 @@ class GameOverScene extends Phaser.Scene {
   }
 
   nextText() {
-    
-    
+    console.log('nextText called');
+
     //incremento el contador de mensajes
     this.mensajes= (this.mensajes+1)/6;
     this.updateText();
   } 
 
   previousText() {
-
-    //Reinicia el timer countdownTimer
-    this.countdownTimer.remove();
-    this.countdownTimer = this.time.addEvent({
-      delay: 9000,
-      callback: this.nextText,
-      callbackScope: this,
-      loop: true
-    });
+    console.log('previousText called');  
 
     this.mensajes -= 1;
     if (this.mensajes < 0) this.mensajes = 6;
@@ -120,7 +112,7 @@ class GameOverScene extends Phaser.Scene {
     this.textTitle = this.add.text(120, 320, '', this.styleTitle)
     this.textContent = this.add.text(120, 406, '', this.style );
 
-    this.messagesindicator = this.add.text(340, 770, '🟠 ⚪ ⚪ ⚪ ⚪ ⚪', { fontSize: '22px', fill: '#FFFFFFF0' });
+    this.messagesindicator = this.add.text(340, 770, '🟠 ⚪ ⚪ ⚪ ⚪ ⚪', { fontSize: '16px', fill: '#FFFFFF80' });
     
     this.nextButton = this.add.text(960, 546, '▶', { fontSize: '52px', fill: '#FFFFFF' });
     this.nextButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
@@ -135,9 +127,9 @@ class GameOverScene extends Phaser.Scene {
       this.restartTimer()
       this,previousText();
     });
-   
 
-    //Pinto el texto con valor 0
+    //Arranco el timer y pinto el texto con valor 0 
+    this.restartTimer();
     this.updateText(); 
 
     // Boton de jugar de nuevo  
@@ -887,7 +879,7 @@ function create() {
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.14', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.15', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
