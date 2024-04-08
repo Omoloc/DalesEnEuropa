@@ -239,7 +239,7 @@ class PlayGameScene extends Phaser.Scene {
 
     // Crea un nuevo temporizador
     this.greenCircleTimer = this.time.addEvent({
-      delay: this.timeup,
+      delay: this.timeup+this.staytime,
       callback: this.showNextImage,
       callbackScope: this,
       loop: true
@@ -334,7 +334,8 @@ class PlayGameScene extends Phaser.Scene {
   }
 
   //Variables
-  timeup=0
+  timeup=0 //tiempo en salir la imagen
+  staytime=0 //tiempo en mantenerse la imagen
   score = 0;
   positionImages = [];
   imagesToDisplay = ['abascalvox', 'aitorpnv', 'albasumar', 'amaiavox', 'belarrapodemos', 
@@ -400,7 +401,8 @@ class PlayGameScene extends Phaser.Scene {
     console.log('Create PlayGameScene');
     this.countdown = 15; // Tiempo de juego en segundos
     this.score = 0;
-    this.timeup = 800;
+    this.timeup = 300;
+    this.staytime = 300;  
 
 
     this.Rufian= this.add.image(0, 0, 'rufian').setOrigin(0);
@@ -434,7 +436,7 @@ class PlayGameScene extends Phaser.Scene {
                               { fontSize: '52px', fontFamily: 'Arial', fill: '#FFFF00' });
     //this.scoreText.setScrollFactor(0);
 
-    this.readyText = this.add.text((config.width / 2)- 150,(config.height / 2)-45, Atencion,
+    this.readyText = this.add.text((config.width / 2)- 200,(config.height / 2)-45, Atencion,
     { fontSize: '80px',fontFamily: 'MyFont', fill: '#FFFF00' });
 
 
@@ -824,7 +826,7 @@ function create() {
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.10', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.11', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
