@@ -109,19 +109,19 @@ class GameOverScene extends Phaser.Scene {
   
     //this.add.text(120, 10, '¡Enhorabuena!', { fontSize: '32px', fontFamily: 'Arial', fill: '#000000' });
     //this.add.text(20, 50, '¡Has eliminado a '+this.contador+ ' diputados!', { fontSize: '32px', fontFamily: 'Arial' , fill: '#000000' });
-    this.textTitle = this.add.text(120, 320, '', this.styleTitle)
-    this.textContent = this.add.text(120, 406, '', this.style );
+    this.textTitle = this.add.text(115, 320, '', this.styleTitle)
+    this.textContent = this.add.text(115, 406, '', this.style );
 
-    this.messagesindicator = this.add.text(390, 770, '🟠 ⚪ ⚪ ⚪ ⚪ ⚪', { fontSize: '16px', fill: '#FFFFFF80' });
+    this.messagesindicator = this.add.text(385, 770, '🟠 ⚪ ⚪ ⚪ ⚪ ⚪', { fontSize: '16px', fill: '#FFFFFF80' });
     
-    this.nextButton = this.add.text(960, 546, '▶', { fontSize: '52px', fill: '#FFFFFF' });
+    this.nextButton = this.add.text(955, 546, '▶', { fontSize: '52px', fill: '#FFFFFF' });
     this.nextButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.nextButton.on('pointerup', () => {
       //Reinicia el timer countdownTimer
       this.restartTimer()
       this.nextText();
     });
-    this.previousButton = this.add.text(40, 546, '◀', { fontSize: '52px', fill: '#FFFFFF' });
+    this.previousButton = this.add.text(35, 546, '◀', { fontSize: '52px', fill: '#FFFFFF' });
     this.previousButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.previousButton.on('pointerup', () => {
       this.restartTimer()
@@ -497,6 +497,11 @@ class PlayGameScene extends Phaser.Scene {
 
     this.countdownText = this.add.text(180, 96, Tiempo +': ' + this.countdown,
                                   { fontSize: '52px',fontFamily: 'MyFont', fill: '#FFFF00' });
+
+    //mensaje independiente de deprisa
+    this.DeprisaText = this.add.text(650, 96, "", { fontSize: '52px', fontFamily: 'MyFont', fill: '#FFFF00' });
+
+
     //countdownText.setOrigin(1, 0);
     //this.countdownText.setScrollFactor(0);
     //console.log('2');
@@ -609,7 +614,8 @@ class PlayGameScene extends Phaser.Scene {
 
     if (this.countdown <= 5)
     {
-      this.countdownText.setText(this.countdownText.text + '  '+ Deprisa);
+      this.countdownText.setText(this.countdownText.text);
+      this.DeprisaText.setText(Deprisa);
       this.timeup=200
       this.staytime=50;
     }
@@ -881,7 +887,7 @@ function create() {
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.18', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.19', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
