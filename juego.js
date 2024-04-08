@@ -495,11 +495,11 @@ class PlayGameScene extends Phaser.Scene {
     { fontSize: '80px',fontFamily: 'MyFont', fill: '#FFFF00' });
 
 
-    this.countdownText = this.add.text(180, 96, Tiempo +': ' + this.countdown,
+    this.countdownText = this.add.text(80, 96, Tiempo +': ' + this.countdown,
                                   { fontSize: '52px',fontFamily: 'MyFont', fill: '#FFFF00' });
 
     //mensaje independiente de deprisa
-    this.DeprisaText = this.add.text(650, 96, "", { fontSize: '52px', fontFamily: 'MyFont', fill: '#FFFF00' });
+    this.DeprisaText = this.add.text(550, 96, "", { fontSize: '52px', fontFamily: 'MyFont', fill: '#FFFF00' });
 
 
     //countdownText.setOrigin(1, 0);
@@ -887,7 +887,7 @@ function create() {
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.19', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.20', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
