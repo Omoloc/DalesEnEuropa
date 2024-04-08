@@ -154,11 +154,11 @@ class GameOverScene extends Phaser.Scene {
     this.link.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.link.on('pointerup', () => {
       if(this.contador === 0) {
-        window.open('https://twitter.com/intent/tweet?text=¡Me ha hecho mucha gracia este juego de eliminar diputados!%0ATe invito a jugarlo en este enlace http://escanos.org/dalesenlosescanos y a seguir a @escanosenblanco&hashtags=dalesenlosescaños', '_blank'); // Abre el enlace en una nueva pestaña
+        window.open('https://twitter.com/intent/tweet?text=¡Me ha hecho mucha gracia este juego de eliminar diputados!%0ATe invito a jugarlo en este enlace http://escanos.org/dalesenlosescanos/index.html y a seguir a @escanosenblanco&hashtags=dalesenlosescaños', '_blank'); // Abre el enlace en una nueva pestaña
       }
       else
       {
-        window.open('https://twitter.com/intent/tweet?text=¡He eliminado '+this.contador+ ' diputados!%0A%0ASi tú también quieres eliminar algunos diputados, pulsa en el enlace http://escanos.org/dalesenlosescanos y sigue a @escanosenblanco&hashtags=dalesenlosescaños' , '_blank'); // Abre el enlace en una nueva pestaña
+        window.open('https://twitter.com/intent/tweet?text=¡He eliminado '+this.contador+ ' diputados!%0A%0ASi tú también quieres eliminar algunos diputados pulsa en el enlace http://escanos.org/dalesenlosescanos/index.html y sigue a @escanosenblanco&hashtags=dalesenlosescaños' , '_blank'); // Abre el enlace en una nueva pestaña
       }
     });
 
