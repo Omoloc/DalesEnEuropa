@@ -72,6 +72,41 @@ class GameOverScene extends Phaser.Scene {
     this.scene.start('PlayGameScene');
   }
 
+  nextText() {
+    
+    
+    //incremento el contador de mensajes
+    this.mensajes= (this.mensajes+1)/6;
+    this.updateText();
+  } 
+
+  previousText() {
+
+    //Reinicia el timer countdownTimer
+    this.countdownTimer.remove();
+    this.countdownTimer = this.time.addEvent({
+      delay: 9000,
+      callback: this.nextText,
+      callbackScope: this,
+      loop: true
+    });
+
+    this.mensajes -= 1;
+    if (this.mensajes < 0) this.mensajes = 6;
+    this.updateText();
+  }
+
+  //Reinicia el timer countdownTimer
+  restartTimer() {
+    this.countdownTimer.remove();
+    this.countdownTimer = this.time.addEvent({
+      delay: 9000,
+      callback: this.nextText,
+      callbackScope: this,
+      loop: true
+    });
+  }
+
   create() {
 
     this.mensajes = 0;
@@ -85,6 +120,24 @@ class GameOverScene extends Phaser.Scene {
     this.textTitle = this.add.text(120, 320, '', this.styleTitle)
     this.textContent = this.add.text(120, 406, '', this.style );
 
+    this.messagesindicator = this.add.text(120, 546, '🟠 ⚪ ⚪ ⚪ ⚪ ⚪', { fontSize: '32px', fill: '#FFFFFF' });
+    
+    this.nextButton = this.add.text(960, 546, '▶', { fontSize: '52px', fill: '#FFFFFF' });
+    this.nextButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
+    this.nextButton.on('pointerup', () => {
+      //Reinicia el timer countdownTimer
+      restartTimer()
+      this.nextText();
+    });
+    this.previousButton = this.add.text(960, 546, '◀', { fontSize: '52px', fill: '#FFFFFF' });
+    this.previousButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
+    this.previousButton.on('pointerup', () => {
+      restartTimer()
+      this,previousText();
+    });
+   
+
+    //Pinto el texto con valor 0
     this.updateText(); 
 
     // Boton de jugar de nuevo  
@@ -119,7 +172,7 @@ class GameOverScene extends Phaser.Scene {
 
     this.countdownTimer = this.time.addEvent({
       delay: 9000,
-      callback: this.updateText,
+      callback: this.nextText,
       callbackScope: this,
       loop: true
     });
@@ -127,8 +180,6 @@ class GameOverScene extends Phaser.Scene {
   }
   
   updateText() {
-    //console.log('AboutEB Scene Called');
-    // Cargo escena de saber más
     switch (this.mensajes) {
       case 0:
         if (this.contador === 0) {
@@ -144,33 +195,43 @@ class GameOverScene extends Phaser.Scene {
           this.textTitle.setText(TituloFinal1);
           this.textContent.setText(unescanovacio+ ((this.contador*120000)+220000).toLocaleString('es-ES') +'€');
         }
+        //cambio el messageindicator
+        this.messagesindicator.setText('🟠 ⚪ ⚪ ⚪ ⚪ ⚪');
+
         break;
       case 1:
         this.textTitle.setText(Quienessomos);
         this.textContent.setText(Somosungrupo);
+        //cambio el messageindicator
+        this.messagesindicator.setText('⚪ 🟠 ⚪ ⚪ ⚪ ⚪');
+
         break;
       case 2:   
-      this.textTitle.setText(Quequeremos);
-      this.textContent.setText( Visibilizar );
+        this.textTitle.setText(Quequeremos);
+        this.textContent.setText( Visibilizar );
+        //cambio el messageindicator
+        this.messagesindicator.setText('⚪ ⚪ 🟠 ⚪ ⚪ ⚪');
         break;
       case 3:   
         this.textTitle.setText(Comolo);
-      this.textContent.setText( Nospresentamos );
+        this.textContent.setText( Nospresentamos );
+        //cambio el messageindicator
+        this.messagesindicator.setText('⚪ ⚪ ⚪ 🟠 ⚪ ⚪');
         break;
       case 4:
         this.textTitle.setText(Estoes);
         this.textContent.setText(Siyahay14);
+        //cambio el messageindicator
+        this.messagesindicator.setText('⚪ ⚪ ⚪ ⚪ 🟠 ⚪');
         break;
       case 5:   
-      this.textTitle.setText(Comopuedo);
-      this.textContent.setText( Comenta );
-        break;
-        //Se pueden añadir más mensajes 5, 6, 7, etc.
-      default:
-        this.mensajes = 0;
+        this.textTitle.setText(Comopuedo);
+        this.textContent.setText( Comenta );
+        //cambio el messageindicator
+        this.messagesindicator.setText('⚪ ⚪ ⚪ ⚪ ⚪ 🟠');
         break;
       }
-      this.mensajes += 1;
+
   
   }
 
@@ -826,7 +887,7 @@ function create() {
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.12', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.13', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
