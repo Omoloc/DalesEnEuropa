@@ -120,19 +120,19 @@ class GameOverScene extends Phaser.Scene {
     this.textTitle = this.add.text(120, 320, '', this.styleTitle)
     this.textContent = this.add.text(120, 406, '', this.style );
 
-    this.messagesindicator = this.add.text(120, 546, '🟠 ⚪ ⚪ ⚪ ⚪ ⚪', { fontSize: '32px', fill: '#FFFFFF' });
+    this.messagesindicator = this.add.text(340, 770, '🟠 ⚪ ⚪ ⚪ ⚪ ⚪', { fontSize: '22px', fill: '#FFFFFFF0' });
     
     this.nextButton = this.add.text(960, 546, '▶', { fontSize: '52px', fill: '#FFFFFF' });
     this.nextButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.nextButton.on('pointerup', () => {
       //Reinicia el timer countdownTimer
-      restartTimer()
+      this.restartTimer()
       this.nextText();
     });
-    this.previousButton = this.add.text(960, 546, '◀', { fontSize: '52px', fill: '#FFFFFF' });
+    this.previousButton = this.add.text(40, 546, '◀', { fontSize: '52px', fill: '#FFFFFF' });
     this.previousButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.previousButton.on('pointerup', () => {
-      restartTimer()
+      this.restartTimer()
       this,previousText();
     });
    
@@ -887,7 +887,7 @@ function create() {
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.13', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.14', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
