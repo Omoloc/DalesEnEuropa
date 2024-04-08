@@ -351,7 +351,6 @@ class PlayGameScene extends Phaser.Scene {
   soundReady = null;
   soundGo = null;
   soundWin = null;
-  showtime = 800; //tiempo de permanencia de cada diputado
   
 
   preload() {
@@ -630,7 +629,7 @@ class PlayGameScene extends Phaser.Scene {
 
 
     this.greenCircleTimer = this.time.addEvent({
-      delay: this.timeup+this.staytime
+      delay: this.timeup+this.staytime,
       callback: this.showNextImage,
       callbackScope: this,
       loop: true
@@ -730,18 +729,16 @@ function create() {
   }).setOrigin(0.5);
   infoButton.setInteractive();
 
-this.bandera=this.add.image(861, 844, 'bandera').setOrigin(0);
-this.bandera.setAlpha(0);
+  this.bandera=this.add.image(861, 844, 'bandera').setOrigin(0);
+  this.bandera.setAlpha(0);
 
-// Boton de cambio de idioma
-lenguageButton = this.add.text(900, 855, '+', {
-  fontSize: '100px',
-  fontFamily: 'MyFont',
-  fill: '#FFFFFF10'
-}).setOrigin(0.5);
-lenguageButton.setInteractive();
-
-
+  // Boton de cambio de idioma
+  lenguageButton = this.add.text(900, 855, '+', {
+    fontSize: '100px',
+    fontFamily: 'MyFont',
+    fill: '#FFFFFF10'
+  }).setOrigin(0.5);
+  lenguageButton.setInteractive();
 
   var startGame = () => {
     // Cargo escena del juego
