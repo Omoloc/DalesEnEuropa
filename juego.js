@@ -90,7 +90,7 @@ class GameOverScene extends Phaser.Scene {
 
   //Reinicia el timer countdownTimer
   restartTimer() {
-    this.countdownTimer.remove();
+    if(this.countdownTimer) this.countdownTimer.remove();
     this.countdownTimer = this.time.addEvent({
       delay: 9000,
       callback: this.nextText,
@@ -879,7 +879,7 @@ function create() {
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.15', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.16', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
