@@ -707,9 +707,9 @@ class PlayGameScene extends Phaser.Scene {
     this.showNextImage();
     this.greenCircleTimer = this.time.addEvent({
       delay: this.timeup+this.staytime,
-      callback: this.ReloadGreenCircleTimershowNextImage,
+      callback: this.ReloadGreenCircleTimer,
       callbackScope: this,
-      loop: true
+      loop: false
     });
   }
 }
@@ -888,7 +888,7 @@ function create() {
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.24', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.25, { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
