@@ -154,11 +154,11 @@ class GameOverScene extends Phaser.Scene {
     this.link.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.link.on('pointerup', () => {
       if(this.contador === 0) {
-        window.open('https://twitter.com/intent/tweet?text=¡Me ha hecho mucha gracia este juego de eliminar diputados!%0ATe invito a jugarlo en este enlace http://escanos.org/dalesenlosescanos/index.html y a seguir a @escanosenblanco&hashtags=dalesenlosescaños', '_blank'); // Abre el enlace en una nueva pestaña
+        window.open('https://twitter.com/intent/tweet?text=¡Me ha hecho mucha gracia este juego de eliminar diputados!%0ATe invito a jugarlo en este enlace http://escanos.org/dalesenlosescanos/ y a seguir a @escanosenblanco&hashtags=dalesenlosescaños', '_blank'); // Abre el enlace en una nueva pestaña
       }
       else
       {
-        window.open('https://twitter.com/intent/tweet?text=¡He eliminado '+this.contador+ ' diputados!%0A%0ASi tú también quieres eliminar algunos diputados pulsa en el enlace http://escanos.org/dalesenlosescanos/index.html y sigue a @escanosenblanco&hashtags=dalesenlosescaños' , '_blank'); // Abre el enlace en una nueva pestaña
+        window.open('https://twitter.com/intent/tweet?text=¡He eliminado '+this.contador+ ' diputados!%0A%0ASi tú también quieres eliminar algunos diputados pulsa en el enlace http://escanos.org/dalesenlosescanos/ y sigue a @escanosenblanco&hashtags=dalesenlosescaños' , '_blank'); // Abre el enlace en una nueva pestaña
       }
     });
 
@@ -352,7 +352,10 @@ class PlayGameScene extends Phaser.Scene {
         paused: true,
       });
       
-      if (this.countdown <=5) this.staytime=300; else this.staytime=700;
+      if (this.countdown <=5)
+        this.staytime=300; 
+      else
+        this.staytime=700;
       
       //Crear un tween que mantiene la imagen en su posición
       this.tweenStay = this.tweens.add({
@@ -389,8 +392,8 @@ class PlayGameScene extends Phaser.Scene {
   }
 
   //Variables
-  timeup=0 //tiempo en salir la imagen
-  staytime=0 //tiempo en mantenerse la imagen
+  timeup=100 //tiempo en salir la imagen
+  staytime=700 //tiempo en mantenerse la imagen
   score = 0;
   positionImages = [];
   imagesToDisplay = ['abascalvox', 'aitorpnv', 'albasumar', 'amaiavox', 'belarrapodemos', 
@@ -457,7 +460,7 @@ class PlayGameScene extends Phaser.Scene {
     this.countdown = 15; // Tiempo de juego en segundos
     this.score = 0;
     this.timeup = 300;
-    this.staytime = 300;  
+    this.staytime = 700;  
 
 
     this.Rufian= this.add.image(0, 0, 'rufian').setOrigin(0);
@@ -887,7 +890,7 @@ function create() {
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.21', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.22', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
