@@ -287,18 +287,12 @@ class PlayGameScene extends Phaser.Scene {
     }
 
     //Cargo una nueva imagen
-    this.showNextImage(); // Muestra la siguiente imagen
+    //this.showNextImage(); // Muestra la siguiente imagen
 
     // Elimina el temporizador actual
     this.time.removeEvent(this.greenCircleTimer);
-
-    // Crea un nuevo temporizador
-    this.greenCircleTimer = this.time.addEvent({
-      delay: this.timeup+this.staytime,
-      callback: this.showNextImage,
-      callbackScope: this,
-      loop: true
-    });
+    
+    this.ReloadGreenCircleTimer()
 
   }
 
@@ -694,13 +688,7 @@ class PlayGameScene extends Phaser.Scene {
     this.positionImages = this.createPositionImages();
 
 
-    this.greenCircleTimer = this.time.addEvent({
-      delay: this.timeup+this.staytime,
-      callback: this.ReloadGreenCircleTimer,
-      callbackScope: this,
-      loop: true
-    });
-    this.showNextImage();
+    this.ReloadGreenCircleTimer();
 
     this.countdownTimer = this.time.addEvent({
       delay: 1000,
@@ -900,7 +888,7 @@ function create() {
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.23', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.24', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
