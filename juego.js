@@ -888,7 +888,7 @@ function create() {
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.25, { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.25', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
