@@ -696,7 +696,7 @@ class PlayGameScene extends Phaser.Scene {
 
     this.greenCircleTimer = this.time.addEvent({
       delay: this.timeup+this.staytime,
-      callback: this.showNextImage,
+      callback: this.ReloadGreenCircleTimer,
       callbackScope: this,
       loop: true
     });
@@ -714,6 +714,16 @@ class PlayGameScene extends Phaser.Scene {
   }
 
 
+  // lo recargo a mano para actualizar el timer
+  ReloadGreenCircleTimer () {
+    this.showNextImage();
+    this.greenCircleTimer = this.time.addEvent({
+      delay: this.timeup+this.staytime,
+      callback: this.ReloadGreenCircleTimershowNextImage,
+      callbackScope: this,
+      loop: true
+    });
+  }
 }
 
 //Clase para saber más sobre Escaños en Blanco
@@ -890,7 +900,7 @@ function create() {
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.22', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.23', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
