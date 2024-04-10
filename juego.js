@@ -157,7 +157,7 @@ class GameOverScene extends Phaser.Scene {
         if (navigator.share) {
          try{ navigator.share({
            title: 'Dales donde más les duele: Dales en los escaños)',
-             text: 'Ayúdame a eliminar unos cuantos escaños en los parlamentos. ¡Dales donde más les duele! ¡Dales en los escaños! http://escanos.org/dalesenlosescanos/';  
+             text: 'Ayúdame a eliminar unos cuantos escaños en los parlamentos. ¡Dales donde más les duele! ¡Dales en los escaños! http://escanos.org/dalesenlosescanos/', 
          });
           console.log('compartir ok');
             } catch(error) {
