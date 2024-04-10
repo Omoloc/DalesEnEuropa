@@ -168,12 +168,12 @@ class GameOverScene extends Phaser.Scene {
       else
         {
           
-        if(this.contador === 0) {
-          window.open('https://twitter.com/intent/tweet?text=¡Me ha hecho mucha gracia este juego de eliminar diputados!%0ATe invito a jugarlo en este enlace http://escanos.org/dalesenlosescanos/ y a seguir a @escanosenblanco&hashtags=dalesenlosescaños', '_blank'); // Abre el enlace en una nueva pestaña
+        if(this.contador <= 1) {
+          window.open('https://twitter.com/intent/tweet?text=Ayúdame a eliminar unos cuantos escaños en el Parlamento %0A%0A http://escanos.org/dalesenlosescanos/ %0A%0A Sigue a @escanosenblanco y ¡Dales donde más les duele!&hashtags=dalesenlosescaños' , '_blank'); // Abre el enlace en una nueva pestaña
       }
       else
       {
-        window.open('https://twitter.com/intent/tweet?text=¡He eliminado '+this.contador+ ' diputados!%0A%0ASi tú también quieres eliminar algunos diputados pulsa en el enlace http://escanos.org/dalesenlosescanos/ y sigue a @escanosenblanco&hashtags=dalesenlosescaños' , '_blank'); // Abre el enlace en una nueva pestaña
+        window.open('https://twitter.com/intent/tweet?text=¡He eliminado '+this.contador+ ' diputados!%0A%0AAyúdame a eliminar unos cuantos escaños http://escanos.org/dalesenlosescanos/ Sigue a @escanosenblanco y ¡Dales donde más les duele!&hashtags=dalesenlosescaños' , '_blank'); // Abre el enlace en una nueva pestaña
       }
         }
     });
@@ -904,7 +904,7 @@ function create() {
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.26', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.27', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
