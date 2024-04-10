@@ -153,13 +153,29 @@ class GameOverScene extends Phaser.Scene {
     this.link = this.add.text(880, 845, 'X', { fontSize: '42px', fontFamily: 'MyFont', fill: '#FFFFFF10'});
     this.link.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.link.on('pointerup', () => {
-      if(this.contador === 0) {
-        window.open('https://twitter.com/intent/tweet?text=¡Me ha hecho mucha gracia este juego de eliminar diputados!%0ATe invito a jugarlo en este enlace http://escanos.org/dalesenlosescanos/ y a seguir a @escanosenblanco&hashtags=dalesenlosescaños', '_blank'); // Abre el enlace en una nueva pestaña
+      
+        if (navigator.share) {
+         try{ navigator.share({
+           title: 'Dales donde más les duele: Dales en los escaños)',
+             text: 'Ayúdame a eliminar unos cuantos escaños en los parlamentos. ¡Que se ganen los escaños!',
+           url: 'http://escanos.org/dalesenlosescanos/',
+         });
+          console.log('compartir ok');
+            } catch(error) {
+           console.error('compartir error: ',error);
+         }
+        }
+      else
+        {
+          
+        if(this.contador === 0) {
+          window.open('https://twitter.com/intent/tweet?text=¡Me ha hecho mucha gracia este juego de eliminar diputados!%0ATe invito a jugarlo en este enlace http://escanos.org/dalesenlosescanos/ y a seguir a @escanosenblanco&hashtags=dalesenlosescaños', '_blank'); // Abre el enlace en una nueva pestaña
       }
       else
       {
         window.open('https://twitter.com/intent/tweet?text=¡He eliminado '+this.contador+ ' diputados!%0A%0ASi tú también quieres eliminar algunos diputados pulsa en el enlace http://escanos.org/dalesenlosescanos/ y sigue a @escanosenblanco&hashtags=dalesenlosescaños' , '_blank'); // Abre el enlace en una nueva pestaña
       }
+        }
     });
 
     /*
@@ -888,7 +904,7 @@ function create() {
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.25', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.26', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
