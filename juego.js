@@ -4,7 +4,7 @@ let vuelveajugar = "Vuelve a jugar y no pulses en el Escaño en Blanco sólo a l
 let Hasdejado = "¡Has dejado ";
 let escanosovacios = " escaños vacíos!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de ";
 let unescanovacio = " ¡Has dejado un escaño vacío!\n\n Si esto fuera el Parlamento Vasco, habrías ahorrado más de ";
-let Quienessomos = "¿Quienes somos?";
+let Quienessomos = "¿Quiénes somos?";
 let Somosungrupo = "Somos un grupo de ciudadanos cansados de la clase política que no encontramos utilidad ni en el voto nulo, blanco ni la abstención";
 let Quequeremos = "¿Qué queremos?";
 let Visibilizar = "Visibilizar la falta de representación, llamar la atención de los medios y abrir un debate sobre las carencias de nuestro sistema.";
@@ -157,7 +157,7 @@ class GameOverScene extends Phaser.Scene {
         if (navigator.share) {
          try{ navigator.share({
            title: 'Dales donde más les duele: Dales en los escaños)',
-             text: 'Ayúdame a eliminar unos cuantos escaños en los parlamentos. ¡Dales donde más les duele! ¡Dales en los escaños! http://escanos.org/dalesenlosescanos/', 
+             text: 'Ayúdame a eliminar unos cuantos escaños en los parlamentos. ¡Dales donde más les duele! ¡Dales en los escaños! #dalesenlosescaños http://escanos.org/dalesenlosescanos/', 
          });
           console.log('compartir ok');
             } catch(error) {
@@ -843,8 +843,8 @@ function create() {
       TituloFinal1 = "Zorionak!";
       Quepaso = "Zer gertatu da?";
       vuelveajugar = "Jokatu berriro, eta ez sakatu Aulki Zurian, politikariei bakarrik.\n\nEman euren eserlekuan!";
-      Hasdejado = "Utzi duzu ";
-      escanosovacios = " aulki hutsa!\n\nHau Eusko Legebiltzarra balitz, kopuru hau baino gehiago aurreztuko zenuen: ";
+      Hasdejado = " ";
+      escanosovacios = " eserleku hutsik utzi dituzu!\n\nHau Eusko Legebiltzarra balitz, kopuru hau baino gehiago aurreztuko zenuen: ";
       unescanovacio = "Aulki bat hutsik utzi duzu!\n\nHau Eusko Legebiltzarra balitz, kopuru hau baino gehiago aurreztuko zenuen: ";
       Quienessomos = "Nor gara?";
       Somosungrupo = "Klase politikoarekin nekatuta gauden herritar talde bat gara, eta ez diogu baliorik aurkitzen boto nuloari, zuriari edo abstentzioari";
@@ -858,7 +858,7 @@ function create() {
       Comenta = "Aipatu gure proposamena zure lagun, senide eta ezagunei. Jarraitu sare sozialetan, eta partekatu gure argitalpenak.";
       Puntuacion = "Puntuazioa";
       Tiempo = "Denbora";
-      Atencion = "Arreta!";
+      Atencion = "Hadi!";
       Deprisa = "Azkar ibili!";
       Jugar = "Jolastu";
 
@@ -873,7 +873,7 @@ function create() {
       Hasdejado = "¡Has dejado ";
       escanosovacios = " escaños vacíos!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de ";
       unescanovacio = " ¡Has dejado un escaño vacío!\n\n Si esto fuera el Parlamento Vasco, habrías ahorrado más de ";
-      Quienessomos = "¿Quienes somos?";
+      Quienessomos = "¿Quiénes somos?";
       Somosungrupo = "Somos un grupo de ciudadanos cansados de la clase política que no encontramos utilidad ni en el voto nulo, blanco ni la abstención";
       Quequeremos = "¿Qué queremos?";
       Visibilizar = "Visibilizar la falta de representación, llamar la atención de los medios y abrir un debate sobre las carencias de nuestro sistema.";
@@ -903,7 +903,7 @@ function create() {
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.30', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.31', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
