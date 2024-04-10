@@ -157,8 +157,8 @@ class GameOverScene extends Phaser.Scene {
         if (navigator.share) {
          try{ navigator.share({
            title: 'Dales donde más les duele: Dales en los escaños)',
-             text: 'Ayúdame a eliminar unos cuantos escaños en los parlamentos. ¡Que se ganen los escaños!',
-           url: 'prueba http://escanos.org/dalesenlosescanos/',
+             text: 'Ayúdame a eliminar unos cuantos escaños en los parlamentos. ¡Que se ganen los escaños! http://escanos.org/dalesenlosescanos/',
+           
          });
           console.log('compartir ok');
             } catch(error) {
@@ -904,7 +904,7 @@ function create() {
   lenguageButton.on('pointerdown', changeLenguage);
   
 
-  this.add.text(980, 1000, '2.28', { fontSize: '19px', fill: '#FFFFFF' }) 
+  this.add.text(980, 1000, '2.29', { fontSize: '19px', fill: '#FFFFFF' }) 
 }
 
 function update() {
