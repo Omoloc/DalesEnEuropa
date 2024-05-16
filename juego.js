@@ -2,8 +2,8 @@ let TituloFinal1 = "¡Enhorabuena!";
 let Quepaso = "¿Qué ha pasado?";
 let vuelveajugar = "Vuelve a jugar y no pulses en el Escaño en Blanco sólo a los políticos.\n\n ¡Dales en el escaño!";
 let Hasdejado = "¡Has dejado ";
-let escanosovacios = " escaños vacíos!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de ";
-let unescanovacio = " ¡Has dejado un escaño vacío!\n\n Si esto fuera el Parlamento Vasco, habrías ahorrado más de ";
+let escanosovacios = " escaños vacíos!\n\nSi esto fuera el Parlamento Europeo, habrías ahorrado más de ";
+let unescanovacio = " ¡Has dejado un escaño vacío!\n\n Si esto fuera el Parlamento Europeo, habrías ahorrado más de ";
 let Quienessomos = "¿Quiénes somos?";
 let Somosungrupo = "Somos un grupo de ciudadanos cansados de la clase política que no encontramos utilidad ni en el voto nulo, blanco ni la abstención";
 let Quequeremos = "¿Qué queremos?";
@@ -11,7 +11,7 @@ let Visibilizar = "Visibilizar la falta de representación, llamar la atención 
 let Comolo = "¿Cómo lo hacemos?";
 let Nospresentamos = "Nos presentamos a las elecciones para dejar escaños vacíos. De esta forma nadie cobrará por ese escaño. Nosotros tampoco.";
 let Estoes = "¿Esto es posible?";
-let Siyahay14 = "Sí. Ya hemos dejado vacías 14 concejalías y un Ayuntamiento. ¡Ayúdanos a dejar un escaño vacío en el Parlamento Vasco!";
+let Siyahay14 = "Sí. Ya hemos dejado vacías 14 concejalías y un Ayuntamiento. ¡Ayúdanos a dejar un escaño vacío en el Parlamento Europeo!";
 let Comopuedo = "¿Cómo ayudar?";
 let Comenta = "Comenta nuestra propuesta con tus amigos, familiares y conocidos. Síguenos en redes sociales y comparte nuestras publicaciones.";
 let Puntuacion = "Puntuación";
@@ -871,8 +871,8 @@ function create() {
       Quepaso = "¿Qué ha pasado?";
       vuelveajugar = "Vuelve a jugar y no pulses en el Escaño en Blanco sólo a los políticos.\n\n ¡Dales en el escaño!";
       Hasdejado = "¡Has dejado ";
-      escanosovacios = " escaños vacíos!\n\nSi esto fuera el Parlamento Vasco, habrías ahorrado más de ";
-      unescanovacio = " ¡Has dejado un escaño vacío!\n\n Si esto fuera el Parlamento Vasco, habrías ahorrado más de ";
+      escanosovacios = " escaños vacíos!\n\nSi esto fuera el Parlamento Europeo, habrías ahorrado más de ";
+      unescanovacio = " ¡Has dejado un escaño vacío!\n\n Si esto fuera el Parlamento Europeo, habrías ahorrado más de ";
       Quienessomos = "¿Quiénes somos?";
       Somosungrupo = "Somos un grupo de ciudadanos cansados de la clase política que no encontramos utilidad ni en el voto nulo, blanco ni la abstención";
       Quequeremos = "¿Qué queremos?";
@@ -880,7 +880,7 @@ function create() {
       Comolo = "¿Cómo lo hacemos?";
       Nospresentamos = "Nos presentamos a las elecciones para dejar escaños vacíos. De esta forma nadie cobrará por ese escaño. Nosotros tampoco.";
       Estoes = "¿Esto es posible?";
-      Siyahay14 = "Sí. Ya hemos dejado vacías 14 concejalías y un Ayuntamiento. ¡Ayúdanos a dejar un escaño vacío en el Parlamento Vasco!";
+      Siyahay14 = "Sí. Ya hemos dejado vacías 14 concejalías y un Ayuntamiento. ¡Ayúdanos a dejar un escaño vacío en el Parlamento Europeo!";
       Comopuedo = "¿Cómo ayudar?";
       Comenta = "Comenta nuestra propuesta con tus amigos, familiares y conocidos. Síguenos en redes sociales y comparte nuestras publicaciones.";
       Puntuacion = "Puntuación";
@@ -888,6 +888,7 @@ function create() {
       Atencion = "¡Atención!";
       Deprisa = "¡Deprisa!";
       Jugar = "Jugar";
+
 
       startButton.setText(Jugar);
 
