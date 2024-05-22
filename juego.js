@@ -40,11 +40,11 @@ class GameOverScene extends Phaser.Scene {
     fill: '#FFFFFF',
     wordWrap: { width: 850, useAdvancedWrap: true }
   }
-    
+
   styleTitle = {
     fontSize: '75px',
     fontFamily: 'MyFont',
-    fontWeight: 'bold', 
+    fontWeight: 'bold',
     fill: '#FFFF66',
     wordWrap: { width: 850, useAdvancedWrap: true }
   }
@@ -84,10 +84,10 @@ class GameOverScene extends Phaser.Scene {
     //incremento el contador de mensajes
     this.mensajes= (this.mensajes+1)%6;
     this.updateText();
-  } 
+  }
 
   previousText() {
-    console.log('previousText called');  
+    console.log('previousText called');
 
     this.mensajes -= 1;
     if (this.mensajes < 0) this.mensajes = 6;
@@ -119,7 +119,7 @@ class GameOverScene extends Phaser.Scene {
     // Verificar la puntuación en el registro
     let score = this.registry.get('score');
     console.log('Puntuación:', score); // Verificar que la puntuación se obtiene correctamente
-      
+
 // Función para obtener el token y luego las puntuaciones
 // Función para obtener el token y luego las puntuaciones
 // Función para obtener el token y luego las puntuaciones
@@ -231,7 +231,7 @@ function mostrarPopUp(top3_day, top3_world) {
 
         mensajeElemento.style.marginBottom = '10px';
         modal.appendChild(mensajeElemento);
-        
+
         descripcionElemento.style.color = '#333';
         modal.appendChild(descripcionElemento);
 
@@ -322,14 +322,14 @@ function enviarPuntuacion(iniciales) {
 // Llamar a la función para obtener el token y las puntuaciones, y mostrar el popup
 obtenerTokenYpuntuaciones();
 
-  
+
     //this.add.text(120, 10, '¡Enhorabuena!', { fontSize: '32px', fontFamily: 'Arial', fill: '#000000' });
     //this.add.text(20, 50, '¡Has eliminado a '+this.contador+ ' diputados!', { fontSize: '32px', fontFamily: 'Arial' , fill: '#000000' });
     this.textTitle = this.add.text(115, 320, '', this.styleTitle)
     this.textContent = this.add.text(115, 406, '', this.style );
 
     this.messagesindicator = this.add.text(385, 770, '🟠 ⚪ ⚪ ⚪ ⚪ ⚪', { fontSize: '16px', fill: '#FFFFFF80' });
-    
+
     this.nextButton = this.add.text(955, 546, '▶', { fontSize: '52px', fill: '#FFFFFF' });
     this.nextButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.nextButton.on('pointerup', () => {
@@ -344,36 +344,36 @@ obtenerTokenYpuntuaciones();
       this.previousText();
     });
 
-    //Arranco el timer y pinto el texto con valor 0 
+    //Arranco el timer y pinto el texto con valor 0
     this.restartTimer();
-    this.updateText(); 
+    this.updateText();
 
-    // Boton de jugar de nuevo  
+    // Boton de jugar de nuevo
     this.startButton = this.add.text(549, 842, Jugar, {
       fontSize: '42px',
       fontFamily: 'MyFont',
       fill: '#FFFFFF'
     }).setOrigin(0);
-        this.startButton.setInteractive();
+    this.startButton.setInteractive({ useHandCursor: true });
     this.startButton.on('pointerdown', this.startGame);
 
-    //Enlace a la web de Escaños en Blanco
-    this.moreButton = this.add.text(120, 845, 'escanos.org', { fontSize: '42px', fontFamily: 'MyFont', fill: '#FFFFFF10'});
+    // Enlace a la web de Escaños en Blanco
+    this.moreButton = this.add.rectangle(250, 870, 360, 150, 0xFFFFFF, 0); // Añade un rectángulo semi-transparente
     this.moreButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.moreButton.on('pointerup', () => {
       window.open('https://escanos.org', '_blank'); // Abre el enlace en una nueva pestaña
     });
-    
+
 
     //Botón de compartir
     this.link = this.add.text(880, 845, 'X', { fontSize: '42px', fontFamily: 'MyFont', fill: '#FFFFFF10'});
     this.link.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.link.on('pointerup', () => {
-      
+
         if (navigator.share) {
          try{ navigator.share({
            title: 'Dales donde más les duele: Dales en los escaños)',
-             text: 'Ayúdame a eliminar unos cuantos escaños en los parlamentos. ¡Dales donde más les duele! ¡Dales en los escaños! #dalesenlosescaños http://escanos.org/dalesenlosescanos/index.html', 
+             text: 'Ayúdame a eliminar unos cuantos escaños en los parlamentos. ¡Dales donde más les duele! ¡Dales en los escaños! #dalesenlosescaños http://escanos.org/dalesenlosescanos/index.html',
          });
           console.log('compartir ok');
             } catch(error) {
@@ -382,7 +382,7 @@ obtenerTokenYpuntuaciones();
         }
       else
         {
-          
+
         if(this.contador <= 1) {
           window.open('https://twitter.com/intent/tweet?text=Ayúdame a eliminar unos cuantos escaños en el Parlamento %0A%0A http://escanos.org/dalesenlosescanos/index.html %0A%0A Sigue a @escanosenblanco y ¡Dales donde más les duele!&hashtags=dalesenlosescaños' , '_blank'); // Abre el enlace en una nueva pestaña
       }
@@ -403,7 +403,7 @@ obtenerTokenYpuntuaciones();
     */
 
   }
-  
+
   updateText() {
     switch (this.mensajes) {
       case 0:
@@ -431,13 +431,13 @@ obtenerTokenYpuntuaciones();
         this.messagesindicator.setText('⚪ 🟠 ⚪ ⚪ ⚪ ⚪');
 
         break;
-      case 2:   
+      case 2:
         this.textTitle.setText(Quequeremos);
         this.textContent.setText( Visibilizar );
         //cambio el messageindicator
         this.messagesindicator.setText('⚪ ⚪ 🟠 ⚪ ⚪ ⚪');
         break;
-      case 3:   
+      case 3:
         this.textTitle.setText(Comolo);
         this.textContent.setText( Nospresentamos );
         //cambio el messageindicator
@@ -449,7 +449,7 @@ obtenerTokenYpuntuaciones();
         //cambio el messageindicator
         this.messagesindicator.setText('⚪ ⚪ ⚪ ⚪ 🟠 ⚪');
         break;
-      case 5:   
+      case 5:
         this.textTitle.setText(Comopuedo);
         this.textContent.setText( Comenta );
         //cambio el messageindicator
@@ -457,7 +457,7 @@ obtenerTokenYpuntuaciones();
         break;
       }
 
-  
+
   }
 
 
@@ -468,7 +468,7 @@ obtenerTokenYpuntuaciones();
 
 
 class PlayGameScene extends Phaser.Scene {
-  
+
   constructor() {
     super({ key: 'PlayGameScene' });
     //console.log('Constructor PlayGameScene');
@@ -504,12 +504,12 @@ class PlayGameScene extends Phaser.Scene {
       this.time.delayedCall(100, () => {
           flash.destroy();
       });
-    } 
+    }
     else {
 
       let coin = this.add.sprite(posX, posY-120 , 'coin1');
       coin.play('spin');
-  
+
       this.score += 1;
       this.scoreText.setText( Puntuacion + ': ' + this.score);
 
@@ -522,26 +522,26 @@ class PlayGameScene extends Phaser.Scene {
 
     // Elimina el temporizador actual
     this.time.removeEvent(this.greenCircleTimer);
-    
+
     this.ReloadGreenCircleTimer()
 
   }
 
   //Muestra la siguiente imagen
   showNextImage() {
-    this.auxcount=0; 
+    this.auxcount=0;
 
     // Detiene la animación
     if (this.tweenUp)
     {
       this.tweenUp.stop();
       this.tweenUp.destroy(); // Destruye el tween
-    } 
+    }
     if (this.tweenStay)
     {
       this.tweenStay.stop();
       this.tweenStay.destroy(); // Destruye el tween
-    } 
+    }
     if (this.tweenDown)
     {
       this.tweenDown.stop();
@@ -576,16 +576,16 @@ class PlayGameScene extends Phaser.Scene {
         duration: this.timeup/2,
         paused: true,
       });
-      
+
       if (this.countdown <=5)
-        this.staytime=300; 
+        this.staytime=300;
       else
         this.staytime=700;
-      
+
       //Crear un tween que mantiene la imagen en su posición
       this.tweenStay = this.tweens.add({
-        targets: this.Rufian,
-        y: '-=' + this.Rufian.height,
+        targets: this.escanoblanco,
+        y: '-=' + this.escanoblanco.height,
         duration: this.staytime,
         paused: true,
         onComplete: () => {
@@ -604,7 +604,7 @@ class PlayGameScene extends Phaser.Scene {
           this.tweenStay.play();
         }
       });
-              
+
       //comienza la animación
       this.tweenUp.play();
 
@@ -621,8 +621,8 @@ class PlayGameScene extends Phaser.Scene {
   staytime=700 //tiempo en mantenerse la imagen
   score = 0;
   positionImages = [];
-  imagesToDisplay = ['abascalvox', 'aitorpnv', 'albasumar', 'amaiavox', 'belarrapodemos', 
-                      'diazsumar', 'enekopsoe', 'escanoblanco', 'feijoopp', 'imanolpnv', 
+  imagesToDisplay = ['abascalvox', 'aitorpnv', 'albasumar', 'amaiavox', 'belarrapodemos',
+                      'diazsumar', 'enekopsoe', 'escanoblanco', 'feijoopp', 'imanolpnv',
                       'javierpp', 'mertxebildu', 'mirenpodemos', 'sanchezpsoe'];
   countdown = 0; // Tiempo de juego en segundos
   scoreText ="";
@@ -631,11 +631,11 @@ class PlayGameScene extends Phaser.Scene {
   soundOpened = null;
   soundCatched = null;
   soundMonedas = null;
-  soundFail = null; 
+  soundFail = null;
   soundReady = null;
   soundGo = null;
   soundWin = null;
-  
+
 
   preload() {
     console.log('Preload PlayGameScene');
@@ -661,14 +661,12 @@ class PlayGameScene extends Phaser.Scene {
     this.load.image('fila1', 'fila1.png');
     this.load.image('fila2', 'fila2.png');
     this.load.image('fila3', 'fila3.png');
-    
-    this.load.image('rufian', 'rufian.webp');
-    
+
     // Cargar imágenes animación monedas
     for(let i = 1; i <= 12; i++) {
         this.load.image(`coin${i}`, `monedas/${i.toString().padStart(3, '0')}.png`);
     }
-    
+
     // Sonidos
     this.load.audio('opened', 'Open.wav');
     this.load.audio('catched', 'Catch.mp3');
@@ -686,12 +684,12 @@ class PlayGameScene extends Phaser.Scene {
     this.countdown = 15; // Tiempo de juego en segundos
     this.score = 0;
     this.timeup = 300;
-    this.staytime = 700;  
+    this.staytime = 700;
 
 
-    this.Rufian= this.add.image(0, 0, 'rufian').setOrigin(0);
+    this.escanoblanco = this.add.image(0, 0, 'escanoblanco').setOrigin(0);
 //establezco los contenedores
-    
+
     //Fila 4. Diputados en cuarta fila y fondo
     this.fila4 = this.add.container(0, 0);
     //Fila 3. Diputados en tercera fila
@@ -734,7 +732,7 @@ class PlayGameScene extends Phaser.Scene {
     //countdownText.setOrigin(1, 0);
     //this.countdownText.setScrollFactor(0);
     //console.log('2');
-    
+
 // Paso 2: Crear la animación en la función create
     let frames = [];
     for(let i = 1; i <= 12; i++) {
@@ -775,7 +773,7 @@ class PlayGameScene extends Phaser.Scene {
     //countdownText = this.add.text(236, 16, 'Tiempo: ' + countdown, style);
 
     //Comenzamos
-    
+
     //console.log('5');
 
     //Sonidos
@@ -832,13 +830,13 @@ class PlayGameScene extends Phaser.Scene {
     this.positionImage.on('pointerdown', () => this.increaseScore(currentPosition.x, currentPosition.y));
     this.images.push(this.positionImage);
   }
-    
+
     return this.images;
   }
 
   decreaseCountdown() {
     this.countdown--;
-  
+
     this.countdownText.setText(Tiempo+': ' + this.countdown);
 
     if (this.countdown <= 5)
@@ -864,7 +862,7 @@ class PlayGameScene extends Phaser.Scene {
     switch (sound) {
       case 'opened':
         if (this.soundOpened) this.soundOpened.play(); else console.log('Sound not found');
-        break;  
+        break;
       case 'catched':
         if (this.soundCatched) this.soundCatched.play(); else console.log('Sound not found');
         break;
@@ -889,7 +887,7 @@ class PlayGameScene extends Phaser.Scene {
     }
     if (this.sound.context.state === 'suspended') {
       this.sound.context.resume();
-    } 
+    }
   }
 
   startGame() {
@@ -910,14 +908,14 @@ class PlayGameScene extends Phaser.Scene {
       loop: false
     })
   }
-  
-  
+
+
   startReady() {
     //console.log('startReady called');
     this.readyText.setText('');
 
     this.playSound('go');
-    
+
     this.positionImages = this.createPositionImages();
 
 
@@ -1052,11 +1050,11 @@ function create() {
     fontSize: '65px',
     fontWeight: 'bold', // Hace que el texto sea negrita
     fill: '#FFFFFF',
-    fontFamily: 'MyFont' 
+    fontFamily: 'MyFont'
   }).setOrigin(0.5);
   startButton.setInteractive();
 
-  // Boton de información 
+  // Boton de información
   infoButton = this.add.text(770, 855, 'i', {
     fontSize: '65px',
     fontFamily: 'MyFont',
@@ -1150,7 +1148,7 @@ function create() {
 
       this.bandera.setAlpha(0);
     }
-     
+
   }
 
   startButton.on('pointerdown', startGame);
@@ -1158,12 +1156,10 @@ function create() {
 
   infoButton.on('pointerdown', showInfo);
   lenguageButton.on('pointerdown', changeLenguage);
-  
 
-  this.add.text(980, 1000, '3.01', { fontSize: '19px', fill: '#FFFFFF' }) 
+
+  this.add.text(980, 1000, '3.01', { fontSize: '19px', fill: '#FFFFFF' })
 }
 
 function update() {
 }
-
-
