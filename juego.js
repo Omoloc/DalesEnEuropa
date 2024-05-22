@@ -19,6 +19,12 @@ let Tiempo = "Tiempo";
 let Atencion = "¡Atención!";
 let Deprisa = "¡Deprisa!";
 let Jugar = "Jugar";
+let title_NoTop = 'Lo siento...';
+let text_NoTop = 'No has ahorrar lo suficiente para entrar en el TOP :(';
+let title_TopDay = '¡Bien!';
+let text_TopDay = `Has conseguido ahorrar para entrar en el TOP 3 diario. Introduce tus 3 iniciales:`;
+let title_TopWorld = '¡Enhorabuena!';
+let text_TopWorld = `Has conseguido ahorrar para entrar en el TOP 3 diario y global. Introduce tus 3 iniciales:`;
 
 class GameOverScene extends Phaser.Scene {
 
@@ -101,11 +107,221 @@ class GameOverScene extends Phaser.Scene {
 
   create() {
 
+    const menuButton = document.getElementById('menuButton');
+    menuButton.style.display = 'flex';
+    menuButton.style.zIndex = '1000';
+    adjustButtonPosition(); // Ajustar posición al cargar
+
     this.mensajes = 0;
-    // Configura el estado inicial de esta escena
     this.add.image(0, 0, 'background').setOrigin(0);
-     // Cambia el color de fondo a blanco
     this.cameras.main.setBackgroundColor('#FFFFFF');
+
+    // Verificar la puntuación en el registro
+    let score = this.registry.get('score');
+    console.log('Puntuación:', score); // Verificar que la puntuación se obtiene correctamente
+      
+// Función para obtener el token y luego las puntuaciones
+// Función para obtener el token y luego las puntuaciones
+// Función para obtener el token y luego las puntuaciones
+// Función para obtener el token y luego las puntuaciones
+function obtenerTokenYpuntuaciones() {
+    return fetch('./inicio_juego.php')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.token) {
+                console.log('Token obtenido:', data.token);
+                let sessionToken = data.token;
+                return fetch('./obtener_puntuaciones.php?token=' + sessionToken)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    });
+            } else {
+                throw new Error('No se pudo obtener el token');
+            }
+        })
+        .then(data => {
+            console.log('Puntuaciones obtenidas:', data);
+            mostrarPopUp(data.top3_day, data.top3_world);
+        })
+        .catch(error => {
+            console.error('Error en la llamada AJAX:', error);
+        });
+}
+
+// Función para obtener el token y luego las puntuaciones
+function obtenerTokenYpuntuaciones() {
+    return fetch('./inicio_juego.php')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.token) {
+                console.log('Token obtenido:', data.token);
+                let sessionToken = data.token;
+                return fetch('./obtener_puntuaciones.php?token=' + sessionToken)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    });
+            } else {
+                throw new Error('No se pudo obtener el token');
+            }
+        })
+        .then(data => {
+            console.log('Puntuaciones obtenidas:', data);
+            mostrarPopUp(data.top3_day, data.top3_world);
+        })
+        .catch(error => {
+            console.error('Error en la llamada AJAX:', error);
+        });
+}
+
+// Función para mostrar el popup
+function mostrarPopUp(top3_day, top3_world) {
+    return new Promise((resolve, reject) => {
+        let modal = document.createElement('div');
+        modal.style.position = 'fixed';
+        modal.style.top = '50%';
+        modal.style.left = '50%';
+        modal.style.transform = 'translate(-50%, -50%)';
+        modal.style.backgroundColor = '#fff';
+        modal.style.padding = '20px';
+        modal.style.boxShadow = '0 0 20px rgba(0, 0, 0, 0.5)';
+        modal.style.zIndex = '1000';
+        modal.style.borderRadius = '15px';
+        modal.style.textAlign = 'center';
+        modal.style.width = '300px';
+        modal.style.border = '2px solid #FFA500';
+
+        let mensajeElemento = document.createElement('h1');
+        let descripcionElemento = document.createElement('p');
+        let input;
+        let botonEnviar;
+        let showInput = false;
+
+
+        if (score == 0 || score <= top3_day ) {
+            mensajeElemento.textContent = title_NoTop;
+            descripcionElemento.textContent = text_NoTop;
+            mensajeElemento.style.color = '#FF4500';
+        } else if (score > top3_day && score <= top3_world) {
+            mensajeElemento.textContent = title_TopDay;
+            descripcionElemento.textContent = text_TopDay;
+            showInput = true;
+            mensajeElemento.style.color = '#FF8C00';
+        } else {
+            mensajeElemento.textContent = title_TopWorld;
+            descripcionElemento.textContent = text_TopWorld;
+            showInput = true;
+            mensajeElemento.style.color = '#32CD32';
+        }
+
+        mensajeElemento.style.marginBottom = '10px';
+        modal.appendChild(mensajeElemento);
+        
+        descripcionElemento.style.color = '#333';
+        modal.appendChild(descripcionElemento);
+
+        if (showInput) {
+            input = document.createElement('input');
+            input.type = 'text';
+            input.maxLength = 3;
+            input.style.marginTop = '10px';
+            input.style.padding = '5px';
+            input.style.borderRadius = '5px';
+            input.style.border = '1px solid #ccc';
+            modal.appendChild(input);
+
+            botonEnviar = document.createElement('button');
+            botonEnviar.textContent = 'Enviar';
+            botonEnviar.style.marginTop = '15px';
+            botonEnviar.style.padding = '10px 20px';
+            botonEnviar.style.border = 'none';
+            botonEnviar.style.backgroundColor = '#FFA500';
+            botonEnviar.style.backgroundImage = 'linear-gradient(45deg, #FFA500, #FF4500)';
+            botonEnviar.style.color = '#fff';
+            botonEnviar.style.borderRadius = '5px';
+            botonEnviar.style.cursor = 'pointer';
+
+            botonEnviar.onclick = function() {
+                let iniciales = input.value;
+                if (iniciales && iniciales.length === 3 && /^[A-Za-z]{3}$/.test(iniciales)) {
+                    document.body.removeChild(modal);
+                    resolve(iniciales);
+                } else {
+                    alert('Iniciales inválidas. Asegúrate de ingresar 3 letras.');
+                }
+            };
+
+            modal.appendChild(botonEnviar);
+        } else {
+            setTimeout(() => {
+                document.body.removeChild(modal);
+                reject('No score achieved');
+            }, 2000);
+        }
+
+        document.body.appendChild(modal);
+    }).then(iniciales => {
+        enviarPuntuacion(iniciales);
+    }).catch(error => {
+        console.error('Error al obtener las iniciales:', error);
+    });
+}
+
+// Función para enviar las iniciales y la puntuación al servidor
+function enviarPuntuacion(iniciales) {
+    fetch('./inicio_juego.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.token) {
+                // Crear un objeto FormData y agregar los datos
+                let formData = new FormData();
+                formData.append('iniciales', iniciales.toUpperCase());
+                formData.append('puntuacion', score);
+                formData.append('token', data.token);
+
+                // Enviar el formulario con el token incluido
+                fetch('./guardar_puntuacion.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(result => {
+                    alert(result); // Mostrar el resultado en un alert para mayor visibilidad
+                    // Lógica adicional después de guardar la puntuación (si es necesario)
+                })
+                .catch(error => {
+                    console.error('Error al guardar la puntuación:', error);
+                    alert('Error al guardar la puntuación: ' + error.message); // Mostrar el error en un alert
+                });
+            } else {
+                console.error('No se pudo obtener el token');
+                alert('No se pudo obtener el token'); // Mostrar el error en un alert
+            }
+        })
+        .catch(error => {
+            console.error('Error en la llamada AJAX:', error);
+            alert('Error en la llamada AJAX: ' + error.message); // Mostrar el error en un alert
+        });
+}
+
+// Llamar a la función para obtener el token y las puntuaciones, y mostrar el popup
+obtenerTokenYpuntuaciones();
+
   
     //this.add.text(120, 10, '¡Enhorabuena!', { fontSize: '32px', fontFamily: 'Arial', fill: '#000000' });
     //this.add.text(20, 50, '¡Has eliminado a '+this.contador+ ' diputados!', { fontSize: '32px', fontFamily: 'Arial' , fill: '#000000' });
@@ -445,7 +661,6 @@ class PlayGameScene extends Phaser.Scene {
     this.load.image('fila1', 'fila1.png');
     this.load.image('fila2', 'fila2.png');
     this.load.image('fila3', 'fila3.png');
-    this.load.image('feijo', 'feijo.gif');
     
     this.load.image('rufian', 'rufian.webp');
     
@@ -466,6 +681,8 @@ class PlayGameScene extends Phaser.Scene {
 
   create() {
     console.log('Create PlayGameScene');
+      const menuButton = document.getElementById('menuButton');
+    menuButton.style.display = 'none';
     this.countdown = 15; // Tiempo de juego en segundos
     this.score = 0;
     this.timeup = 300;
@@ -633,7 +850,8 @@ class PlayGameScene extends Phaser.Scene {
     }
 
     if (this.countdown === 0) {
-      this.scene.start('GameOverScene', { puntuacion: this.score });
+        this.registry.set('score', this.score);
+        this.scene.start('GameOverScene', { puntuacion: this.score });
 
       if (this.score >0 ) this.playSound('win'); else this.playSound('failed');
     }
@@ -742,6 +960,8 @@ class AboutEB extends Phaser.Scene {
   }
 
   create() {
+const menuButton = document.getElementById('menuButton');
+    menuButton.style.display = 'none';
     // Configura el estado inicial de esta escena
   }
 
@@ -774,11 +994,45 @@ window.onload = function() {
         GameOverScene, PlayGameScene, AboutEB ]
       };
 
-      var game = new Phaser.Game(config);
+    var game = new Phaser.Game(config);
+    // Configurar el evento de clic para el botón
+    document.getElementById('menuButton').addEventListener('click', function() {
+        verPuntuaciones();
+    });
+
+    // Ajustar la posición del botón cuando la ventana cambie de tamaño
+    window.addEventListener('resize', adjustButtonPosition);
   });
 };
 
 var startButton;
+
+function verPuntuaciones() {
+    // Realizar una llamada AJAX para obtener el token
+    fetch('./inicio_juego.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.token) {
+                // Abrir la página de puntuaciones en una nueva pestaña con el token
+                window.open('./puntuaciones.php?token=' + data.token, '_blank');
+            } else {
+                console.error('No se pudo obtener el token');
+            }
+        })
+        .catch(error => console.error('Error en la llamada AJAX:', error));
+}
+
+function adjustButtonPosition() {
+  const img = document.querySelector('canvas'); // Selecciona el canvas de Phaser
+  const button = document.getElementById('menuButton');
+
+  // Obtener las dimensiones y posición de la imagen
+  const imgRect = img.getBoundingClientRect();
+
+  // Posicionar el botón en la esquina superior derecha de la imagen
+  button.style.top = `${imgRect.top + 20}px`;
+  button.style.left = `${imgRect.right - button.offsetWidth - 20}px`;
+}
 
 function preload() {
     this.load.image('intro', 'Intro.png');
@@ -791,6 +1045,8 @@ function create() {
   this.add.image(0, 0, 'intro').setOrigin(0);
   //console.log('Scene created');
 
+          const menuButton = document.getElementById('menuButton');
+    menuButton.style.display = 'none';
   // Pantalla inicial
   startButton = this.add.text( 510, 865 , 'JUGAR', {
     fontSize: '65px',
