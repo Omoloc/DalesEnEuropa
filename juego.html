@@ -18,50 +18,15 @@
     }
     @font-face {
         font-family: 'MyFont';
-        src: url('SugarBomb.ttf') format('truetype');
+        src: url('fonts/SugarBomb.ttf') format('truetype');
     }
-.menu-button {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #FFA500, #FF4500); /* Degradado naranja */
-            border: 2px solid white; /* Borde blanco */
-            position: absolute;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 1000;
-        }
-        .menu-button .lines {
-            width: 20px;
-            height: 3px;
-            background-color: white;
-            position: relative;
-        }
-        .menu-button .lines::before,
-        .menu-button .lines::after {
-            content: '';
-            width: 20px;
-            height: 3px;
-            background-color: white;
-            position: absolute;
-            left: 0;
-        }
-        .menu-button .lines::before {
-            top: -7px;
-        }
-        .menu-button .lines::after {
-            top: 7px;
-        }
-
   </style>
 </head>
 <body>
   <div class="menu-button" id="menuButton">
     <div class="lines"></div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/phaser/dist/phaser.min.js"></script>
-  <script src="juego.js"></script>
+  <script src="js/phaser.min.js"></script>
+  <script src="js/juego.js"></script>
 </body>
 </html>

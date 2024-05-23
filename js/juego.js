@@ -65,7 +65,7 @@ class GameOverScene extends Phaser.Scene {
 
   preload() {
     // Carga los recursos necesarios para esta escena
-    this.load.image('background', 'Background.png');
+    this.load.image('background', 'media/img/Background_EU.png');
     //this.load.css('myfont', 'myfont.css');
 
   }
@@ -125,7 +125,7 @@ class GameOverScene extends Phaser.Scene {
 // Función para obtener el token y luego las puntuaciones
 // Función para obtener el token y luego las puntuaciones
 function obtenerTokenYpuntuaciones() {
-    return fetch('./inicio_juego.php')
+    return fetch('./php/inicio_juego.php')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -136,7 +136,7 @@ function obtenerTokenYpuntuaciones() {
             if (data.token) {
                 console.log('Token obtenido:', data.token);
                 let sessionToken = data.token;
-                return fetch('./obtener_puntuaciones.php?token=' + sessionToken)
+                return fetch('./php/obtener_puntuaciones.php?token=' + sessionToken)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
@@ -158,7 +158,7 @@ function obtenerTokenYpuntuaciones() {
 
 // Función para obtener el token y luego las puntuaciones
 function obtenerTokenYpuntuaciones() {
-    return fetch('./inicio_juego.php')
+    return fetch('./php/inicio_juego.php')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -169,7 +169,7 @@ function obtenerTokenYpuntuaciones() {
             if (data.token) {
                 console.log('Token obtenido:', data.token);
                 let sessionToken = data.token;
-                return fetch('./obtener_puntuaciones.php?token=' + sessionToken)
+                return fetch('./php/obtener_puntuaciones.php?token=' + sessionToken)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
@@ -284,7 +284,7 @@ function mostrarPopUp(top3_day, top3_world) {
 
 // Función para enviar las iniciales y la puntuación al servidor
 function enviarPuntuacion(iniciales) {
-    fetch('./inicio_juego.php')
+    fetch('./php/inicio_juego.php')
         .then(response => response.json())
         .then(data => {
             if (data.token) {
@@ -295,7 +295,7 @@ function enviarPuntuacion(iniciales) {
                 formData.append('token', data.token);
 
                 // Enviar el formulario con el token incluido
-                fetch('./guardar_puntuacion.php', {
+                fetch('./php/guardar_puntuacion.php', {
                     method: 'POST',
                     body: formData
                 })
@@ -320,7 +320,7 @@ function enviarPuntuacion(iniciales) {
 }
 
 // Llamar a la función para obtener el token y las puntuaciones, y mostrar el popup
-obtenerTokenYpuntuaciones();
+//obtenerTokenYpuntuaciones();
 
 
     //this.add.text(120, 10, '¡Enhorabuena!', { fontSize: '32px', fontFamily: 'Arial', fill: '#000000' });
@@ -466,6 +466,25 @@ obtenerTokenYpuntuaciones();
   }
 }
 
+class InstructionsGame extends Phaser.Scene {
+    constructor() {
+    super({ key: 'InstructionsGame' });
+    }
+
+    preload() {
+        console.log('Preload PlayGameScene');
+        this.load.image('background', 'media/img/info.png');
+
+    }
+
+    create() {
+    // Configura el estado inicial de esta escena
+    }
+
+    update() {
+    // Actualiza el estado de esta escena en cada frame
+    }
+}
 
 class PlayGameScene extends Phaser.Scene {
 
@@ -476,6 +495,9 @@ class PlayGameScene extends Phaser.Scene {
     // Bind the context
     this.increaseScore = this.increaseScore.bind(this);
     this.showNextImage = this.showNextImage.bind(this);
+    this.music = null;
+      this.wosh = null;
+      this.DeprisaText = null;
     //this.endGame = this.endGame.bind(this);
   }
 
@@ -641,47 +663,49 @@ class PlayGameScene extends Phaser.Scene {
     console.log('Preload PlayGameScene');
 
     //imagenes
-    this.load.image('abascalvox', 'diputados/abascalvox.webp');
-    this.load.image('aitorpnv', 'diputados/aitorpnv.webp');
-    this.load.image('albasumar', 'diputados/albasumar.webp');
-    this.load.image('amaiavox', 'diputados/amaiavox.webp');
-    this.load.image('belarrapodemos', 'diputados/belarrapodemos.webp');
-    this.load.image('diazsumar', 'diputados/diazsumar.webp');
-    this.load.image('enekopsoe', 'diputados/enekopsoe.webp');
-    this.load.image('escanoblanco', 'diputados/escanoblanco.webp');
-    this.load.image('feijoopp', 'diputados/feijoopp.webp');
-    this.load.image('imanolpnv', 'diputados/imanolpnv.webp');
-    this.load.image('javierpp', 'diputados/javierpp.webp');
-    this.load.image('mertxebildu', 'diputados/mertxebildu.webp');
-    this.load.image('mirenpodemos', 'diputados/mirenpodemos.webp');
-    this.load.image('sanchezpsoe', 'diputados/sanchezpsoe.webp');
+    this.load.image('abascalvox', 'media/img/diputados/abascalvox.webp');
+    this.load.image('aitorpnv', 'media/img/diputados/aitorpnv.webp');
+    this.load.image('albasumar', 'media/img/diputados/albasumar.webp');
+    this.load.image('amaiavox', 'media/img/diputados/amaiavox.webp');
+    this.load.image('belarrapodemos', 'media/img/diputados/belarrapodemos.webp');
+    this.load.image('diazsumar', 'media/img/diputados/diazsumar.webp');
+    this.load.image('enekopsoe', 'media/img/diputados/enekopsoe.webp');
+    this.load.image('escanoblanco', 'media/img/diputados/escanoblanco.webp');
+    this.load.image('feijoopp', 'media/img/diputados/feijoopp.webp');
+    this.load.image('imanolpnv', 'media/img/diputados/imanolpnv.webp');
+    this.load.image('javierpp', 'media/img/diputados/javierpp.webp');
+    this.load.image('mertxebildu', 'media/img/diputados/mertxebildu.webp');
+    this.load.image('mirenpodemos', 'media/img/diputados/mirenpodemos.webp');
+    this.load.image('sanchezpsoe', 'media/img/diputados/sanchezpsoe.webp');
 
-    this.load.image('congreso', 'congreso.png');
-    this.load.image('fila0', 'fila0.png');
-    this.load.image('fila1', 'fila1.png');
-    this.load.image('fila2', 'fila2.png');
-    this.load.image('fila3', 'fila3.png');
+    this.load.image('congreso', 'media/img/congreso//congreso_EU.png');
+    this.load.image('fila0', 'media/img/congreso/fila0_EU.png');
+    this.load.image('fila1', 'media/img/congreso/fila1_EU.png');
+    this.load.image('fila2', 'media/img/congreso/fila2_EU.png');
+    this.load.image('fila3', 'media/img/congreso/fila3_EU.png');
 
     // Cargar imágenes animación monedas
     for(let i = 1; i <= 12; i++) {
-        this.load.image(`coin${i}`, `monedas/${i.toString().padStart(3, '0')}.png`);
+        this.load.image(`coin${i}`, `media/img/monedas/${i.toString().padStart(3, '0')}.png`);
     }
 
     // Sonidos
-    this.load.audio('opened', 'Open.wav');
-    this.load.audio('catched', 'Catch.mp3');
-    this.load.audio('failed', 'Replay.wav');
-    this.load.audio('ready', 'Ready.mp3');
-    this.load.audio('go', 'Go.mp3');
-    this.load.audio('win', 'Win.mp3');
-    this.load.audio('monedas', 'monedas01.mp3');
+    this.load.audio('music', 'media/audio/music.mp3');
+    this.load.audio('wosh', 'media/audio/wosh.mp3');
+    this.load.audio('opened', 'media/audio/Open.wav');
+    this.load.audio('catched', 'media/audio/Catch.mp3');
+    this.load.audio('failed', 'media/audio/Replay.wav');
+    this.load.audio('ready', 'media/audio/Ready.mp3');
+    this.load.audio('go', 'media/audio/Go.mp3');
+    this.load.audio('win', 'media/audio/Win.mp3');
+    this.load.audio('monedas', 'media/audio/monedas01.mp3');
   }
 
   create() {
     console.log('Create PlayGameScene');
       const menuButton = document.getElementById('menuButton');
     menuButton.style.display = 'none';
-    this.countdown = 15; // Tiempo de juego en segundos
+    this.countdown = 20; // Tiempo de juego en segundos
     this.score = 0;
     this.timeup = 300;
     this.staytime = 700;
@@ -711,7 +735,7 @@ class PlayGameScene extends Phaser.Scene {
     //console.log('1');
 
     this.scoreText = this.add.text(16, 36, Puntuacion+': 0',
-                              { fontSize: '52px', fontFamily: 'MyFont', fill: '#FFFF00' });
+                              { fontSize: '36px', fontFamily: 'MyFont', fill: '#000000' });
     //this.scoreText.setScrollFactor(0);
 
     this.HelpText = this.add.text(16, 96, '',
@@ -723,15 +747,7 @@ class PlayGameScene extends Phaser.Scene {
 
 
     this.countdownText = this.add.text(80, 96, Tiempo +': ' + this.countdown,
-                                  { fontSize: '52px',fontFamily: 'MyFont', fill: '#FFFF00' });
-
-    //mensaje independiente de deprisa
-    this.DeprisaText = this.add.text(400, 96, "", { fontSize: '52px', fontFamily: 'MyFont', fill: '#FFFF00' });
-
-
-    //countdownText.setOrigin(1, 0);
-    //this.countdownText.setScrollFactor(0);
-    //console.log('2');
+                                  { fontSize: '36px',fontFamily: 'MyFont', fill: '#000000' });
 
 // Paso 2: Crear la animación en la función create
     let frames = [];
@@ -778,12 +794,18 @@ class PlayGameScene extends Phaser.Scene {
 
     //Sonidos
     this.playSound('ready');
+    
+    this.music = this.sound.add('music'); // Añade la música directamente
+    this.music.play(); // Reproduce la música 
+                
 
     //console.log('6')
     this.startGame();
   }
 
   loadSounds() {
+    this.soundMusic = this.sound.add('music');
+    this.soundMusic = this.sound.add('wosh');
     this.soundOpened = this.sound.add('opened');
     this.soundCatched = this.sound.add('catched');
     this.soundMonedas = this.sound.add('monedas');
@@ -839,19 +861,51 @@ class PlayGameScene extends Phaser.Scene {
 
     this.countdownText.setText(Tiempo+': ' + this.countdown);
 
-    if (this.countdown <= 5)
-    {
-      this.countdownText.setText(this.countdownText.text);
-      this.DeprisaText.setText(Deprisa);
-      this.timeup=200
-      this.staytime=50;
+    if (this.countdown == 15) {
+        this.music.setRate(1.04);
+        console.log('15');
+    }
+      
+    if (this.countdown == 13) {
+        this.music.setRate(1.06);
+        console.log('13');
+    }
+      
+    if (this.countdown == 11) {
+        this.music.setRate(1.10);
+        console.log('11');
+    }
+      
+    if (this.countdown == 10){
+        this.wosh = this.sound.add('wosh');
+        this.wosh.setVolume(2);
+        this.wosh.play();
+        this.countdownText.setText(this.countdownText.text);
+        this.DeprisaText = this.add.text((config.width / 2)- 200,(config.height / 2)-45, Deprisa,
+            { fontSize: '80px',fontFamily: 'MyFont', fill: '#FFFF00' });
+        this.music.setRate(1.12);
+        this.timeup=200
+        this.staytime=50;
+        console.log('10');
+    }
+      
+    if (this.countdown == 9) {
+        this.DeprisaText.destroy();
+        console.log('9');
+    }
+      
+    if (this.countdown == 5) {
+        this.music.setRate(1.15);
+        console.log('-5');
     }
 
     if (this.countdown === 0) {
+        this.music.stop();
         this.registry.set('score', this.score);
         this.scene.start('GameOverScene', { puntuacion: this.score });
+        console.log('0');
 
-      if (this.score >0 ) this.playSound('win'); else this.playSound('failed');
+        if (this.score >0 ) this.playSound('win'); else this.playSound('failed');
     }
 
   }
@@ -860,6 +914,12 @@ class PlayGameScene extends Phaser.Scene {
     //console.log('playSound called '+sound);
 
     switch (sound) {
+      case 'music':
+        if (this.soundMusic) this.soundMusic.play(); else console.log('Sound not found');
+        break;
+      case 'wosh':
+        if (this.soundWosh) this.soundWosh.play(); else console.log('Sound not found');
+        break;
       case 'opened':
         if (this.soundOpened) this.soundOpened.play(); else console.log('Sound not found');
         break;
@@ -946,6 +1006,7 @@ class PlayGameScene extends Phaser.Scene {
 }
 
 //Clase para saber más sobre Escaños en Blanco
+
 class AboutEB extends Phaser.Scene {
   constructor() {
     super({ key: 'AboutEB' });
@@ -958,8 +1019,6 @@ class AboutEB extends Phaser.Scene {
   }
 
   create() {
-const menuButton = document.getElementById('menuButton');
-    menuButton.style.display = 'none';
     // Configura el estado inicial de esta escena
   }
 
@@ -989,7 +1048,7 @@ window.onload = function() {
           create: create,
           update: update
         },
-        GameOverScene, PlayGameScene, AboutEB ]
+        GameOverScene, InstructionsGame, PlayGameScene, AboutEB ]
       };
 
     var game = new Phaser.Game(config);
@@ -1007,12 +1066,12 @@ var startButton;
 
 function verPuntuaciones() {
     // Realizar una llamada AJAX para obtener el token
-    fetch('./inicio_juego.php')
+    fetch('./php/inicio_juego.php')
         .then(response => response.json())
         .then(data => {
             if (data.token) {
                 // Abrir la página de puntuaciones en una nueva pestaña con el token
-                window.open('./puntuaciones.php?token=' + data.token, '_blank');
+                window.open('./php/puntuaciones.php?token=' + data.token, '_blank');
             } else {
                 console.error('No se pudo obtener el token');
             }
@@ -1033,19 +1092,16 @@ function adjustButtonPosition() {
 }
 
 function preload() {
-    this.load.image('intro', 'Intro.png');
-    this.load.image('bandera', 'bandera.png');
-
-    //this.load.css('myfont', 'myfont.css');
+    this.load.image('intro', 'media/img/Intro_EU.png');
+    this.load.image('boton_idioma', 'media/img/idiomas/boton_euskera.png');
 }
 
 function create() {
-  this.add.image(0, 0, 'intro').setOrigin(0);
-  //console.log('Scene created');
+    this.add.image(0, 0, 'intro').setOrigin(0);
 
-          const menuButton = document.getElementById('menuButton');
+    const menuButton = document.getElementById('menuButton');
     menuButton.style.display = 'none';
-  // Pantalla inicial
+
   startButton = this.add.text( 510, 865 , 'JUGAR', {
     fontSize: '65px',
     fontWeight: 'bold', // Hace que el texto sea negrita
@@ -1054,7 +1110,7 @@ function create() {
   }).setOrigin(0.5);
   startButton.setInteractive();
 
-  // Boton de información
+
   infoButton = this.add.text(770, 855, 'i', {
     fontSize: '65px',
     fontFamily: 'MyFont',
@@ -1062,8 +1118,8 @@ function create() {
   }).setOrigin(0.5);
   infoButton.setInteractive();
 
-  this.bandera=this.add.image(861, 844, 'bandera').setOrigin(0);
-  this.bandera.setAlpha(0);
+  this.boton_idioma=this.add.image(861, 844, 'background').setOrigin(0);
+  this.boton_idioma.setAlpha(0);
 
   // Boton de cambio de idioma
   lenguageButton = this.add.text(900, 855, '+', {
@@ -1074,8 +1130,6 @@ function create() {
   lenguageButton.setInteractive();
 
   var startGame = () => {
-    // Cargo escena del juego
-    //console.log('PlayGameScene Scene Called');
     if (this.sound.context.state === 'suspended') {
       this.sound.context.resume();
     }
@@ -1083,9 +1137,7 @@ function create() {
   }
 
   var showInfo = () => {
-    // Muestra información sobre el juego
     console.log('Showinfo Called');
-    //this.scene.start('PlayGameScene');
   }
 
   var changeLenguage = () => {
@@ -1117,7 +1169,7 @@ function create() {
       Jugar = "Jolastu";
 
       startButton.setText(Jugar);
-      this.bandera.setAlpha(1);
+      this.boton_idioma.setAlpha(1);
     }
     else
     {
@@ -1146,7 +1198,7 @@ function create() {
 
       startButton.setText(Jugar);
 
-      this.bandera.setAlpha(0);
+      this.boton_idioma.setAlpha(0);
     }
 
   }
@@ -1158,7 +1210,23 @@ function create() {
   lenguageButton.on('pointerdown', changeLenguage);
 
 
-  this.add.text(980, 1000, '3.01', { fontSize: '19px', fill: '#FFFFFF' })
+    let tempText = this.add.text(0, 0, 'v3.01', { 
+        fontSize: '20px', 
+        fill: '#FFFFFF' 
+    });
+    
+    let textWidth = tempText.width;
+    let textHeight = tempText.height;
+    
+    tempText.destroy();
+    
+    let posX = 1024 - textWidth - 4;
+    let posY = 1024 - textHeight - 4;
+    
+    let finalText = this.add.text(posX, posY, 'v3.01', { 
+        fontSize: '20px', 
+        fill: '#FFFFFF' 
+    });
 }
 
 function update() {
