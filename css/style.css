@@ -1,0 +1,10 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+@font-face {
+    font-family: 'MyFont';
+    src: url('../fonts/SugarBomb.ttf') format('truetype');
+}
