@@ -111,7 +111,8 @@ class PlayGameScene extends Phaser.Scene {
         this.TextReady = null;
         this.TextDeprisa = null;
         this.TextCountdown=null;
-        this.loopReload=0; 
+        this.loopReload=0;
+        this.lastShownImages = this.lastShownImages || [];
     }
 
     increaseScore(posX, posY) {
@@ -175,9 +176,22 @@ class PlayGameScene extends Phaser.Scene {
         });
 
         console.log('Images to display '+this.gameImagesToDisplay.length);
-        this.randomImage = Phaser.Math.RND.pick(this.gameImagesToDisplay);
-        
+        do {
+            this.randomImage = Phaser.Math.RND.pick(this.gameImagesToDisplay);
+        } while (this.lastShownImages.includes(this.randomImage));
+
+        // Agregar la imagen seleccionada a la lista de últimas imágenes mostradas
+        this.lastShownImages.push(this.randomImage);
+
+        // Asegurarse de que la lista de últimas imágenes mostradas no tenga más de 5 elementos
+        if (this.lastShownImages.length > 5) {
+            this.lastShownImages.shift();
+        }
+
+        // Buscar el índice de la imagen seleccionada
         this.index = this.gameImagesToDisplay.indexOf(this.randomImage);
+
+        // Eliminar la imagen seleccionada de la lista si se encuentra
         if (this.index > -1) {
             this.gameImagesToDisplay.splice(this.index, 1);
         }
@@ -540,8 +554,12 @@ class PlayGameScene extends Phaser.Scene {
 
     if (this.loopReload % 5 === 0) {
         console.log("this.loopReload es divisible entre 5");
-        this.gameImagesToDisplay = Array.from(this.imagesToDisplay);
+        this.gameImagesToDisplay = [...this.imagesToDisplay];
+        console.log("this.lastShownImages :",this.lastShownImages);
+        this.lastShownImages = [];
+        console.log("this.lastShownImages :",this.lastShownImages);
     }
+    
     this.showNextImage();
     this.greenCircleTimer = this.time.addEvent({
       delay: this.timeup+this.staytime,
