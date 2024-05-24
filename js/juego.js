@@ -61,7 +61,9 @@ class InitialScene extends Phaser.Scene {
         this.addTextPlay();
         this.addImageFlag(bandera);
         
-        addTextWithAdjustedPosition(this, 1024, 1024, '20px', '#FFFFFF', 'v3.01','Arial');
+        const optimalFontSize = getOptimalFontSize(this, 'v3.01', 75, 50, 'Arial', 4);
+        const optimalPositionBottomRight = getOptimalSquarePosition(this, 'v3.01', optimalFontSize, 'Arial', 4, 'bottom-right');
+        this.TextVersionBottomRight = addTextWithAdjustedPosition(this, optimalPositionBottomRight.x, optimalPositionBottomRight.y, optimalPositionBottomRight.fontSize, '#FFFFFF', 'v3.01', 'Arial');
     }
 
     update() {
@@ -122,7 +124,9 @@ class InstructionsGame extends Phaser.Scene {
         this.addImageFlag(bandera);
         this.addTextInstruction()
         
-        addTextWithAdjustedPosition(this, 1024, 1024, '20px', '#FFFFFF', 'v3.01','Arial');
+        const optimalFontSize = getOptimalFontSize(this, 'v3.01', 75, 50, 'Arial', 4);
+        const optimalPositionBottomRight = getOptimalSquarePosition(this, 'v3.01', optimalFontSize, 'Arial', 4, 'bottom-right');
+        this.TextVersionBottomRight = addTextWithAdjustedPosition(this, optimalPositionBottomRight.x, optimalPositionBottomRight.y, optimalPositionBottomRight.fontSize, '#FFFFFF', 'v3.01', 'Arial');
     }
 
     update() {
@@ -385,14 +389,18 @@ class PlayGameScene extends Phaser.Scene {
     this.fila1.add(this.add.image(0, 0, 'fila1').setOrigin(0));
     this.fila0.add(this.add.image(0, 0, 'fila0').setOrigin(0));
 
-    const optimalFontSize_TextScore = getOptimalFontSize(this, Puntuacion + ': ' + this.score, 250, 120, 'MyFont', 4);
-    this.TextScore = addTextWithAdjustedPosition(this, 300, 100, optimalFontSize_TextScore, '#000000', Puntuacion + ': ' + this.score,'myFont');
+      
+
+    const optimalFontSize_TextScore = getOptimalFontSize(this, Puntuacion + ': ' + this.score, 300, 100, 'MyFont', 12);
+    const optimalPosition_TextScore = getOptimalSquarePosition(this, Puntuacion + ': ' + this.score, optimalFontSize_TextScore, 'MyFont', 12);
+    this.TextScore = addTextWithAdjustedPosition(this, optimalPosition_TextScore.x, optimalPosition_TextScore.y, optimalFontSize_TextScore, '#000000', Puntuacion + ': ' + this.score,'myFont');
+      
+    const optimalFontSize_TextCountdown = getOptimalFontSize(this, Tiempo +': ' + this.countdown, 300, 100, 'MyFont', 12);
+    const optimalPosition_TextCountdown = getOptimalSquarePosition(this, Puntuacion + ': ' + this.score, optimalFontSize_TextCountdown, 'MyFont', 12);
+    this.TextCountdown = addTextWithAdjustedPosition(this, optimalPosition_TextCountdown.x, optimalPosition_TextCountdown.y+80, optimalFontSize_TextCountdown, '#000000', Tiempo +': ' + this.countdown,'myFont');
 
     const optimalFontSize_TextReady = getOptimalFontSize(this, Atencion, 380, 150, 'MyFont', 4);
     this.TextReady = addCenteredText(this, Atencion, optimalFontSize_TextReady, 'MyFont', '#FFFF00');
-
-    const optimalFontSize_TextCountdown = getOptimalFontSize(this, Tiempo +': ' + this.countdown, 250, 120, 'MyFont', 4);
-    this.TextCountdown = addTextWithAdjustedPosition(this, 300, 150, optimalFontSize_TextCountdown, '#000000', Tiempo +': ' + this.countdown,'myFont');
 
 // Paso 2: Crear la animación en la función create
     let frames = [];
@@ -1101,9 +1109,9 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 const addTextWithAdjustedPosition = (scene, x, y, fontSize, color, text, font) => {
-    
+    // Añadir texto temporalmente para medir su tamaño
     let tempText = scene.add.text(0, 0, text, { 
-        fontSize: fontSize, 
+        fontSize: fontSize + 'px', 
         fill: color,
         fontFamily: font
     });
@@ -1113,18 +1121,19 @@ const addTextWithAdjustedPosition = (scene, x, y, fontSize, color, text, font) =
     
     tempText.destroy();
     
-    let posX = x - textWidth - 4;
-    let posY = y - textHeight - 4;
+    // Calcular la posición final
+    let posX = x + 4; // Ajustamos para asegurarnos de que no salga de pantalla
+    let posY = y + 4; // Ajustamos para asegurarnos de que no salga de pantalla
     
     let textObject = scene.add.text(posX, posY, text, { 
-        fontSize: fontSize, 
+        fontSize: fontSize + 'px', 
         fill: color,
         fontFamily: font
     });
     
+    console.log("Texto añadido en:", { x: posX, y: posY, fontSize: fontSize + 'px' });
     return textObject;
 };
-
 
 function addCenteredText(scene, text, fontSize, fontFamily, color, classCSS) {
     // Crear el texto con el tamaño de fuente especificado
@@ -1184,3 +1193,25 @@ function measureText(scene, text, fontSize, fontFamily) {
         height: totalHeight
     };
 }
+
+const getOptimalSquarePosition = (scene, text, fontSize, fontFamily, padding, position = 'top-left') => {
+    let dimensions = measureText(scene, text, fontSize, fontFamily);
+
+    let posX, posY;
+
+    if (position === 'top-left') {
+        posX = padding;
+        posY = 0;
+    } else if (position === 'top-right') {
+        posX = scene.scale.width - dimensions.width - padding;
+        posY = 0;
+    } else if (position === 'bottom-right') {
+        posX = scene.scale.width - dimensions.width - padding;
+        posY = scene.scale.height - dimensions.height - padding - fontSize * 0.2;
+    } else if (position === 'bottom-left') {
+        posX = padding;
+        posY = scene.scale.height - dimensions.height - padding - fontSize * 0.2;
+    }
+    return { x: posX, y: posY, fontSize: fontSize };
+};
+
