@@ -1,3 +1,10 @@
+let title_NoTop = 'Lo siento...';
+let text_NoTop = 'No has ahorrar lo suficiente para entrar en el TOP :(';
+let title_TopDay = '¡Bien!';
+let text_TopDay = `Has conseguido ahorrar para entrar en el TOP 3 diario. Introduce tus 3 iniciales:`;
+let title_TopWorld = '¡Enhorabuena!';
+let text_TopWorld = `Has conseguido ahorrar para entrar en el TOP 3 diario y global. Introduce tus 3 iniciales:`;
+
 class BaseScene extends Phaser.Scene {
     constructor() {
         super({ key: 'BaseScene' });
