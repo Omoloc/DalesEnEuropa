@@ -836,6 +836,7 @@ class AboutEB extends Phaser.Scene {
             this.ImageFlag.on('pointerup', () => {
                 changeLanguage();
                 this.addImageFlag(bandera)
+                this.updateText()
             });
         } else {
             console.log("Hay");
