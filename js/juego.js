@@ -226,9 +226,8 @@ class PlayGameScene extends Phaser.Scene {
     staytime=700
     score = 0;
     positionImages = [];
-    imagesToDisplay = ['abascalvox', 'aitorpnv', 'albasumar', 'amaiavox', 'belarrapodemos',
-                      'diazsumar', 'enekopsoe', 'escanoblanco', 'feijoopp', 'imanolpnv',
-                      'javierpp', 'mertxebildu', 'mirenpodemos', 'sanchezpsoe'];
+    imagesToDisplay = ['pp','psoe', 'sumar', 'vox', 'podemos',
+                      'junts','ceus', 'ahora_rep', 'escanoblanco', 'feijoopp', 'abascalvox', 'sanchezpsoe'];
     countdown = 0;
     scoreText ="";
     soundOpened = null;
