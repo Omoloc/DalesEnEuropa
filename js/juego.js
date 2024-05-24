@@ -111,6 +111,7 @@ class PlayGameScene extends Phaser.Scene {
         this.TextReady = null;
         this.TextDeprisa = null;
         this.TextCountdown=null;
+        this.loopReload=0; 
     }
 
     increaseScore(posX, posY) {
@@ -173,8 +174,13 @@ class PlayGameScene extends Phaser.Scene {
             positionImage.setAlpha(0);
         });
 
-        console.log('Images to display '+this.imagesToDisplay.length);
-        this.randomImage = Phaser.Math.RND.pick(this.imagesToDisplay);
+        console.log('Images to display '+this.gameImagesToDisplay.length);
+        this.randomImage = Phaser.Math.RND.pick(this.gameImagesToDisplay);
+        
+        this.index = this.gameImagesToDisplay.indexOf(this.randomImage);
+        if (this.index > -1) {
+            this.gameImagesToDisplay.splice(this.index, 1);
+        }
 
         this.randomPositionImage = Phaser.Math.RND.pick(this.positionImages);
         this.originalY = this.randomPositionImage.y;
@@ -228,6 +234,7 @@ class PlayGameScene extends Phaser.Scene {
     positionImages = [];
     imagesToDisplay = ['escanoblanco', 'pp','psoe', 'sumar', 'vox', 'podemos',
                       'junts','ceus', 'ahora_rep', 'feijoopp', 'abascalvox', 'sanchezpsoe'];
+    gameImagesToDisplay = [...this.imagesToDisplay];
     countdown = 0;
     scoreText ="";
     soundOpened = null;
@@ -527,10 +534,14 @@ class PlayGameScene extends Phaser.Scene {
       loop: true
     });
 
-    //this.startGame();
-
   }
   ReloadGreenCircleTimer () {
+    this.loopReload++;
+
+    if (this.loopReload % 5 === 0) {
+        console.log("this.loopReload es divisible entre 5");
+        this.gameImagesToDisplay = Array.from(this.imagesToDisplay);
+    }
     this.showNextImage();
     this.greenCircleTimer = this.time.addEvent({
       delay: this.timeup+this.staytime,
