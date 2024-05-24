@@ -391,13 +391,13 @@ class PlayGameScene extends Phaser.Scene {
 
       
 
-    const optimalFontSize_TextScore = getOptimalFontSize(this, Puntuacion + ': ' + this.score, 300, 100, 'MyFont', 12);
-    const optimalPosition_TextScore = getOptimalSquarePosition(this, Puntuacion + ': ' + this.score, optimalFontSize_TextScore, 'MyFont', 12);
-    this.TextScore = addTextWithAdjustedPosition(this, optimalPosition_TextScore.x, optimalPosition_TextScore.y, optimalFontSize_TextScore, '#000000', Puntuacion + ': ' + this.score,'myFont');
+    const optimalFontSize_TextScore = getOptimalFontSize(this, Puntuacion + ': 100', 300, 100, 'MyFont', 4);
+    const optimalPosition_TextScore = getOptimalSquarePosition(this, Puntuacion + ': 100', optimalFontSize_TextScore, 'MyFont', 4,'top-left');
+    this.TextScore = addTextWithAdjustedPosition(this, optimalPosition_TextScore.x, optimalPosition_TextScore.y+8, optimalFontSize_TextScore, '#000000', Puntuacion + ': ' + this.score,'myFont');
       
-    const optimalFontSize_TextCountdown = getOptimalFontSize(this, Tiempo +': ' + this.countdown, 300, 100, 'MyFont', 12);
-    const optimalPosition_TextCountdown = getOptimalSquarePosition(this, Puntuacion + ': ' + this.score, optimalFontSize_TextCountdown, 'MyFont', 12);
-    this.TextCountdown = addTextWithAdjustedPosition(this, optimalPosition_TextCountdown.x, optimalPosition_TextCountdown.y+80, optimalFontSize_TextCountdown, '#000000', Tiempo +': ' + this.countdown,'myFont');
+    const optimalFontSize_TextCountdown = getOptimalFontSize(this, Tiempo +': ' + this.countdown, 300, 100, 'MyFont', 4);
+    const optimalPosition_TextCountdown = getOptimalSquarePosition(this, Puntuacion + ': ' + this.score, optimalFontSize_TextCountdown, 'MyFont', 4,'top-left');
+    this.TextCountdown = addTextWithAdjustedPosition(this, optimalPosition_TextCountdown.x, optimalPosition_TextCountdown.y+80, optimalFontSize_TextCountdown, '#000000', Tiempo +': ' + this.countdown,'myFont','top-left');
 
     const optimalFontSize_TextReady = getOptimalFontSize(this, Atencion, 380, 150, 'MyFont', 4);
     this.TextReady = addCenteredText(this, Atencion, optimalFontSize_TextReady, 'MyFont', '#FFFF00');
@@ -1194,7 +1194,7 @@ function measureText(scene, text, fontSize, fontFamily) {
     };
 }
 
-const getOptimalSquarePosition = (scene, text, fontSize, fontFamily, padding, position = 'top-left') => {
+const getOptimalSquarePosition = (scene, text, fontSize, fontFamily, padding, position) => {
     let dimensions = measureText(scene, text, fontSize, fontFamily);
 
     let posX, posY;
