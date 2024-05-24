@@ -425,7 +425,6 @@ class PlayGameScene extends Phaser.Scene {
   }
   decreaseCountdown() {
     this.countdown--;
-    this.countdown=0;
 
     this.TextCountdown.setText(Tiempo+': ' + this.countdown);
 
