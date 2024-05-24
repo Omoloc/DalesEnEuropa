@@ -82,7 +82,7 @@ class InitialScene extends Phaser.Scene {
         this.TextPlay.y = 865;
         this.TextPlay.setInteractive({ useHandCursor: true });
         this.TextPlay.on('pointerup', () => {
-            this.scene.start('InstructionsGame');
+            this.scene.start('PlayGameScene');
         });
     }
 
@@ -98,100 +98,6 @@ class InitialScene extends Phaser.Scene {
         } else {
             this.ImageFlag.setTexture(bandera_actual);
         }
-    }
-}
-
-class InstructionsGame extends Phaser.Scene {
-    constructor() {
-        super({ key: 'InstructionsGame' });
-    }
-
-    preload() {
-        this.load.image('info', 'media/img/info.png');
-        this.load.image('bandera_esp', 'media/img/idiomas/boton_castellano.png');
-        this.load.image('bandera_eus', 'media/img/idiomas/boton_euskera.png');
-        this.load.image('bandera_cat', 'media/img/idiomas/boton_catalan.png');
-        this.load.image('bandera_gal', 'media/img/idiomas/boton_gallego.png');
-        this.load.image('boton', 'media/img/Boton.png');
-    }
-
-    create() {
-        console.log('InstructionsGame started');
-        this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'info').setOrigin(0.5, 0.5);
-        this.add.image(this.cameras.main.centerX, 865, 'boton').setOrigin(0.5, 0.5);
-        
-        this.addTextPlay();
-        this.addImageFlag(bandera);
-        this.addTextInstruction()
-        
-        const optimalFontSize = getOptimalFontSize(this, 'v3.01', 75, 50, 'Arial', 4);
-        const optimalPositionBottomRight = getOptimalSquarePosition(this, 'v3.01', optimalFontSize, 'Arial', 4, 'bottom-right');
-        this.TextVersionBottomRight = addTextWithAdjustedPosition(this, optimalPositionBottomRight.x, optimalPositionBottomRight.y, optimalPositionBottomRight.fontSize, '#FFFFFF', 'v3.01', 'Arial');
-    }
-
-    update() {
-    }
-    
-    transitionOut(progress) {
-        this.cameras.main.alpha = 1 - progress;
-    }
-    
-    addImageFlag(bandera_actual) {
-        if (!this.ImageFlag) {
-            this.ImageFlag = this.add.image(878, 890, bandera).setOrigin(0.5);
-            this.ImageFlag.setInteractive({ useHandCursor: true });
-            this.ImageFlag.on('pointerup', () => {
-                changeLanguage();
-                this.addTextPlay();
-                this.addTextInstruction()
-                this.addImageFlag(bandera)
-            });
-        } else {
-            this.ImageFlag.setTexture(bandera_actual);
-        }
-    }
-    
-    addTextPlay() {
-        
-        if (this.TextPlay) {
-            this.TextPlay.destroy();
-        }
-        
-        const optimalFontSize_TextPlay = getOptimalFontSize(this, Jugar, 320, 90, 'MyFont', 4);
-        
-        this.TextPlay = addCenteredText(this, Jugar, optimalFontSize_TextPlay, 'MyFont', '#FFFFFF');
-        this.TextPlay.y = 865;
-        this.TextPlay.setInteractive({ useHandCursor: true });
-        this.TextPlay.on('pointerup', () => {
-            this.cameras.main.setAlpha(1);
-
-            this.tweens.add({
-                targets: this.cameras.main,
-                alpha: 1,
-                duration: 300,
-                onComplete: () => {
-                    this.time.delayedCall(0, () => {
-                        this.scene.transition({
-                            target: 'PlayGameScene',
-                            duration: 1000,
-                            moveBelow: true,
-                            onUpdate: this.transitionOut,
-                        });
-                    }, [], this);
-                }
-            });
-        });
-    }
-    
-    addTextInstruction() {
-        
-        if (this.TextInstruction) {
-            this.TextInstruction.destroy();
-        }
-        
-        const optimalFontSize_TextInstruction = getOptimalFontSize(this, info1, 665, 565, 'MyFont', 4);
-        this.TextInstruction = addCenteredText(this, info1, optimalFontSize_TextInstruction, 'MyFont', '#000000');
-        
     }
 }
 
@@ -368,11 +274,21 @@ class PlayGameScene extends Phaser.Scene {
     this.load.audio('go', 'media/audio/Go.mp3');
     this.load.audio('win', 'media/audio/Win.mp3');
     this.load.audio('monedas', 'media/audio/monedas01.mp3');
+      
+    this.countdown = 20;
+    this.score = 0;
+
+    this.optimalFontSize_TextScore = getOptimalFontSize(this, Puntuacion + ': 100', 300, 100, 'MyFont', 4);
+    this.optimalPosition_TextScore = getOptimalSquarePosition(this, Puntuacion + ': 100', this.optimalFontSize_TextScore, 'MyFont', 4,'top-left');
+      
+    this.optimalFontSize_TextCountdown = getOptimalFontSize(this, Tiempo +': ' + this.countdown, 300, 100, 'MyFont', 4);
+    this.optimalPosition_TextCountdown = getOptimalSquarePosition(this, Tiempo +': ' + this.countdown, this.optimalFontSize_TextCountdown, 'MyFont', 4,'top-left');
+      
+    this.optimalFontSize_TextReady = getOptimalFontSize(this, Atencion, 380, 150, 'MyFont', 4);
+
   }
   create() {
     console.log('Create PlayGameScene');
-    this.countdown = 20;
-    this.score = 0;
     this.timeup = 300;
     this.staytime = 700;
 
@@ -388,19 +304,13 @@ class PlayGameScene extends Phaser.Scene {
     this.fila2.add(this.add.image(0, 0, 'fila2').setOrigin(0));
     this.fila1.add(this.add.image(0, 0, 'fila1').setOrigin(0));
     this.fila0.add(this.add.image(0, 0, 'fila0').setOrigin(0));
-
       
-
-    const optimalFontSize_TextScore = getOptimalFontSize(this, Puntuacion + ': 100', 300, 100, 'MyFont', 4);
-    const optimalPosition_TextScore = getOptimalSquarePosition(this, Puntuacion + ': 100', optimalFontSize_TextScore, 'MyFont', 4,'top-left');
-    this.TextScore = addTextWithAdjustedPosition(this, optimalPosition_TextScore.x, optimalPosition_TextScore.y+8, optimalFontSize_TextScore, '#000000', Puntuacion + ': ' + this.score,'myFont');
+    
+    this.TextReady = addCenteredText(this, Atencion, this.optimalFontSize_TextReady, 'MyFont', '#FFFF00');
       
-    const optimalFontSize_TextCountdown = getOptimalFontSize(this, Tiempo +': ' + this.countdown, 300, 100, 'MyFont', 4);
-    const optimalPosition_TextCountdown = getOptimalSquarePosition(this, Puntuacion + ': ' + this.score, optimalFontSize_TextCountdown, 'MyFont', 4,'top-left');
-    this.TextCountdown = addTextWithAdjustedPosition(this, optimalPosition_TextCountdown.x, optimalPosition_TextCountdown.y+80, optimalFontSize_TextCountdown, '#000000', Tiempo +': ' + this.countdown,'myFont','top-left');
-
-    const optimalFontSize_TextReady = getOptimalFontSize(this, Atencion, 380, 150, 'MyFont', 4);
-    this.TextReady = addCenteredText(this, Atencion, optimalFontSize_TextReady, 'MyFont', '#FFFF00');
+    this.TextScore = addTextWithAdjustedPosition(this, this.optimalPosition_TextScore.x, this.optimalPosition_TextScore.y+8 , this.optimalFontSize_TextScore, '#000000', Puntuacion + ': ' + this.score,'myFont');
+      
+    this.TextCountdown = addTextWithAdjustedPosition(this, this.optimalPosition_TextCountdown.x, this.optimalPosition_TextCountdown.y+80, this.optimalFontSize_TextCountdown, '#000000', Tiempo +': ' + this.countdown,'myFont','top-left');
 
 // Paso 2: Crear la animación en la función create
     let frames = [];
@@ -720,12 +630,8 @@ class GameOverScene extends Phaser.Scene {
 
     // Verificar la puntuación en el registro
     let score = this.registry.get('score');
-    console.log('Puntuación:', score); // Verificar que la puntuación se obtiene correctamente
+    console.log('Puntuación:', score);
 
-// Función para obtener el token y luego las puntuaciones
-// Función para obtener el token y luego las puntuaciones
-// Función para obtener el token y luego las puntuaciones
-// Función para obtener el token y luego las puntuaciones
 function obtenerTokenYpuntuaciones() {
     return fetch('./php/inicio_juego.php')
         .then(response => {
@@ -884,7 +790,7 @@ function mostrarPopUp(top3_day, top3_world) {
     });
 }
 
-// Función para enviar las iniciales y la puntuación al servidor
+
 function enviarPuntuacion(iniciales) {
     fetch('./php/inicio_juego.php')
         .then(response => response.json())
@@ -921,12 +827,6 @@ function enviarPuntuacion(iniciales) {
         });
 }
 
-// Llamar a la función para obtener el token y las puntuaciones, y mostrar el popup
-//obtenerTokenYpuntuaciones();
-
-
-    //this.add.text(120, 10, '¡Enhorabuena!', { fontSize: '32px', fontFamily: 'Arial', fill: '#000000' });
-    //this.add.text(20, 50, '¡Has eliminado a '+this.contador+ ' diputados!', { fontSize: '32px', fontFamily: 'Arial' , fill: '#000000' });
     this.textTitle = this.add.text(115, 320, '', this.styleTitle)
     this.textContent = this.add.text(115, 406, '', this.style );
 
@@ -963,7 +863,7 @@ function enviarPuntuacion(iniciales) {
     this.moreButton = this.add.rectangle(250, 870, 360, 150, 0xFFFFFF, 0); // Añade un rectángulo semi-transparente
     this.moreButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
     this.moreButton.on('pointerup', () => {
-      window.open('https://escanos.org', '_blank'); // Abre el enlace en una nueva pestaña
+            this.scene.start('AboutEB');
     });
 
 
@@ -1069,18 +969,86 @@ function enviarPuntuacion(iniciales) {
 }
 
 class AboutEB extends Phaser.Scene {
-    constructor() {
+constructor() {
         super({ key: 'AboutEB' });
     }
 
     preload() {
+        this.load.image('info', 'media/img/info.png');
+        this.load.image('bandera_esp', 'media/img/idiomas/boton_castellano.png');
+        this.load.image('bandera_eus', 'media/img/idiomas/boton_euskera.png');
+        this.load.image('bandera_cat', 'media/img/idiomas/boton_catalan.png');
+        this.load.image('bandera_gal', 'media/img/idiomas/boton_gallego.png');
+        this.load.image('boton', 'media/img/Boton.png');
     }
 
     create() {
         console.log('AboutEB started');
+        this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'info').setOrigin(0.5, 0.5);
+        this.add.image(this.cameras.main.centerX, 865, 'boton').setOrigin(0.5, 0.5);
+        
+        this.addTextPlay();
+        this.addImageFlag(bandera);
+        this.addTextInstruction()
+        
+        const optimalFontSize = getOptimalFontSize(this, 'v3.01', 75, 50, 'Arial', 4);
+        const optimalPositionBottomRight = getOptimalSquarePosition(this, 'v3.01', optimalFontSize, 'Arial', 4, 'bottom-right');
+        this.TextVersionBottomRight = addTextWithAdjustedPosition(this, optimalPositionBottomRight.x, optimalPositionBottomRight.y, optimalPositionBottomRight.fontSize, '#FFFFFF', 'v3.01', 'Arial');
+        
+        this.moreButton = this.add.rectangle(325, 940, 360, 150, 0xFFFFFF, 0); // Añade un rectángulo semi-transparente
+        this.moreButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
+        this.moreButton.on('pointerup', () => {
+                window.open('https://escanos.org', '_blank');
+        });
     }
 
     update() {
+    }
+    
+    transitionOut(progress) {
+        this.cameras.main.alpha = 1 - progress;
+    }
+    
+    addImageFlag(bandera_actual) {
+        if (!this.ImageFlag) {
+            this.ImageFlag = this.add.image(878, 890, bandera).setOrigin(0.5);
+            this.ImageFlag.setInteractive({ useHandCursor: true });
+            this.ImageFlag.on('pointerup', () => {
+                changeLanguage();
+                this.addTextPlay();
+                this.addTextInstruction()
+                this.addImageFlag(bandera)
+            });
+        } else {
+            this.ImageFlag.setTexture(bandera_actual);
+        }
+    }
+    
+    addTextPlay() {
+        
+        if (this.TextPlay) {
+            this.TextPlay.destroy();
+        }
+        
+        const optimalFontSize_TextPlay = getOptimalFontSize(this, Jugar, 320, 90, 'MyFont', 4);
+        this.TextPlay = addCenteredText(this, Jugar, optimalFontSize_TextPlay, 'MyFont', '#FFFFFF');
+        
+        this.TextPlay.y = 865;
+        this.TextPlay.setInteractive({ useHandCursor: true });
+        this.TextPlay.on('pointerup', () => {
+            this.scene.start('InstructionsGame');
+        });
+    }
+    
+    addTextInstruction() {
+        
+        if (this.TextInstruction) {
+            this.TextInstruction.destroy();
+        }
+        
+        const optimalFontSize_TextInstruction = getOptimalFontSize(this, info1, 665, 565, 'MyFont', 4);
+        this.TextInstruction = addCenteredText(this, info1, optimalFontSize_TextInstruction, 'MyFont', '#000000');
+        
     }
 }
 
@@ -1097,7 +1065,6 @@ document.addEventListener("DOMContentLoaded", function() {
             scene: [
                 BaseScene,
                 InitialScene, 
-                InstructionsGame, 
                 PlayGameScene, 
                 GameOverScene, 
                 AboutEB
