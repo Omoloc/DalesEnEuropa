@@ -226,8 +226,8 @@ class PlayGameScene extends Phaser.Scene {
     staytime=700
     score = 0;
     positionImages = [];
-    imagesToDisplay = ['pp','psoe', 'sumar', 'vox', 'podemos',
-                      'junts','ceus', 'ahora_rep', 'escanoblanco', 'feijoopp', 'abascalvox', 'sanchezpsoe'];
+    imagesToDisplay = ['escanoblanco', 'pp','psoe', 'sumar', 'vox', 'podemos',
+                      'junts','ceus', 'ahora_rep', 'feijoopp', 'abascalvox', 'sanchezpsoe'];
     countdown = 0;
     scoreText ="";
     soundOpened = null;
@@ -239,19 +239,18 @@ class PlayGameScene extends Phaser.Scene {
     soundWin = null;
 
   preload() {
-    this.load.image('abascalvox', 'media/img/diputados/abascalvox.webp');
-    this.load.image('aitorpnv', 'media/img/diputados/aitorpnv.webp');
-    this.load.image('albasumar', 'media/img/diputados/albasumar.webp');
-    this.load.image('amaiavox', 'media/img/diputados/amaiavox.webp');
-    this.load.image('belarrapodemos', 'media/img/diputados/belarrapodemos.webp');
-    this.load.image('diazsumar', 'media/img/diputados/diazsumar.webp');
-    this.load.image('enekopsoe', 'media/img/diputados/enekopsoe.webp');
+
     this.load.image('escanoblanco', 'media/img/diputados/escanoblanco.webp');
+    this.load.image('pp', 'media/img/diputados/pp.webp');
+    this.load.image('psoe', 'media/img/diputados/psoe.webp');
+    this.load.image('sumar', 'media/img/diputados/sumar.webp');
+    this.load.image('vox', 'media/img/diputados/vox.webp');
+    this.load.image('podemos', 'media/img/diputados/podemos.webp');
+    this.load.image('junts', 'media/img/diputados/junts.webp');
+    this.load.image('ceus', 'media/img/diputados/ceus.webp');
+    this.load.image('ahora_rep', 'media/img/diputados/ahora_rep.webp');
     this.load.image('feijoopp', 'media/img/diputados/feijoopp.webp');
-    this.load.image('imanolpnv', 'media/img/diputados/imanolpnv.webp');
-    this.load.image('javierpp', 'media/img/diputados/javierpp.webp');
-    this.load.image('mertxebildu', 'media/img/diputados/mertxebildu.webp');
-    this.load.image('mirenpodemos', 'media/img/diputados/mirenpodemos.webp');
+    this.load.image('abascalvox', 'media/img/diputados/abascalvox.webp');
     this.load.image('sanchezpsoe', 'media/img/diputados/sanchezpsoe.webp');
 
     this.load.image('congreso', 'media/img/congreso//congreso_EU.png');
