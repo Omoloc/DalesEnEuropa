@@ -1,30 +1,629 @@
-let TituloFinal1 = "¡Enhorabuena!";
-let Quepaso = "¿Qué ha pasado?";
-let vuelveajugar = "Vuelve a jugar y no pulses en el Escaño en Blanco sólo a los políticos.\n\n ¡Dales en el escaño!";
-let Hasdejado = "¡Has dejado ";
-let escanosovacios = " escaños vacíos!\n\nSi esto fuera el Parlamento Europeo, habrías ahorrado más de ";
-let unescanovacio = " ¡Has dejado un escaño vacío!\n\n Si esto fuera el Parlamento Europeo, habrías ahorrado más de ";
-let Quienessomos = "¿Quiénes somos?";
-let Somosungrupo = "Somos un grupo de ciudadanos cansados de la clase política que no encontramos utilidad ni en el voto nulo, blanco ni la abstención";
-let Quequeremos = "¿Qué queremos?";
-let Visibilizar = "Visibilizar la falta de representación, llamar la atención de los medios y abrir un debate sobre las carencias de nuestro sistema.";
-let Comolo = "¿Cómo lo hacemos?";
-let Nospresentamos = "Nos presentamos a las elecciones para dejar escaños vacíos. De esta forma nadie cobrará por ese escaño. Nosotros tampoco.";
-let Estoes = "¿Esto es posible?";
-let Siyahay14 = "Sí. Ya hemos dejado vacías 14 concejalías y un Ayuntamiento. ¡Ayúdanos a dejar un escaño vacío en el Parlamento Europeo!";
-let Comopuedo = "¿Cómo ayudar?";
-let Comenta = "Comenta nuestra propuesta con tus amigos, familiares y conocidos. Síguenos en redes sociales y comparte nuestras publicaciones.";
-let Puntuacion = "Puntuación";
-let Tiempo = "Tiempo";
-let Atencion = "¡Atención!";
-let Deprisa = "¡Deprisa!";
-let Jugar = "Jugar";
-let title_NoTop = 'Lo siento...';
-let text_NoTop = 'No has ahorrar lo suficiente para entrar en el TOP :(';
-let title_TopDay = '¡Bien!';
-let text_TopDay = `Has conseguido ahorrar para entrar en el TOP 3 diario. Introduce tus 3 iniciales:`;
-let title_TopWorld = '¡Enhorabuena!';
-let text_TopWorld = `Has conseguido ahorrar para entrar en el TOP 3 diario y global. Introduce tus 3 iniciales:`;
+class BaseScene extends Phaser.Scene {
+    constructor() {
+        super({ key: 'BaseScene' });
+    }
+
+    preload() {
+        // Cargar la imagen de fondo para la pantalla de carga
+        this.load.image('loadingScreen', 'media/img/Intro_Base_EU.png');
+    }
+
+    create() {
+        console.log('BaseScene started');
+        
+        let background_Base = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'loadingScreen').setOrigin(0.5, 0.5);
+        
+        background_Base.alpha = 0;
+        
+        this.tweens.add({
+        targets: background_Base,
+        alpha: 1,
+        duration: 500,
+        onComplete: () => {
+                // Pasar a la siguiente escena después de un breve retraso
+                this.time.delayedCall(500, () => {
+                    this.scene.transition({
+                        target: 'InitialScene',
+                        duration: 1000,
+                        moveBelow: true,
+                        onUpdate: this.transitionOut,
+                        data: { x: this.cameras.main.centerX, y: this.cameras.main.centerY }
+                    });
+                }, [], this);
+            }
+        });
+    }
+
+    transitionOut(progress) {
+        this.cameras.main.alpha = 1 - progress;
+    }
+}
+
+class InitialScene extends Phaser.Scene {
+    constructor() {
+        super({ key: 'InitialScene' });
+        this.languageChanged = false;
+    }
+
+    preload() {
+        this.load.image('initialScreen', 'media/img/Intro_EU.png');
+        changeLanguage();
+        this.load.image('bandera_esp', 'media/img/idiomas/boton_castellano.png');
+        this.load.image('bandera_eus', 'media/img/idiomas/boton_euskera.png');
+        this.load.image('bandera_cat', 'media/img/idiomas/boton_catalan.png');
+        this.load.image('bandera_gal', 'media/img/idiomas/boton_gallego.png');
+    }
+
+    create() {
+        console.log('InitialScene started');
+        this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'initialScreen').setOrigin(0.5, 0.5);
+        
+        this.addTextPlay();
+        this.addImageFlag(bandera);
+        
+        addTextWithAdjustedPosition(this, 1024, 1024, '20px', '#FFFFFF', 'v3.01','Arial');
+    }
+
+    update() {
+        
+    }
+
+    addTextPlay() {
+        
+        if (this.TextPlay) {
+            this.TextPlay.destroy();
+        }
+        
+        const optimalFontSize_TextPlay = getOptimalFontSize(this, Jugar, 320, 90, 'MyFont', 4);
+        this.TextPlay = addCenteredText(this, Jugar, optimalFontSize_TextPlay, 'MyFont', '#FFFFFF');
+        
+        this.TextPlay.y = 865;
+        this.TextPlay.setInteractive({ useHandCursor: true });
+        this.TextPlay.on('pointerup', () => {
+            this.scene.start('InstructionsGame');
+        });
+    }
+
+    addImageFlag(bandera_actual) {
+        if (!this.ImageFlag) {
+            this.ImageFlag = this.add.image(890, 865, bandera).setOrigin(0.5);
+            this.ImageFlag.setInteractive({ useHandCursor: true });
+            this.ImageFlag.on('pointerup', () => {
+                changeLanguage();
+                this.addTextPlay();
+                this.addImageFlag(bandera)
+            });
+        } else {
+            this.ImageFlag.setTexture(bandera_actual);
+        }
+    }
+}
+
+class InstructionsGame extends Phaser.Scene {
+    constructor() {
+        super({ key: 'InstructionsGame' });
+    }
+
+    preload() {
+        this.load.image('info', 'media/img/info.png');
+        this.load.image('bandera_esp', 'media/img/idiomas/boton_castellano.png');
+        this.load.image('bandera_eus', 'media/img/idiomas/boton_euskera.png');
+        this.load.image('bandera_cat', 'media/img/idiomas/boton_catalan.png');
+        this.load.image('bandera_gal', 'media/img/idiomas/boton_gallego.png');
+        this.load.image('boton', 'media/img/Boton.png');
+    }
+
+    create() {
+        console.log('InstructionsGame started');
+        this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'info').setOrigin(0.5, 0.5);
+        this.add.image(this.cameras.main.centerX, 865, 'boton').setOrigin(0.5, 0.5);
+        
+        this.addTextPlay();
+        this.addImageFlag(bandera);
+        this.addTextInstruction()
+        
+        addTextWithAdjustedPosition(this, 1024, 1024, '20px', '#FFFFFF', 'v3.01','Arial');
+    }
+
+    update() {
+    }
+    
+    transitionOut(progress) {
+        this.cameras.main.alpha = 1 - progress;
+    }
+    
+    addImageFlag(bandera_actual) {
+        if (!this.ImageFlag) {
+            this.ImageFlag = this.add.image(878, 890, bandera).setOrigin(0.5);
+            this.ImageFlag.setInteractive({ useHandCursor: true });
+            this.ImageFlag.on('pointerup', () => {
+                changeLanguage();
+                this.addTextPlay();
+                this.addTextInstruction()
+                this.addImageFlag(bandera)
+            });
+        } else {
+            this.ImageFlag.setTexture(bandera_actual);
+        }
+    }
+    
+    addTextPlay() {
+        
+        if (this.TextPlay) {
+            this.TextPlay.destroy();
+        }
+        
+        const optimalFontSize_TextPlay = getOptimalFontSize(this, Jugar, 320, 90, 'MyFont', 4);
+        
+        this.TextPlay = addCenteredText(this, Jugar, optimalFontSize_TextPlay, 'MyFont', '#FFFFFF');
+        this.TextPlay.y = 865;
+        this.TextPlay.setInteractive({ useHandCursor: true });
+        this.TextPlay.on('pointerup', () => {
+            this.cameras.main.setAlpha(1);
+
+            this.tweens.add({
+                targets: this.cameras.main,
+                alpha: 1,
+                duration: 300,
+                onComplete: () => {
+                    this.time.delayedCall(0, () => {
+                        this.scene.transition({
+                            target: 'PlayGameScene',
+                            duration: 1000,
+                            moveBelow: true,
+                            onUpdate: this.transitionOut,
+                        });
+                    }, [], this);
+                }
+            });
+        });
+    }
+    
+    addTextInstruction() {
+        
+        if (this.TextInstruction) {
+            this.TextInstruction.destroy();
+        }
+        
+        const optimalFontSize_TextInstruction = getOptimalFontSize(this, info1, 665, 565, 'MyFont', 4);
+        this.TextInstruction = addCenteredText(this, info1, optimalFontSize_TextInstruction, 'MyFont', '#000000');
+        
+    }
+}
+
+class PlayGameScene extends Phaser.Scene {
+    constructor() {
+        super({ key: 'PlayGameScene' });
+        this.increaseScore = this.increaseScore.bind(this);
+        this.showNextImage = this.showNextImage.bind(this);
+        this.music = null;
+        this.wosh = null;
+        this.TextReady = null;
+        this.TextDeprisa = null;
+        this.TextCountdown=null;
+    }
+
+    increaseScore(posX, posY) {
+
+        if (this.randomImage === 'escanoblanco') {
+            this.score -= 3;
+            if (this.score < 0) {
+                this.score = 0;
+            }
+            this.TextScore.setText(Puntuacion+': ' + this.score);
+
+            this.playSound('failed');
+
+            let flash = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0xff0000);
+            flash.setOrigin(0, 0);
+
+            flash.alpha = 0.5;
+
+            this.time.delayedCall(100, () => {
+                flash.destroy();
+            });
+        } else {
+            let coin = this.add.sprite(posX, posY-120 , 'coin1');
+            coin.play('spin');
+
+            this.score += 1;
+            this.TextScore.setText( Puntuacion + ': ' + this.score);
+
+            this.playSound('catched');
+            this.playSound('monedas');
+        }
+
+        this.time.removeEvent(this.greenCircleTimer);
+
+        this.ReloadGreenCircleTimer()
+
+    }
+
+    showNextImage() {
+        this.auxcount=0;
+
+        if (this.tweenUp) {
+            this.tweenUp.stop();
+            this.tweenUp.destroy();
+        }
+        
+        if (this.tweenStay) {
+            this.tweenStay.stop();
+            this.tweenStay.destroy();
+        }
+        
+        if (this.tweenDown) {
+            this.tweenDown.stop();
+            this.tweenDown.destroy();
+        }
+        
+        if (this.randomPositionImage) this.randomPositionImage.y = this.originalY;
+
+        this.positionImages.forEach(function (positionImage) {
+            positionImage.setAlpha(0);
+        });
+
+        console.log('Images to display '+this.imagesToDisplay.length);
+        this.randomImage = Phaser.Math.RND.pick(this.imagesToDisplay);
+
+        this.randomPositionImage = Phaser.Math.RND.pick(this.positionImages);
+        this.originalY = this.randomPositionImage.y;
+
+        if (this.randomImage) {
+            console.log('showNextImage called '+this.randomImage);
+            this.randomPositionImage.setTexture(this.randomImage);
+            this.randomPositionImage.setAlpha(1);
+
+            this.tweenDown = this.tweens.add({
+                targets: this.randomPositionImage,
+                y: '+=' + this.randomPositionImage.height,
+                duration: this.timeup/2,
+                paused: true,
+            });
+
+            if (this.countdown <= 5) {
+                this.staytime = 300;
+            } else {
+                this.staytime = 700;
+            }
+            
+            this.tweenStay = this.tweens.add({
+                targets: this.escanoblanco,
+                y: '-=' + this.escanoblanco.height,
+                duration: this.staytime,
+                paused: true,
+                onComplete: () => {
+                    this.tweenDown.play();
+                }
+            });
+            
+            this.tweenUp = this.tweens.add({
+                targets: this.randomPositionImage,
+                y: '-=' + this.randomPositionImage.height,
+                duration: this.timeup/2,
+                paused: true,
+                onComplete: () => {
+                    this.tweenStay.play();
+                }
+            });
+            this.tweenUp.play();
+        } else {
+            console.log('No image to display');
+        }
+    }
+
+    timeup=100
+    staytime=700
+    score = 0;
+    positionImages = [];
+    imagesToDisplay = ['abascalvox', 'aitorpnv', 'albasumar', 'amaiavox', 'belarrapodemos',
+                      'diazsumar', 'enekopsoe', 'escanoblanco', 'feijoopp', 'imanolpnv',
+                      'javierpp', 'mertxebildu', 'mirenpodemos', 'sanchezpsoe'];
+    countdown = 0;
+    scoreText ="";
+    soundOpened = null;
+    soundCatched = null;
+    soundMonedas = null;
+    soundFail = null;
+    soundReady = null;
+    soundGo = null;
+    soundWin = null;
+
+  preload() {
+    this.load.image('abascalvox', 'media/img/diputados/abascalvox.webp');
+    this.load.image('aitorpnv', 'media/img/diputados/aitorpnv.webp');
+    this.load.image('albasumar', 'media/img/diputados/albasumar.webp');
+    this.load.image('amaiavox', 'media/img/diputados/amaiavox.webp');
+    this.load.image('belarrapodemos', 'media/img/diputados/belarrapodemos.webp');
+    this.load.image('diazsumar', 'media/img/diputados/diazsumar.webp');
+    this.load.image('enekopsoe', 'media/img/diputados/enekopsoe.webp');
+    this.load.image('escanoblanco', 'media/img/diputados/escanoblanco.webp');
+    this.load.image('feijoopp', 'media/img/diputados/feijoopp.webp');
+    this.load.image('imanolpnv', 'media/img/diputados/imanolpnv.webp');
+    this.load.image('javierpp', 'media/img/diputados/javierpp.webp');
+    this.load.image('mertxebildu', 'media/img/diputados/mertxebildu.webp');
+    this.load.image('mirenpodemos', 'media/img/diputados/mirenpodemos.webp');
+    this.load.image('sanchezpsoe', 'media/img/diputados/sanchezpsoe.webp');
+
+    this.load.image('congreso', 'media/img/congreso//congreso_EU.png');
+    this.load.image('fila0', 'media/img/congreso/fila0_EU.png');
+    this.load.image('fila1', 'media/img/congreso/fila1_EU.png');
+    this.load.image('fila2', 'media/img/congreso/fila2_EU.png');
+    this.load.image('fila3', 'media/img/congreso/fila3_EU.png');
+
+    for(let i = 1; i <= 12; i++) {
+        this.load.image(`coin${i}`, `media/img/monedas/${i.toString().padStart(3, '0')}.png`);
+    }
+    
+    this.load.audio('music', 'media/audio/music.mp3');
+    this.load.audio('wosh', 'media/audio/wosh.mp3');
+    this.load.audio('opened', 'media/audio/Open.wav');
+    this.load.audio('catched', 'media/audio/Catch.mp3');
+    this.load.audio('failed', 'media/audio/Replay.wav');
+    this.load.audio('ready', 'media/audio/Ready.mp3');
+    this.load.audio('go', 'media/audio/Go.mp3');
+    this.load.audio('win', 'media/audio/Win.mp3');
+    this.load.audio('monedas', 'media/audio/monedas01.mp3');
+  }
+  create() {
+    console.log('Create PlayGameScene');
+    this.countdown = 20;
+    this.score = 0;
+    this.timeup = 300;
+    this.staytime = 700;
+
+    this.escanoblanco = this.add.image(0, 0, 'escanoblanco').setOrigin(0);
+    
+    this.fila4 = this.add.container(0, 0);
+    this.fila3 = this.add.container(0, 0);
+    this.fila2 = this.add.container(0, 0);
+    this.fila1 = this.add.container(0, 0);
+    this.fila0 = this.add.container(0, 0);
+    this.fila4.add(this.add.image(0, 0, 'congreso').setOrigin(0));
+    this.fila3.add(this.add.image(0, 0, 'fila3').setOrigin(0));
+    this.fila2.add(this.add.image(0, 0, 'fila2').setOrigin(0));
+    this.fila1.add(this.add.image(0, 0, 'fila1').setOrigin(0));
+    this.fila0.add(this.add.image(0, 0, 'fila0').setOrigin(0));
+
+    const optimalFontSize_TextScore = getOptimalFontSize(this, Puntuacion + ': ' + this.score, 250, 120, 'MyFont', 4);
+    this.TextScore = addTextWithAdjustedPosition(this, 300, 100, optimalFontSize_TextScore, '#000000', Puntuacion + ': ' + this.score,'myFont');
+
+    const optimalFontSize_TextReady = getOptimalFontSize(this, Atencion, 380, 150, 'MyFont', 4);
+    this.TextReady = addCenteredText(this, Atencion, optimalFontSize_TextReady, 'MyFont', '#FFFF00');
+
+    const optimalFontSize_TextCountdown = getOptimalFontSize(this, Tiempo +': ' + this.countdown, 250, 120, 'MyFont', 4);
+    this.TextCountdown = addTextWithAdjustedPosition(this, 300, 150, optimalFontSize_TextCountdown, '#000000', Tiempo +': ' + this.countdown,'myFont');
+
+// Paso 2: Crear la animación en la función create
+    let frames = [];
+    for(let i = 1; i <= 12; i++) {
+        frames.push({ key: `coin${i}` });
+    }
+    //console.log('3');
+
+    this.anims.create({
+        key: 'spin',
+        frames: frames,
+        frameRate: 10,
+        repeat: 0
+    });
+
+    // Agrega un evento de finalización de animación para eliminar la moneda una vez que la animación haya terminado
+    this.anims.on('animationcomplete', (anim, frame, gameObject) => {
+      if (anim.key === 'spin') {
+          gameObject.destroy();
+      }
+    }, this);
+
+    //console.log('4');
+    this.loadSounds();
+
+    this.style = {
+      fontSize: '32px',
+      fontFamily: 'MyFont',
+      fill: '#FFFF00',
+      backgroundColor: '#000000',
+      padding: {
+        left: 10,
+        right: 10,
+        top: 5,
+        bottom: 5
+      }
+    };
+    
+    this.playSound('ready');
+    
+    this.music = this.sound.add('music');
+    this.music.play();
+                
+
+    //console.log('6')
+    this.startGame();
+  }
+  loadSounds() {
+    this.soundMusic = this.sound.add('music');
+    this.soundMusic = this.sound.add('wosh');
+    this.soundOpened = this.sound.add('opened');
+    this.soundCatched = this.sound.add('catched');
+    this.soundMonedas = this.sound.add('monedas');
+    this.soundFail = this.sound.add('failed');
+    this.soundReady = this.sound.add('ready');
+    this.soundGo = this.sound.add('go');
+    this.soundWin = this.sound.add('win');
+  }
+  createPositionImages() {
+    this.images = [];
+
+    this.positions = [
+      { x: 236, y: 526 },
+      { x: 417, y: 526 },
+      { x: 601, y: 526 },
+      { x: 782, y: 526 },
+      { x: 124, y: 696 },
+      { x: 319, y: 696 },
+      { x: 506, y: 696 },
+      { x: 697, y: 696 },
+      { x: 894, y: 696 },
+      { x: 200, y: 866 },
+      { x: 398, y: 866 },
+      { x: 598, y: 866 },
+      { x: 798, y: 866 },
+      { x: 316, y: 1053 },
+      { x: 524, y: 1053 },
+      { x: 734, y: 1053 }
+      // ... (agrega las demás posiciones aquí)
+    ];
+
+  for (var i = 0; i < this.positions.length; i++) {
+    let currentPosition = this.positions[i];
+    this.positionImage = this.add.image(currentPosition.x, currentPosition.y -10, '').setOrigin(0.5);
+    if (currentPosition.y === 526) this.fila4.add(this.positionImage);
+    if (currentPosition.y === 696) this.fila3.add(this.positionImage);
+    if (currentPosition.y === 866) this.fila2.add(this.positionImage);
+    if (currentPosition.y === 1053) this.fila1.add(this.positionImage);
+
+    this.positionImage.setDisplaySize(30, 30);
+    this.positionImage.setInteractive();
+    //console.log('ADDED IMAGE');
+    this.positionImage.on('pointerdown', () => this.increaseScore(currentPosition.x, currentPosition.y));
+    this.images.push(this.positionImage);
+  }
+
+    return this.images;
+  }
+  decreaseCountdown() {
+    this.countdown--;
+
+    this.TextCountdown.setText(Tiempo+': ' + this.countdown);
+
+    if (this.countdown == 15) {
+        this.music.setRate(1.04);
+    }
+      
+    if (this.countdown == 13) {
+        this.music.setRate(1.06);
+    }
+      
+    if (this.countdown == 11) {
+        this.music.setRate(1.10);
+    }
+      
+    if (this.countdown == 10){
+        this.wosh = this.sound.add('wosh');
+        this.wosh.setVolume(2);
+        this.wosh.play();
+        const optimalFontSize_TextDeprisa = getOptimalFontSize(this, Deprisa, 380, 150, 'MyFont', 4);
+        this.TextDeprisa = addCenteredText(this, Deprisa, optimalFontSize_TextDeprisa, 'MyFont', '#FFFF00');
+        this.music.setRate(1.12);
+        this.timeup=200
+        this.staytime=50;
+    }
+      
+    if (this.countdown == 9) {
+        this.TextDeprisa.destroy();
+    }
+      
+    if (this.countdown == 5) {
+        this.music.setRate(1.15);
+    }
+
+    if (this.countdown === 0) {
+        this.music.stop();
+        this.registry.set('score', this.score);
+        this.scene.start('GameOverScene', { puntuacion: this.score });
+
+        if (this.score >0 ) this.playSound('win'); else this.playSound('failed');
+    }
+
+  }
+  playSound(sound) {
+    //console.log('playSound called '+sound);
+
+    switch (sound) {
+      case 'music':
+        if (this.soundMusic) this.soundMusic.play(); else console.log('Sound not found');
+        break;
+      case 'wosh':
+        if (this.soundWosh) this.soundWosh.play(); else console.log('Sound not found');
+        break;
+      case 'opened':
+        if (this.soundOpened) this.soundOpened.play(); else console.log('Sound not found');
+        break;
+      case 'catched':
+        if (this.soundCatched) this.soundCatched.play(); else console.log('Sound not found');
+        break;
+      case 'monedas':
+        if (this.soundMonedas) this.soundMonedas.play(); else console.log('Sound not found');
+        break;
+      case 'failed':
+        if (this.soundFail) this.soundFail.play(); else console.log('Sound not found');
+        break;
+      case 'ready':
+        if (this.soundReady) this.soundReady.play(); else console.log('Sound not found');
+        break;
+      case 'go':
+        if (this.soundGo) this.soundGo.play(); else console.log('Sound not found');
+        break;
+      case 'win':
+        if (this.soundWin) this.soundWin.play(); else console.log('Sound not found');
+        break;
+      default:
+        console.log('No sound found');
+        break;
+    }
+    if (this.sound.context.state === 'suspended') {
+      this.sound.context.resume();
+    }
+  }
+  startGame() {
+    console.log('startGame called');
+
+    if (this.greenCircleTimer) {
+      this.greenCircleTimer.remove();
+    }
+    if (this.countdownTimer) {
+      this.countdownTimer.remove();
+    }
+
+    //añadir un contador de tres segundos para empezar el juego
+    this.readyTimer = this.time.addEvent({
+      delay: 1500,
+      callback: this.startReady,
+      callbackScope: this,
+      loop: false
+    })
+  }
+  startReady() {
+    //console.log('startReady called');
+    this.TextReady.destroy();
+
+    this.playSound('go');
+
+    this.positionImages = this.createPositionImages();
+
+
+    this.ReloadGreenCircleTimer();
+
+    this.countdownTimer = this.time.addEvent({
+      delay: 1000,
+      callback: this.decreaseCountdown,
+      callbackScope: this,
+      loop: true
+    });
+
+    //this.startGame();
+
+  }
+  ReloadGreenCircleTimer () {
+    this.showNextImage();
+    this.greenCircleTimer = this.time.addEvent({
+      delay: this.timeup+this.staytime,
+      callback: this.ReloadGreenCircleTimer,
+      callbackScope: this,
+      loop: false
+    });
+  }
+}
 
 class GameOverScene extends Phaser.Scene {
 
@@ -106,11 +705,6 @@ class GameOverScene extends Phaser.Scene {
   }
 
   create() {
-
-    const menuButton = document.getElementById('menuButton');
-    menuButton.style.display = 'flex';
-    menuButton.style.zIndex = '1000';
-    adjustButtonPosition(); // Ajustar posición al cargar
 
     this.mensajes = 0;
     this.add.image(0, 0, 'background').setOrigin(0);
@@ -466,753 +1060,52 @@ function enviarPuntuacion(iniciales) {
   }
 }
 
-class InstructionsGame extends Phaser.Scene {
+class AboutEB extends Phaser.Scene {
     constructor() {
-    super({ key: 'InstructionsGame' });
+        super({ key: 'AboutEB' });
     }
 
     preload() {
-        console.log('Preload PlayGameScene');
-        this.load.image('background', 'media/img/info.png');
-
     }
 
     create() {
-    // Configura el estado inicial de esta escena
+        console.log('AboutEB started');
     }
 
     update() {
-    // Actualiza el estado de esta escena en cada frame
     }
 }
 
-class PlayGameScene extends Phaser.Scene {
+document.addEventListener("DOMContentLoaded", function() {
+    document.fonts.load('10pt "MyFont"').then(function() {
+        config = {
+            type: Phaser.AUTO,
+            width: 1024,
+            height: 1024,
+            scale: {
+                mode: Phaser.Scale.FIT,
+                autoCenter: Phaser.Scale.CENTER_BOTH
+            },
+            scene: [
+                BaseScene,
+                InitialScene, 
+                InstructionsGame, 
+                PlayGameScene, 
+                GameOverScene, 
+                AboutEB
+            ]
+        };
 
-  constructor() {
-    super({ key: 'PlayGameScene' });
-    //console.log('Constructor PlayGameScene');
-
-    // Bind the context
-    this.increaseScore = this.increaseScore.bind(this);
-    this.showNextImage = this.showNextImage.bind(this);
-    this.music = null;
-      this.wosh = null;
-      this.DeprisaText = null;
-    //this.endGame = this.endGame.bind(this);
-  }
-
-  increaseScore(posX, posY) {
-    //console.log('increaseScore called');
-
-    //Si la imagen es la de los escaños decrece el escore y reproduce sonido failed. En caso contrario aumenta el score y reproduce sonido catched
-    if (this.randomImage === 'escanoblanco') {
-      this.score -= 3;
-      if (this.score < 0) {
-        this.score = 0;
-      }
-      this.scoreText.setText(Puntuacion+': ' + this.score);
-
-      this.playSound('failed');
-
-      //Fogonazo rojo
-      // Crea un rectángulo que cubra toda la pantalla
-      let flash = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0xff0000);
-      flash.setOrigin(0, 0); // Asegúrate de que el origen esté en la esquina superior izquierda
-
-      // Configura la opacidad del rectángulo para que sea semitransparente
-      flash.alpha = 0.5;
-
-      // Haz que el fogonazo desaparezca después de un corto período de tiempo
-      this.time.delayedCall(100, () => {
-          flash.destroy();
-      });
-    }
-    else {
-
-      let coin = this.add.sprite(posX, posY-120 , 'coin1');
-      coin.play('spin');
-
-      this.score += 1;
-      this.scoreText.setText( Puntuacion + ': ' + this.score);
-
-      this.playSound('catched');
-      this.playSound('monedas');
-    }
-
-    //Cargo una nueva imagen
-    //this.showNextImage(); // Muestra la siguiente imagen
-
-    // Elimina el temporizador actual
-    this.time.removeEvent(this.greenCircleTimer);
-
-    this.ReloadGreenCircleTimer()
-
-  }
-
-  //Muestra la siguiente imagen
-  showNextImage() {
-    this.auxcount=0;
-
-    // Detiene la animación
-    if (this.tweenUp)
-    {
-      this.tweenUp.stop();
-      this.tweenUp.destroy(); // Destruye el tween
-    }
-    if (this.tweenStay)
-    {
-      this.tweenStay.stop();
-      this.tweenStay.destroy(); // Destruye el tween
-    }
-    if (this.tweenDown)
-    {
-      this.tweenDown.stop();
-      this.tweenDown.destroy(); // Destruye el tween
-    }
-    // Reinicia la posición de la imagen
-    if (this.randomPositionImage) this.randomPositionImage.y = this.originalY;
-
-    this.positionImages.forEach(function (positionImage) {
-      positionImage.setAlpha(0);
+        var game = new Phaser.Game(config);
     });
+});
 
-    console.log('Images to display '+this.imagesToDisplay.length);
-    this.randomImage = Phaser.Math.RND.pick(this.imagesToDisplay);
-
-    this.randomPositionImage = Phaser.Math.RND.pick(this.positionImages);
-    this.originalY = this.randomPositionImage.y;
-
-    if (this.randomImage)
-    {
-      //this.HelpText.setText(this.randomPositionImage.x+', '+this.randomPositionImage.y+' '+this.randomImage);
-      console.log('showNextImage called '+this.randomImage);
-
-      this.randomPositionImage.setTexture(this.randomImage);
-      this.randomPositionImage.setAlpha(1);
-
-
-      // Crea un tween que mueve la imagen hacia abajo
-      this.tweenDown = this.tweens.add({
-        targets: this.randomPositionImage,
-        y: '+=' + this.randomPositionImage.height,
-        duration: this.timeup/2,
-        paused: true,
-      });
-
-      if (this.countdown <=5)
-        this.staytime=300;
-      else
-        this.staytime=700;
-
-      //Crear un tween que mantiene la imagen en su posición
-      this.tweenStay = this.tweens.add({
-        targets: this.escanoblanco,
-        y: '-=' + this.escanoblanco.height,
-        duration: this.staytime,
-        paused: true,
-        onComplete: () => {
-            this.tweenDown.play();
-        }
-      });
-
-
-      //Crear un tween que mueve la imagen hacia arriba
-      this.tweenUp = this.tweens.add({
-        targets: this.randomPositionImage,
-        y: '-=' + this.randomPositionImage.height,
-        duration: this.timeup/2,
-        paused: true,
-        onComplete: () => {
-          this.tweenStay.play();
-        }
-      });
-
-      //comienza la animación
-      this.tweenUp.play();
-
-     }
-     else
-      {
-        console.log('No image to display');
-      }
-
-  }
-
-  //Variables
-  timeup=100 //tiempo en salir la imagen
-  staytime=700 //tiempo en mantenerse la imagen
-  score = 0;
-  positionImages = [];
-  imagesToDisplay = ['abascalvox', 'aitorpnv', 'albasumar', 'amaiavox', 'belarrapodemos',
-                      'diazsumar', 'enekopsoe', 'escanoblanco', 'feijoopp', 'imanolpnv',
-                      'javierpp', 'mertxebildu', 'mirenpodemos', 'sanchezpsoe'];
-  countdown = 0; // Tiempo de juego en segundos
-  scoreText ="";
-  countdownText="";
-  readyText="";
-  soundOpened = null;
-  soundCatched = null;
-  soundMonedas = null;
-  soundFail = null;
-  soundReady = null;
-  soundGo = null;
-  soundWin = null;
-
-
-  preload() {
-    console.log('Preload PlayGameScene');
-
-    //imagenes
-    this.load.image('abascalvox', 'media/img/diputados/abascalvox.webp');
-    this.load.image('aitorpnv', 'media/img/diputados/aitorpnv.webp');
-    this.load.image('albasumar', 'media/img/diputados/albasumar.webp');
-    this.load.image('amaiavox', 'media/img/diputados/amaiavox.webp');
-    this.load.image('belarrapodemos', 'media/img/diputados/belarrapodemos.webp');
-    this.load.image('diazsumar', 'media/img/diputados/diazsumar.webp');
-    this.load.image('enekopsoe', 'media/img/diputados/enekopsoe.webp');
-    this.load.image('escanoblanco', 'media/img/diputados/escanoblanco.webp');
-    this.load.image('feijoopp', 'media/img/diputados/feijoopp.webp');
-    this.load.image('imanolpnv', 'media/img/diputados/imanolpnv.webp');
-    this.load.image('javierpp', 'media/img/diputados/javierpp.webp');
-    this.load.image('mertxebildu', 'media/img/diputados/mertxebildu.webp');
-    this.load.image('mirenpodemos', 'media/img/diputados/mirenpodemos.webp');
-    this.load.image('sanchezpsoe', 'media/img/diputados/sanchezpsoe.webp');
-
-    this.load.image('congreso', 'media/img/congreso//congreso_EU.png');
-    this.load.image('fila0', 'media/img/congreso/fila0_EU.png');
-    this.load.image('fila1', 'media/img/congreso/fila1_EU.png');
-    this.load.image('fila2', 'media/img/congreso/fila2_EU.png');
-    this.load.image('fila3', 'media/img/congreso/fila3_EU.png');
-
-    // Cargar imágenes animación monedas
-    for(let i = 1; i <= 12; i++) {
-        this.load.image(`coin${i}`, `media/img/monedas/${i.toString().padStart(3, '0')}.png`);
-    }
-
-    // Sonidos
-    this.load.audio('music', 'media/audio/music.mp3');
-    this.load.audio('wosh', 'media/audio/wosh.mp3');
-    this.load.audio('opened', 'media/audio/Open.wav');
-    this.load.audio('catched', 'media/audio/Catch.mp3');
-    this.load.audio('failed', 'media/audio/Replay.wav');
-    this.load.audio('ready', 'media/audio/Ready.mp3');
-    this.load.audio('go', 'media/audio/Go.mp3');
-    this.load.audio('win', 'media/audio/Win.mp3');
-    this.load.audio('monedas', 'media/audio/monedas01.mp3');
-  }
-
-  create() {
-    console.log('Create PlayGameScene');
-      const menuButton = document.getElementById('menuButton');
-    menuButton.style.display = 'none';
-    this.countdown = 20; // Tiempo de juego en segundos
-    this.score = 0;
-    this.timeup = 300;
-    this.staytime = 700;
-
-
-    this.escanoblanco = this.add.image(0, 0, 'escanoblanco').setOrigin(0);
-//establezco los contenedores
-
-    //Fila 4. Diputados en cuarta fila y fondo
-    this.fila4 = this.add.container(0, 0);
-    //Fila 3. Diputados en tercera fila
-    this.fila3 = this.add.container(0, 0);
-    //Fila 2. Diputados en segunda fila
-    this.fila2 = this.add.container(0, 0);
-    //Fila 1. Diputados en primera fila
-    this.fila1 = this.add.container(0, 0);
-    //frontal. Esto se pintará delante de todo
-    this.fila0 = this.add.container(0, 0);
-
-    //this.add.image(0, 0, 'congreso').setOrigin(0);
-    this.fila4.add(this.add.image(0, 0, 'congreso').setOrigin(0));
-    this.fila3.add(this.add.image(0, 0, 'fila3').setOrigin(0));
-    this.fila2.add(this.add.image(0, 0, 'fila2').setOrigin(0));
-    this.fila1.add(this.add.image(0, 0, 'fila1').setOrigin(0));
-    this.fila0.add(this.add.image(0, 0, 'fila0').setOrigin(0));
-
-    //console.log('1');
-
-    this.scoreText = this.add.text(16, 36, Puntuacion+': 0',
-                              { fontSize: '36px', fontFamily: 'MyFont', fill: '#000000' });
-    //this.scoreText.setScrollFactor(0);
-
-    this.HelpText = this.add.text(16, 96, '',
-                              { fontSize: '52px', fontFamily: 'Arial', fill: '#FFFF00' });
-    //this.scoreText.setScrollFactor(0);
-
-    this.readyText = this.add.text((config.width / 2)- 200,(config.height / 2)-45, Atencion,
-    { fontSize: '80px',fontFamily: 'MyFont', fill: '#FFFF00' });
-
-
-    this.countdownText = this.add.text(80, 96, Tiempo +': ' + this.countdown,
-                                  { fontSize: '36px',fontFamily: 'MyFont', fill: '#000000' });
-
-// Paso 2: Crear la animación en la función create
-    let frames = [];
-    for(let i = 1; i <= 12; i++) {
-        frames.push({ key: `coin${i}` });
-    }
-    //console.log('3');
-
-    this.anims.create({
-        key: 'spin',
-        frames: frames,
-        frameRate: 10,
-        repeat: 0
-    });
-
-    // Agrega un evento de finalización de animación para eliminar la moneda una vez que la animación haya terminado
-    this.anims.on('animationcomplete', (anim, frame, gameObject) => {
-      if (anim.key === 'spin') {
-          gameObject.destroy();
-      }
-    }, this);
-
-    //console.log('4');
-    this.loadSounds();
-
-    this.style = {
-      fontSize: '32px',
-      fontFamily: 'MyFont',
-      fill: '#FFFF00',
-      backgroundColor: '#000000',  // Agrega el color de fondo negro al estilo
-      padding: {
-        left: 10,
-        right: 10,
-        top: 5,
-        bottom: 5
-      }
-    };
-    //scoreText = this.add.text(16, 16, 'Score: 0', style);
-    //countdownText = this.add.text(236, 16, 'Tiempo: ' + countdown, style);
-
-    //Comenzamos
-
-    //console.log('5');
-
-    //Sonidos
-    this.playSound('ready');
+const addTextWithAdjustedPosition = (scene, x, y, fontSize, color, text, font) => {
     
-    this.music = this.sound.add('music'); // Añade la música directamente
-    this.music.play(); // Reproduce la música 
-                
-
-    //console.log('6')
-    this.startGame();
-  }
-
-  loadSounds() {
-    this.soundMusic = this.sound.add('music');
-    this.soundMusic = this.sound.add('wosh');
-    this.soundOpened = this.sound.add('opened');
-    this.soundCatched = this.sound.add('catched');
-    this.soundMonedas = this.sound.add('monedas');
-    this.soundFail = this.sound.add('failed');
-    this.soundReady = this.sound.add('ready');
-    this.soundGo = this.sound.add('go');
-    this.soundWin = this.sound.add('win');
-  }
-
-  createPositionImages() {
-    this.images = [];
-
-    this.positions = [
-      { x: 236, y: 526 },
-      { x: 417, y: 526 },
-      { x: 601, y: 526 },
-      { x: 782, y: 526 },
-      { x: 124, y: 696 },
-      { x: 319, y: 696 },
-      { x: 506, y: 696 },
-      { x: 697, y: 696 },
-      { x: 894, y: 696 },
-      { x: 200, y: 866 },
-      { x: 398, y: 866 },
-      { x: 598, y: 866 },
-      { x: 798, y: 866 },
-      { x: 316, y: 1053 },
-      { x: 524, y: 1053 },
-      { x: 734, y: 1053 }
-      // ... (agrega las demás posiciones aquí)
-    ];
-
-  for (var i = 0; i < this.positions.length; i++) {
-    let currentPosition = this.positions[i];
-    this.positionImage = this.add.image(currentPosition.x, currentPosition.y -10, '').setOrigin(0.5);
-    if (currentPosition.y === 526) this.fila4.add(this.positionImage);
-    if (currentPosition.y === 696) this.fila3.add(this.positionImage);
-    if (currentPosition.y === 866) this.fila2.add(this.positionImage);
-    if (currentPosition.y === 1053) this.fila1.add(this.positionImage);
-
-    this.positionImage.setDisplaySize(30, 30);
-    this.positionImage.setInteractive();
-    //console.log('ADDED IMAGE');
-    this.positionImage.on('pointerdown', () => this.increaseScore(currentPosition.x, currentPosition.y));
-    this.images.push(this.positionImage);
-  }
-
-    return this.images;
-  }
-
-  decreaseCountdown() {
-    this.countdown--;
-
-    this.countdownText.setText(Tiempo+': ' + this.countdown);
-
-    if (this.countdown == 15) {
-        this.music.setRate(1.04);
-        console.log('15');
-    }
-      
-    if (this.countdown == 13) {
-        this.music.setRate(1.06);
-        console.log('13');
-    }
-      
-    if (this.countdown == 11) {
-        this.music.setRate(1.10);
-        console.log('11');
-    }
-      
-    if (this.countdown == 10){
-        this.wosh = this.sound.add('wosh');
-        this.wosh.setVolume(2);
-        this.wosh.play();
-        this.countdownText.setText(this.countdownText.text);
-        this.DeprisaText = this.add.text((config.width / 2)- 200,(config.height / 2)-45, Deprisa,
-            { fontSize: '80px',fontFamily: 'MyFont', fill: '#FFFF00' });
-        this.music.setRate(1.12);
-        this.timeup=200
-        this.staytime=50;
-        console.log('10');
-    }
-      
-    if (this.countdown == 9) {
-        this.DeprisaText.destroy();
-        console.log('9');
-    }
-      
-    if (this.countdown == 5) {
-        this.music.setRate(1.15);
-        console.log('-5');
-    }
-
-    if (this.countdown === 0) {
-        this.music.stop();
-        this.registry.set('score', this.score);
-        this.scene.start('GameOverScene', { puntuacion: this.score });
-        console.log('0');
-
-        if (this.score >0 ) this.playSound('win'); else this.playSound('failed');
-    }
-
-  }
-
-  playSound(sound) {
-    //console.log('playSound called '+sound);
-
-    switch (sound) {
-      case 'music':
-        if (this.soundMusic) this.soundMusic.play(); else console.log('Sound not found');
-        break;
-      case 'wosh':
-        if (this.soundWosh) this.soundWosh.play(); else console.log('Sound not found');
-        break;
-      case 'opened':
-        if (this.soundOpened) this.soundOpened.play(); else console.log('Sound not found');
-        break;
-      case 'catched':
-        if (this.soundCatched) this.soundCatched.play(); else console.log('Sound not found');
-        break;
-      case 'monedas':
-        if (this.soundMonedas) this.soundMonedas.play(); else console.log('Sound not found');
-        break;
-      case 'failed':
-        if (this.soundFail) this.soundFail.play(); else console.log('Sound not found');
-        break;
-      case 'ready':
-        if (this.soundReady) this.soundReady.play(); else console.log('Sound not found');
-        break;
-      case 'go':
-        if (this.soundGo) this.soundGo.play(); else console.log('Sound not found');
-        break;
-      case 'win':
-        if (this.soundWin) this.soundWin.play(); else console.log('Sound not found');
-        break;
-      default:
-        console.log('No sound found');
-        break;
-    }
-    if (this.sound.context.state === 'suspended') {
-      this.sound.context.resume();
-    }
-  }
-
-  startGame() {
-    console.log('startGame called');
-
-    if (this.greenCircleTimer) {
-      this.greenCircleTimer.remove();
-    }
-    if (this.countdownTimer) {
-      this.countdownTimer.remove();
-    }
-
-    //añadir un contador de tres segundos para empezar el juego
-    this.readyTimer = this.time.addEvent({
-      delay: 1500,
-      callback: this.startReady,
-      callbackScope: this,
-      loop: false
-    })
-  }
-
-
-  startReady() {
-    //console.log('startReady called');
-    this.readyText.setText('');
-
-    this.playSound('go');
-
-    this.positionImages = this.createPositionImages();
-
-
-    this.ReloadGreenCircleTimer();
-
-    this.countdownTimer = this.time.addEvent({
-      delay: 1000,
-      callback: this.decreaseCountdown,
-      callbackScope: this,
-      loop: true
-    });
-
-    //this.startGame();
-
-  }
-
-
-  // lo recargo a mano para actualizar el timer
-  ReloadGreenCircleTimer () {
-    this.showNextImage();
-    this.greenCircleTimer = this.time.addEvent({
-      delay: this.timeup+this.staytime,
-      callback: this.ReloadGreenCircleTimer,
-      callbackScope: this,
-      loop: false
-    });
-  }
-}
-
-//Clase para saber más sobre Escaños en Blanco
-
-class AboutEB extends Phaser.Scene {
-  constructor() {
-    super({ key: 'AboutEB' });
-  }
-
-  preload() {
-    // Carga los recursos necesarios para esta escena
-    //this.load.css('myfont', 'myfont.css');
-
-  }
-
-  create() {
-    // Configura el estado inicial de esta escena
-  }
-
-  update() {
-    // Actualiza el estado de esta escena en cada frame
-  }
-}
-
-
-window.onload = function() {
-  document.fonts.load('10pt "MyFont"').then(function() {
-      // Aquí va el código para iniciar tu juego
-      // Por ejemplo:
-
-      // Configuración del juego
-      config = {
-        type: Phaser.AUTO,
-        width: 1024,
-        height: 1024,
-        scale: {
-          mode: Phaser.Scale.FIT,
-          autoCenter: Phaser.Scale.CENTER_BOTH
-        },
-        scene: [{
-          key: 'initialScene',
-          preload: preload,
-          create: create,
-          update: update
-        },
-        GameOverScene, InstructionsGame, PlayGameScene, AboutEB ]
-      };
-
-    var game = new Phaser.Game(config);
-    // Configurar el evento de clic para el botón
-    document.getElementById('menuButton').addEventListener('click', function() {
-        verPuntuaciones();
-    });
-
-    // Ajustar la posición del botón cuando la ventana cambie de tamaño
-    window.addEventListener('resize', adjustButtonPosition);
-  });
-};
-
-var startButton;
-
-function verPuntuaciones() {
-    // Realizar una llamada AJAX para obtener el token
-    fetch('./php/inicio_juego.php')
-        .then(response => response.json())
-        .then(data => {
-            if (data.token) {
-                // Abrir la página de puntuaciones en una nueva pestaña con el token
-                window.open('./php/puntuaciones.php?token=' + data.token, '_blank');
-            } else {
-                console.error('No se pudo obtener el token');
-            }
-        })
-        .catch(error => console.error('Error en la llamada AJAX:', error));
-}
-
-function adjustButtonPosition() {
-  const img = document.querySelector('canvas'); // Selecciona el canvas de Phaser
-  const button = document.getElementById('menuButton');
-
-  // Obtener las dimensiones y posición de la imagen
-  const imgRect = img.getBoundingClientRect();
-
-  // Posicionar el botón en la esquina superior derecha de la imagen
-  button.style.top = `${imgRect.top + 20}px`;
-  button.style.left = `${imgRect.right - button.offsetWidth - 20}px`;
-}
-
-function preload() {
-    this.load.image('intro', 'media/img/Intro_EU.png');
-    this.load.image('boton_idioma', 'media/img/idiomas/boton_euskera.png');
-}
-
-function create() {
-    this.add.image(0, 0, 'intro').setOrigin(0);
-
-    const menuButton = document.getElementById('menuButton');
-    menuButton.style.display = 'none';
-
-  startButton = this.add.text( 510, 865 , 'JUGAR', {
-    fontSize: '65px',
-    fontWeight: 'bold', // Hace que el texto sea negrita
-    fill: '#FFFFFF',
-    fontFamily: 'MyFont'
-  }).setOrigin(0.5);
-  startButton.setInteractive();
-
-
-  infoButton = this.add.text(770, 855, 'i', {
-    fontSize: '65px',
-    fontFamily: 'MyFont',
-    fill: '#FFFFFF10'
-  }).setOrigin(0.5);
-  infoButton.setInteractive();
-
-  this.boton_idioma=this.add.image(861, 844, 'background').setOrigin(0);
-  this.boton_idioma.setAlpha(0);
-
-  // Boton de cambio de idioma
-  lenguageButton = this.add.text(900, 855, '+', {
-    fontSize: '100px',
-    fontFamily: 'MyFont',
-    fill: '#FFFFFF10'
-  }).setOrigin(0.5);
-  lenguageButton.setInteractive();
-
-  var startGame = () => {
-    if (this.sound.context.state === 'suspended') {
-      this.sound.context.resume();
-    }
-    this.scene.start('PlayGameScene');
-  }
-
-  var showInfo = () => {
-    console.log('Showinfo Called');
-  }
-
-  var changeLenguage = () => {
-    // Cambia el idioma del juego
-    console.log('ChangeLenguage Called');
-
-    if (TituloFinal1 === "¡Enhorabuena!")
-    {
-      TituloFinal1 = "Zorionak!";
-      Quepaso = "Zer gertatu da?";
-      vuelveajugar = "Jokatu berriro, eta ez sakatu Aulki Zurian, politikariei bakarrik.\n\nEman euren eserlekuan!";
-      Hasdejado = " ";
-      escanosovacios = " eserleku hutsik utzi dituzu!\n\nHau Eusko Legebiltzarra balitz, kopuru hau baino gehiago aurreztuko zenuen: ";
-      unescanovacio = "Aulki bat hutsik utzi duzu!\n\nHau Eusko Legebiltzarra balitz, kopuru hau baino gehiago aurreztuko zenuen: ";
-      Quienessomos = "Nor gara?";
-      Somosungrupo = "Klase politikoarekin nekatuta gauden herritar talde bat gara, eta ez diogu baliorik aurkitzen boto nuloari, zuriari edo abstentzioari";
-      Quequeremos = "Zer nahi dugu?";
-      Visibilizar = "Errepresentazio-falta ikusaraztea, komunikabideen arreta erakartzea eta gure sistemaren gabeziei buruzko eztabaida sortzea.";
-      Comolo = "Nola egiten dugu?";
-      Nospresentamos = "Hauteskundeetara aurkezten gara eserleku hutsak uzteko. Horrela, inork ez du kobratuko eserleku horrengatik. Guk ere ez.";
-      Estoes = "Hau posible da?";
-      Siyahay14 = "Bai. Hutsik utzi ditugu 14 zinegotzigo eta udal bat. Lagun iezaguzu Eusko Legebiltzarrean aulki huts bat uzten!";
-      Comopuedo = "Nola lagundu?";
-      Comenta = "Aipatu gure proposamena zure lagun, senide eta ezagunei. Jarraitu sare sozialetan, eta partekatu gure argitalpenak.";
-      Puntuacion = "Puntuazioa";
-      Tiempo = "Denbora";
-      Atencion = "Hadi!";
-      Deprisa = "Azkar ibili!";
-      Jugar = "Jolastu";
-
-      startButton.setText(Jugar);
-      this.boton_idioma.setAlpha(1);
-    }
-    else
-    {
-      TituloFinal1 = "¡Enhorabuena!";
-      Quepaso = "¿Qué ha pasado?";
-      vuelveajugar = "Vuelve a jugar y no pulses en el Escaño en Blanco sólo a los políticos.\n\n ¡Dales en el escaño!";
-      Hasdejado = "¡Has dejado ";
-      escanosovacios = " escaños vacíos!\n\nSi esto fuera el Parlamento Europeo, habrías ahorrado más de ";
-      unescanovacio = " ¡Has dejado un escaño vacío!\n\n Si esto fuera el Parlamento Europeo, habrías ahorrado más de ";
-      Quienessomos = "¿Quiénes somos?";
-      Somosungrupo = "Somos un grupo de ciudadanos cansados de la clase política que no encontramos utilidad ni en el voto nulo, blanco ni la abstención";
-      Quequeremos = "¿Qué queremos?";
-      Visibilizar = "Visibilizar la falta de representación, llamar la atención de los medios y abrir un debate sobre las carencias de nuestro sistema.";
-      Comolo = "¿Cómo lo hacemos?";
-      Nospresentamos = "Nos presentamos a las elecciones para dejar escaños vacíos. De esta forma nadie cobrará por ese escaño. Nosotros tampoco.";
-      Estoes = "¿Esto es posible?";
-      Siyahay14 = "Sí. Ya hemos dejado vacías 14 concejalías y un Ayuntamiento. ¡Ayúdanos a dejar un escaño vacío en el Parlamento Europeo!";
-      Comopuedo = "¿Cómo ayudar?";
-      Comenta = "Comenta nuestra propuesta con tus amigos, familiares y conocidos. Síguenos en redes sociales y comparte nuestras publicaciones.";
-      Puntuacion = "Puntuación";
-      Tiempo = "Tiempo";
-      Atencion = "¡Atención!";
-      Deprisa = "¡Deprisa!";
-      Jugar = "Jugar";
-
-
-      startButton.setText(Jugar);
-
-      this.boton_idioma.setAlpha(0);
-    }
-
-  }
-
-  startButton.on('pointerdown', startGame);
-  console.log('Start button added');
-
-  infoButton.on('pointerdown', showInfo);
-  lenguageButton.on('pointerdown', changeLenguage);
-
-
-    let tempText = this.add.text(0, 0, 'v3.01', { 
-        fontSize: '20px', 
-        fill: '#FFFFFF' 
+    let tempText = scene.add.text(0, 0, text, { 
+        fontSize: fontSize, 
+        fill: color,
+        fontFamily: font
     });
     
     let textWidth = tempText.width;
@@ -1220,14 +1113,74 @@ function create() {
     
     tempText.destroy();
     
-    let posX = 1024 - textWidth - 4;
-    let posY = 1024 - textHeight - 4;
+    let posX = x - textWidth - 4;
+    let posY = y - textHeight - 4;
     
-    let finalText = this.add.text(posX, posY, 'v3.01', { 
-        fontSize: '20px', 
-        fill: '#FFFFFF' 
+    let textObject = scene.add.text(posX, posY, text, { 
+        fontSize: fontSize, 
+        fill: color,
+        fontFamily: font
     });
+    
+    return textObject;
+};
+
+
+function addCenteredText(scene, text, fontSize, fontFamily, color, classCSS) {
+    // Crear el texto con el tamaño de fuente especificado
+    let textObject = scene.add.text(0, 0, text, {
+        fontSize: fontSize + 'px',
+        fontFamily: fontFamily,
+        color: color,
+        align: 'center'
+    });
+
+    // Centrar el texto en la pantalla
+    textObject.setOrigin(0.5, 0.5);
+    textObject.x = scene.cameras.main.width / 2;
+    textObject.y = scene.cameras.main.height / 2;
+
+    return textObject;
 }
 
-function update() {
+const getOptimalFontSize = (scene, text, maxWidth, maxHeight, fontFamily, padding) => {
+    let minFontSize = 1;
+    let maxFontSize = 200;
+    let bestFitFontSize = minFontSize;
+
+    const adjustedMaxWidth = maxWidth - 2 * padding;
+    const adjustedMaxHeight = maxHeight - 2 * padding;
+
+    while (minFontSize <= maxFontSize) {
+        let fontSize = Math.floor((minFontSize + maxFontSize) / 2);
+        let dimensions = measureText(scene, text, fontSize, fontFamily);
+
+        if (dimensions.width <= adjustedMaxWidth && dimensions.height <= adjustedMaxHeight) {
+            bestFitFontSize = fontSize; // Actualiza el mejor ajuste si se cumplen las condiciones
+            minFontSize = fontSize + 1;
+        } else {
+            maxFontSize = fontSize - 1;
+        }
+    }
+    return bestFitFontSize;
+};
+
+function measureText(scene, text, fontSize, fontFamily) {
+    let canvas = document.createElement("canvas");
+    let ctx = canvas.getContext("2d");
+    ctx.font = `${fontSize}px ${fontFamily}`;
+    let lines = text.split('\n');
+    let maxWidth = 0;
+    let totalHeight = 0;
+
+    lines.forEach(line => {
+        let metrics = ctx.measureText(line);
+        maxWidth = Math.max(maxWidth, metrics.width);
+        totalHeight += Math.abs(metrics.actualBoundingBoxAscent) + Math.abs(metrics.actualBoundingBoxDescent);
+    });
+
+    return {
+        width: maxWidth,
+        height: totalHeight
+    };
 }

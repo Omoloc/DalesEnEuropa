@@ -1,9 +1,10 @@
 // Variables globales
-let TituloFinal1, Quepaso, vuelveajugar, Hasdejado, escanosovacios, unescanovacio, Quienessomos, Somosungrupo, Quequeremos, Visibilizar, Comolo, Nospresentamos, Estoes, Siyahay14, Comopuedo, Comenta, Puntuacion, Tiempo, Atencion, Deprisa, Jugar, bandera;
+let bandera, TituloFinal1, info1, Quepaso, vuelveajugar, Hasdejado, escanosovacios, unescanovacio, Quienessomos, Somosungrupo, Quequeremos, Visibilizar, Comolo, Nospresentamos, Estoes, Siyahay14, Comopuedo, Comenta, Puntuacion, Tiempo, Atencion, Deprisa, Jugar;
 
 const languages = {
     esp: {
-        bandera: "media/img/idiomas/boton_castellano.png",
+        bandera: 'bandera_esp',
+        info1: "¿Cómo se juega?\n\nDeberas evitar que los diputados\n\n se sienten en TU escaño\n\n del Parlamento Europeo\n\nVacía tantos escaños como puedas\n\n y ahórranos dinero a todos",
         TituloFinal1: "¡Enhorabuena!",
         Quepaso: "¿Qué ha pasado?",
         vuelveajugar: "Vuelve a jugar y no pulses en el Escaño en Blanco sólo a los políticos.\n\n ¡Dales en el escaño!",
@@ -27,11 +28,12 @@ const languages = {
         Jugar: "Jugar"
     },
     eus: {
-        bandera: "media/img/idiomas/boton_euskera.png",
+        bandera: 'bandera_eus',
         TituloFinal1: "Zorionak!",
+        info1: "Nola jokatu?\n\nLegebiltzarkideei ZURE eserlekuan\n\n esertzea saihestu beharko zenuke\n\n Europako Parlamentuan\n\nHustu ahal duzun adina eserleku\n\n eta aurreztu iezaguzu diru guztia. ",
         Quepaso: "Zer gertatu da?",
         vuelveajugar: "Jokatu berriro, eta ez sakatu Aulki Zurian, politikariei bakarrik.\n\nEman euren eserlekuan!",
-        Hasdejado: " ",
+        Hasdejado: "Utzi zara",
         escanosovacios: " eserleku hutsik utzi dituzu!\n\nHau Eusko Legebiltzarra balitz, kopuru hau baino gehiago aurreztuko zenuen: ",
         unescanovacio: "Aulki bat hutsik utzi duzu!\n\nHau Eusko Legebiltzarra balitz, kopuru hau baino gehiago aurreztuko zenuen: ",
         Quienessomos: "Nor gara?",
@@ -51,11 +53,11 @@ const languages = {
         Jugar: "Jolastu"
     },
     cat: {
-        bandera: "media/img/idiomas/boton_catalan.png"
+        bandera: 'bandera_cat',
         // Agrega más traducciones aquí
     },
     gal: {
-        bandera: "media/img/idiomas/boton_gallego.png"
+        bandera: 'bandera_gal',
         // Agrega más traducciones aquí
     }
 };
@@ -72,8 +74,13 @@ class LanguageManager {
     }
 
     changeLanguage() {
+        let initialIndex = this.currentIndex;
         do {
             this.currentIndex = (this.currentIndex + 1) % this.languageKeys.length;
+            if (this.currentIndex === initialIndex) {
+                this.currentIndex = -1;  // Regresar al inicio si no hay más traducciones disponibles
+                break;
+            }
         } while (!this.isLanguageAvailable(this.languageKeys[this.currentIndex]));
 
         return this.currentLanguage || false;
@@ -84,41 +91,53 @@ class LanguageManager {
         const langWordsCount = Object.keys(this.languages[langCode]).length;
         return langWordsCount >= spanishWordsCount;
     }
+
+    getNextAvailableLanguageFlag() {
+        let tempIndex = this.currentIndex;
+        let initialIndex = tempIndex;
+        do {
+            tempIndex = (tempIndex + 1) % this.languageKeys.length;
+            if (tempIndex === initialIndex) {
+                return this.languages['esp'].bandera;  // Regresar a 'esp' si no hay más traducciones disponibles
+            }
+        } while (!this.isLanguageAvailable(this.languageKeys[tempIndex]));
+
+        return this.languages[this.languageKeys[tempIndex]].bandera;
+    }
 }
 
 const languageManager = new LanguageManager(languages);
 
 const changeLanguage = () => {
-        const currentLanguage = languageManager.changeLanguage();
-    if (currentLanguage) {
-        TituloFinal1 = currentLanguage.TituloFinal1;
-        Quepaso = currentLanguage.Quepaso;
-        vuelveajugar = currentLanguage.vuelveajugar;
-        Hasdejado = currentLanguage.Hasdejado;
-        escanosovacios = currentLanguage.escanosovacios;
-        unescanovacio = currentLanguage.unescanovacio;
-        Quienessomos = currentLanguage.Quienessomos;
-        Somosungrupo = currentLanguage.Somosungrupo;
-        Quequeremos = currentLanguage.Quequeremos;
-        Visibilizar = currentLanguage.Visibilizar;
-        Comolo = currentLanguage.Comolo;
-        Nospresentamos = currentLanguage.Nospresentamos;
-        Estoes = currentLanguage.Estores;
-        Siyahay14 = currentLanguage.Siyahay14;
-        Comopuedo = currentLanguage.Comopuedo;
-        Comenta = currentLanguage.Comenta;
-        Puntuacion = currentLanguage.Puntuacion;
-        Tiempo = currentLanguage.Tiempo;
-        Atencion = currentLanguage.Atencion;
-        Deprisa = currentLanguage.Deprisa;
-        Jugar = currentLanguage.Jugar;
-        bandera = currentLanguage.bandera;
-    
+    const newLanguageData = languageManager.changeLanguage();
+    const nextFlag = languageManager.getNextAvailableLanguageFlag();
+
+    if (newLanguageData) {
+        // Actualizar las variables globales al nuevo idioma
+        bandera = nextFlag;
+        TituloFinal1 = newLanguageData.TituloFinal1;
+        info1 = newLanguageData.info1;
+        Quepaso = newLanguageData.Quepaso;
+        vuelveajugar = newLanguageData.vuelveajugar;
+        Hasdejado = newLanguageData.Hasdejado;
+        escanosovacios = newLanguageData.escanosovacios;
+        unescanovacio = newLanguageData.unescanovacio;
+        Quienessomos = newLanguageData.Quienessomos;
+        Somosungrupo = newLanguageData.Somosungrupo;
+        Quequeremos = newLanguageData.Quequeremos;
+        Visibilizar = newLanguageData.Visibilizar;
+        Comolo = newLanguageData.Comolo;
+        Nospresentamos = newLanguageData.Nospresentamos;
+        Estoes = newLanguageData.Estores;
+        Siyahay14 = newLanguageData.Siyahay14;
+        Comopuedo = newLanguageData.Comopuedo;
+        Comenta = newLanguageData.Comenta;
+        Puntuacion = newLanguageData.Puntuacion;
+        Tiempo = newLanguageData.Tiempo;
+        Atencion = newLanguageData.Atencion;
+        Deprisa = newLanguageData.Deprisa;
+        Jugar = newLanguageData.Jugar;
     } else {
         console.log('No more languages available or language not supported');
     }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    changeLanguage();
-});

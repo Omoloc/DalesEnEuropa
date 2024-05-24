@@ -8,3 +8,15 @@ body {
     font-family: 'MyFont';
     src: url('../fonts/SugarBomb.ttf') format('truetype');
 }
+
+.button-bordered {
+    border: 5px solid #FFD700; /* Cambia el color y el grosor del borde según tus necesidades */
+    border-radius: 10px; /* Ajusta el radio del borde para que coincida con el estilo del botón */
+    padding: 10px; /* Añade algo de relleno si es necesario */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Opcional: añade una sombra para darle un efecto de elevación */
+    background-color: #FFA500; /* Fondo del botón */
+    color: #FFFFFF; /* Color del texto */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    text-align: center; /* Centra el texto */
+    display: inline-block; /* Asegura que el botón tenga un tamaño específico */
+}
