@@ -11,7 +11,6 @@ class BaseScene extends Phaser.Scene {
     }
 
     preload() {
-        // Cargar la imagen de fondo para la pantalla de carga
         this.load.image('loadingScreen', 'media/img/Intro_Base_EU.png');
     }
 
@@ -76,14 +75,14 @@ class InitialScene extends Phaser.Scene {
     update() {
         
     }
-
+    
     addTextPlay() {
         
         if (this.TextPlay) {
             this.TextPlay.destroy();
         }
         
-        const optimalFontSize_TextPlay = getOptimalFontSize(this, Jugar, 320, 90, 'MyFont', 4);
+        const optimalFontSize_TextPlay = getOptimalFontSize(this, Jugar, 320, 85, 'MyFont', 4);
         this.TextPlay = addCenteredText(this, Jugar, optimalFontSize_TextPlay, 'MyFont', '#FFFFFF');
         
         this.TextPlay.y = 865;
@@ -119,7 +118,7 @@ class PlayGameScene extends Phaser.Scene {
         this.TextDeprisa = null;
         this.TextCountdown=null;
         this.loopReload=0;
-        this.lastShownImages = this.lastShownImages || [];
+        this.historialImages = [];
     }
 
     increaseScore(posX, posY) {
@@ -182,26 +181,15 @@ class PlayGameScene extends Phaser.Scene {
             positionImage.setAlpha(0);
         });
 
-        console.log('Images to display '+this.gameImagesToDisplay.length);
-        do {
-            this.randomImage = Phaser.Math.RND.pick(this.gameImagesToDisplay);
-        } while (this.lastShownImages.includes(this.randomImage));
-
-        // Agregar la imagen seleccionada a la lista de últimas imágenes mostradas
-        this.lastShownImages.push(this.randomImage);
-
-        // Asegurarse de que la lista de últimas imágenes mostradas no tenga más de 5 elementos
-        if (this.lastShownImages.length > 5) {
-            this.lastShownImages.shift();
-        }
-
-        // Buscar el índice de la imagen seleccionada
-        this.index = this.gameImagesToDisplay.indexOf(this.randomImage);
-
-        // Eliminar la imagen seleccionada de la lista si se encuentra
-        if (this.index > -1) {
-            this.gameImagesToDisplay.splice(this.index, 1);
-        }
+            console.log('Images to display '+this.gameImagesToDisplay.length);
+        
+            const imagesPosibles = this.gameImagesToDisplay.filter(image => !this.historialImages.includes(image));
+            this.randomImage = Phaser.Math.RND.pick(imagesPosibles);
+            this.historialImages.push(this.randomImage);
+        
+            if (this.historialImages.length > 4) {
+              this.historialImages.shift();
+            }
 
         this.randomPositionImage = Phaser.Math.RND.pick(this.positionImages);
         this.originalY = this.randomPositionImage.y;
@@ -437,6 +425,7 @@ class PlayGameScene extends Phaser.Scene {
   }
   decreaseCountdown() {
     this.countdown--;
+    this.countdown=0;
 
     this.TextCountdown.setText(Tiempo+': ' + this.countdown);
 
@@ -556,17 +545,7 @@ class PlayGameScene extends Phaser.Scene {
     });
 
   }
-  ReloadGreenCircleTimer () {
-    this.loopReload++;
-
-    if (this.loopReload % 5 === 0) {
-        console.log("this.loopReload es divisible entre 5");
-        this.gameImagesToDisplay = [...this.imagesToDisplay];
-        console.log("this.lastShownImages :",this.lastShownImages);
-        this.lastShownImages = [];
-        console.log("this.lastShownImages :",this.lastShownImages);
-    }
-    
+  ReloadGreenCircleTimer () {    
     this.showNextImage();
     this.greenCircleTimer = this.time.addEvent({
       delay: this.timeup+this.staytime,
@@ -579,432 +558,115 @@ class PlayGameScene extends Phaser.Scene {
 
 class GameOverScene extends Phaser.Scene {
 
-  contador = 0;
-  textContent = ""
-  textTitle = ""
-  mensajes = 0;
-  moreButton = "";
+    constructor() {
+        super({ key: 'GameOverScene' });
+        console.log('Constructor GameOverScene');
 
-  style = {
-    fontSize: '50px',
-    fontFamily: 'MyFont',
-    fill: '#FFFFFF',
-    wordWrap: { width: 850, useAdvancedWrap: true }
-  }
-
-  styleTitle = {
-    fontSize: '75px',
-    fontFamily: 'MyFont',
-    fontWeight: 'bold',
-    fill: '#FFFF66',
-    wordWrap: { width: 850, useAdvancedWrap: true }
-  }
-
-  constructor() {
-    super({ key: 'GameOverScene' });
-    console.log('Constructor GameOverScene');
-
-    // Vincula el contexto de 'this' en 'startGame' a la instancia de 'GameOverScene'
-    this.startGame = this.startGame.bind(this);
-    this.updateText = this.updateText.bind(this);
-  }
-
-  init(data) {
-    console.log('init GameOverScene ' + data.puntuacion);
-    this.contador = data.puntuacion;
-  }
-
-  preload() {
-    // Carga los recursos necesarios para esta escena
-    this.load.image('background', 'media/img/Background_EU.png');
-    //this.load.css('myfont', 'myfont.css');
-
-  }
-  startGame() {
-    // Cargo escena del juego
-    console.log('PlayGameScene Scene Called');
-    if (this.sound.context.state === 'suspended') {
-      this.sound.context.resume();
+        this.startGame = this.startGame.bind(this);
     }
-    this.scene.start('PlayGameScene');
-  }
 
-  nextText() {
-    console.log('nextText called');
+    init(data) {
+        console.log('init GameOverScene ' + data.puntuacion);
+        this.contador = data.puntuacion;
+    }
 
-    //incremento el contador de mensajes
-    this.mensajes= (this.mensajes+1)%6;
-    this.updateText();
-  }
+    preload() {
+        this.load.image('background', 'media/img/Background_EU.png');
+    }
 
-  previousText() {
-    console.log('previousText called');
-
-    this.mensajes -= 1;
-    if (this.mensajes < 0) this.mensajes = 6;
-    this.updateText();
-  }
-
-  //Reinicia el timer countdownTimer
-  restartTimer() {
-    if(this.countdownTimer) this.countdownTimer.remove();
-    this.countdownTimer = this.time.addEvent({
-      delay: 9000,
-      callback: this.nextText,
-      callbackScope: this,
-      loop: true
-    });
-  }
-
-  create() {
-
-    this.mensajes = 0;
-    this.add.image(0, 0, 'background').setOrigin(0);
-    this.cameras.main.setBackgroundColor('#FFFFFF');
-
-    // Verificar la puntuación en el registro
-    let score = this.registry.get('score');
-    console.log('Puntuación:', score);
-
-function obtenerTokenYpuntuaciones() {
-    return fetch('./php/inicio_juego.php')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.token) {
-                console.log('Token obtenido:', data.token);
-                let sessionToken = data.token;
-                return fetch('./php/obtener_puntuaciones.php?token=' + sessionToken)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    });
-            } else {
-                throw new Error('No se pudo obtener el token');
-            }
-        })
-        .then(data => {
-            console.log('Puntuaciones obtenidas:', data);
-            mostrarPopUp(data.top3_day, data.top3_world);
-        })
-        .catch(error => {
-            console.error('Error en la llamada AJAX:', error);
-        });
-}
-
-// Función para obtener el token y luego las puntuaciones
-function obtenerTokenYpuntuaciones() {
-    return fetch('./php/inicio_juego.php')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.token) {
-                console.log('Token obtenido:', data.token);
-                let sessionToken = data.token;
-                return fetch('./php/obtener_puntuaciones.php?token=' + sessionToken)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    });
-            } else {
-                throw new Error('No se pudo obtener el token');
-            }
-        })
-        .then(data => {
-            console.log('Puntuaciones obtenidas:', data);
-            mostrarPopUp(data.top3_day, data.top3_world);
-        })
-        .catch(error => {
-            console.error('Error en la llamada AJAX:', error);
-        });
-}
-
-// Función para mostrar el popup
-function mostrarPopUp(top3_day, top3_world) {
-    return new Promise((resolve, reject) => {
-        let modal = document.createElement('div');
-        modal.style.position = 'fixed';
-        modal.style.top = '50%';
-        modal.style.left = '50%';
-        modal.style.transform = 'translate(-50%, -50%)';
-        modal.style.backgroundColor = '#fff';
-        modal.style.padding = '20px';
-        modal.style.boxShadow = '0 0 20px rgba(0, 0, 0, 0.5)';
-        modal.style.zIndex = '1000';
-        modal.style.borderRadius = '15px';
-        modal.style.textAlign = 'center';
-        modal.style.width = '300px';
-        modal.style.border = '2px solid #FFA500';
-
-        let mensajeElemento = document.createElement('h1');
-        let descripcionElemento = document.createElement('p');
-        let input;
-        let botonEnviar;
-        let showInput = false;
-
-
-        if (score == 0 || score <= top3_day ) {
-            mensajeElemento.textContent = title_NoTop;
-            descripcionElemento.textContent = text_NoTop;
-            mensajeElemento.style.color = '#FF4500';
-        } else if (score > top3_day && score <= top3_world) {
-            mensajeElemento.textContent = title_TopDay;
-            descripcionElemento.textContent = text_TopDay;
-            showInput = true;
-            mensajeElemento.style.color = '#FF8C00';
-        } else {
-            mensajeElemento.textContent = title_TopWorld;
-            descripcionElemento.textContent = text_TopWorld;
-            showInput = true;
-            mensajeElemento.style.color = '#32CD32';
+    startGame() {
+        console.log('PlayGameScene Scene Called');
+        if (this.sound.context.state === 'suspended') {
+          this.sound.context.resume();
         }
+        this.scene.start('PlayGameScene');
+    }
 
-        mensajeElemento.style.marginBottom = '10px';
-        modal.appendChild(mensajeElemento);
+    create() {
 
-        descripcionElemento.style.color = '#333';
-        modal.appendChild(descripcionElemento);
+        this.mensajes = 0;
+        this.add.image(0, 0, 'background').setOrigin(0);
+        this.cameras.main.setBackgroundColor('#FFFFFF');
 
-        if (showInput) {
-            input = document.createElement('input');
-            input.type = 'text';
-            input.maxLength = 3;
-            input.style.marginTop = '10px';
-            input.style.padding = '5px';
-            input.style.borderRadius = '5px';
-            input.style.border = '1px solid #ccc';
-            modal.appendChild(input);
+        let score = this.registry.get('score');
+        console.log('Puntuación:', score);
 
-            botonEnviar = document.createElement('button');
-            botonEnviar.textContent = 'Enviar';
-            botonEnviar.style.marginTop = '15px';
-            botonEnviar.style.padding = '10px 20px';
-            botonEnviar.style.border = 'none';
-            botonEnviar.style.backgroundColor = '#FFA500';
-            botonEnviar.style.backgroundImage = 'linear-gradient(45deg, #FFA500, #FF4500)';
-            botonEnviar.style.color = '#fff';
-            botonEnviar.style.borderRadius = '5px';
-            botonEnviar.style.cursor = 'pointer';
+        this.addTextPlay();
+        
+        this.moreButton = this.add.rectangle(263, 926, 340, 134, 0xFFFFFF, 0);
+        this.moreButton.setInteractive({ useHandCursor: true });
+        this.moreButton.on('pointerup', () => {
+                this.scene.start('AboutEB');
+        });
 
-            botonEnviar.onclick = function() {
-                let iniciales = input.value;
-                if (iniciales && iniciales.length === 3 && /^[A-Za-z]{3}$/.test(iniciales)) {
-                    document.body.removeChild(modal);
-                    resolve(iniciales);
-                } else {
-                    alert('Iniciales inválidas. Asegúrate de ingresar 3 letras.');
-                }
-            };
-
-            modal.appendChild(botonEnviar);
-        } else {
-            setTimeout(() => {
-                document.body.removeChild(modal);
-                reject('No score achieved');
-            }, 2000);
-        }
-
-        document.body.appendChild(modal);
-    }).then(iniciales => {
-        enviarPuntuacion(iniciales);
-    }).catch(error => {
-        console.error('Error al obtener las iniciales:', error);
-    });
-}
-
-
-function enviarPuntuacion(iniciales) {
-    fetch('./php/inicio_juego.php')
-        .then(response => response.json())
-        .then(data => {
-            if (data.token) {
-                // Crear un objeto FormData y agregar los datos
-                let formData = new FormData();
-                formData.append('iniciales', iniciales.toUpperCase());
-                formData.append('puntuacion', score);
-                formData.append('token', data.token);
-
-                // Enviar el formulario con el token incluido
-                fetch('./php/guardar_puntuacion.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.text())
-                .then(result => {
-                    alert(result); // Mostrar el resultado en un alert para mayor visibilidad
-                    // Lógica adicional después de guardar la puntuación (si es necesario)
-                })
-                .catch(error => {
-                    console.error('Error al guardar la puntuación:', error);
-                    alert('Error al guardar la puntuación: ' + error.message); // Mostrar el error en un alert
+        this.link = this.add.circle(890, 925, 55, 0xFFFFFF, 0);
+        this.link.setInteractive({ useHandCursor: true });
+        
+        this.link.on('pointerup', () => {
+            if (navigator.share) {
+                try{ navigator.share({
+                    title: 'Dales donde más les duele: Dales en los escaños)',
+                    text: 'Ayúdame a eliminar unos cuantos escaños en los parlamentos. ¡Dales donde más les duele! ¡Dales en los escaños! #dalesenlosescaños http://escanos.org/dalesenlosescanos/index.html',
                 });
+                    console.log('compartir ok');
+                } catch(error) {
+                    console.error('compartir error: ',error);
+                }
             } else {
-                console.error('No se pudo obtener el token');
-                alert('No se pudo obtener el token'); // Mostrar el error en un alert
-            }
-        })
-        .catch(error => {
-            console.error('Error en la llamada AJAX:', error);
-            alert('Error en la llamada AJAX: ' + error.message); // Mostrar el error en un alert
+                if(this.contador <= 1) {
+                    window.open('https://twitter.com/intent/tweet?text=Ayúdame a eliminar unos cuantos escaños en el Parlamento %0A%0A http://escanos.org/dalesenlosescanos/index.html %0A%0A Sigue a @escanosenblanco y ¡Dales donde más les duele!&hashtags=dalesenlosescaños' , '_blank'); 
+                } else {
+                    window.open('https://twitter.com/intent/tweet?text=¡He eliminado '+this.contador+ ' diputados!%0A%0AAyúdame a eliminar unos cuantos escaños http://escanos.org/dalesenlosescanos/index.html %0A%0A Sigue a @escanosenblanco y ¡dales donde más les duele!&hashtags=dalesenlosescaños' , '_blank');
+                    }
+                }   
+            });
+    }
+    
+    addTextPlay() {
+        if (this.TextPlay) {
+            this.TextPlay.destroy();
+        }
+        
+        const optimalFontSize_TextPlay = getOptimalFontSize(this, Jugar, 315, 70, 'MyFont', 4);
+        this.TextPlay = addTextWithCustomX(this, Jugar, optimalFontSize_TextPlay, 'MyFont', '#FFFFFF', 640)
+        
+        this.TextPlay.y = 925;
+        this.TextPlay.setInteractive({ useHandCursor: true });
+        this.TextPlay.on('pointerup', () => {
+            this.scene.start('PlayGameScene');
         });
-}
-
-    this.textTitle = this.add.text(115, 320, '', this.styleTitle)
-    this.textContent = this.add.text(115, 406, '', this.style );
-
-    this.messagesindicator = this.add.text(385, 770, '🟠 ⚪ ⚪ ⚪ ⚪ ⚪', { fontSize: '16px', fill: '#FFFFFF80' });
-
-    this.nextButton = this.add.text(955, 546, '▶', { fontSize: '52px', fill: '#FFFFFF' });
-    this.nextButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
-    this.nextButton.on('pointerup', () => {
-      //Reinicia el timer countdownTimer
-      this.restartTimer()
-      this.nextText();
-    });
-    this.previousButton = this.add.text(35, 546, '◀', { fontSize: '52px', fill: '#FFFFFF' });
-    this.previousButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
-    this.previousButton.on('pointerup', () => {
-      this.restartTimer()
-      this.previousText();
-    });
-
-    //Arranco el timer y pinto el texto con valor 0
-    this.restartTimer();
-    this.updateText();
-
-    // Boton de jugar de nuevo
-    this.startButton = this.add.text(549, 842, Jugar, {
-      fontSize: '42px',
-      fontFamily: 'MyFont',
-      fill: '#FFFFFF'
-    }).setOrigin(0);
-    this.startButton.setInteractive({ useHandCursor: true });
-    this.startButton.on('pointerdown', this.startGame);
-
-    // Enlace a la web de Escaños en Blanco
-    this.moreButton = this.add.rectangle(250, 870, 360, 150, 0xFFFFFF, 0); // Añade un rectángulo semi-transparente
-    this.moreButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
-    this.moreButton.on('pointerup', () => {
-            this.scene.start('AboutEB');
-    });
-
-
-    //Botón de compartir
-    this.link = this.add.text(880, 845, 'X', { fontSize: '42px', fontFamily: 'MyFont', fill: '#FFFFFF10'});
-    this.link.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
-    this.link.on('pointerup', () => {
-
-        if (navigator.share) {
-         try{ navigator.share({
-           title: 'Dales donde más les duele: Dales en los escaños)',
-             text: 'Ayúdame a eliminar unos cuantos escaños en los parlamentos. ¡Dales donde más les duele! ¡Dales en los escaños! #dalesenlosescaños http://escanos.org/dalesenlosescanos/index.html',
-         });
-          console.log('compartir ok');
-            } catch(error) {
-           console.error('compartir error: ',error);
-         }
-        }
-      else
-        {
-
-        if(this.contador <= 1) {
-          window.open('https://twitter.com/intent/tweet?text=Ayúdame a eliminar unos cuantos escaños en el Parlamento %0A%0A http://escanos.org/dalesenlosescanos/index.html %0A%0A Sigue a @escanosenblanco y ¡Dales donde más les duele!&hashtags=dalesenlosescaños' , '_blank'); // Abre el enlace en una nueva pestaña
-      }
-      else
-      {
-        window.open('https://twitter.com/intent/tweet?text=¡He eliminado '+this.contador+ ' diputados!%0A%0AAyúdame a eliminar unos cuantos escaños http://escanos.org/dalesenlosescanos/index.html %0A%0A Sigue a @escanosenblanco y ¡dales donde más les duele!&hashtags=dalesenlosescaños' , '_blank'); // Abre el enlace en una nueva pestaña
-      }
-        }
-    });
-
-    /*
-    this.countdownTimer = this.time.addEvent({
-      delay: 9000,
-      callback: this.nextText,
-      callbackScope: this,
-      loop: true
-    });
-    */
-
-  }
-
-  updateText() {
-    switch (this.mensajes) {
-      case 0:
-        if (this.contador === 0) {
-          console.log('contador='+this.contador);
-          this.textTitle.setText(Quepaso, this.styleTitle);
-          this.textContent.setText( vuelveajugar);
-        } else if (this.contador > 1) {
-          console.log('contador='+this.contador);
-          this.textTitle.setText(TituloFinal1);
-          this.textContent.setText( Hasdejado + this.contador + escanosovacios + (this.contador*120000).toLocaleString('es-ES') +'€');
-        } else {
-          console.log('contador='+this.contador);
-          this.textTitle.setText(TituloFinal1);
-          this.textContent.setText(unescanovacio+ ((this.contador*120000)+220000).toLocaleString('es-ES') +'€');
-        }
-        //cambio el messageindicator
-        this.messagesindicator.setText('🟠 ⚪ ⚪ ⚪ ⚪ ⚪');
-
-        break;
-      case 1:
-        this.textTitle.setText(Quienessomos);
-        this.textContent.setText(Somosungrupo);
-        //cambio el messageindicator
-        this.messagesindicator.setText('⚪ 🟠 ⚪ ⚪ ⚪ ⚪');
-
-        break;
-      case 2:
-        this.textTitle.setText(Quequeremos);
-        this.textContent.setText( Visibilizar );
-        //cambio el messageindicator
-        this.messagesindicator.setText('⚪ ⚪ 🟠 ⚪ ⚪ ⚪');
-        break;
-      case 3:
-        this.textTitle.setText(Comolo);
-        this.textContent.setText( Nospresentamos );
-        //cambio el messageindicator
-        this.messagesindicator.setText('⚪ ⚪ ⚪ 🟠 ⚪ ⚪');
-        break;
-      case 4:
-        this.textTitle.setText(Estoes);
-        this.textContent.setText(Siyahay14);
-        //cambio el messageindicator
-        this.messagesindicator.setText('⚪ ⚪ ⚪ ⚪ 🟠 ⚪');
-        break;
-      case 5:
-        this.textTitle.setText(Comopuedo);
-        this.textContent.setText( Comenta );
-        //cambio el messageindicator
-        this.messagesindicator.setText('⚪ ⚪ ⚪ ⚪ ⚪ 🟠');
-        break;
-      }
-
-
-  }
-
+    }
 
   update() {
-    // Actualiza el estado de esta escena en cada frame
+      
   }
 }
 
 class AboutEB extends Phaser.Scene {
-constructor() {
+    constructor() {
         super({ key: 'AboutEB' });
+        this.updateText = this.updateText.bind(this);
+    }
+    
+    contador = 0;
+    textContent = ""
+    textTitle = ""
+    mensajes = 0;
+    moreButton = "";
+
+    style = {
+        fontSize: '50px',
+        fontFamily: 'MyFont',
+        fill: '#000000',
+        wordWrap: { width: 850, useAdvancedWrap: true }
+    }
+
+    styleTitle = {
+        fontSize: '75px',
+        fontFamily: 'MyFont',
+        fontWeight: 'bold',
+        fill: '#AAAAAA',
+        wordWrap: { width: 850, useAdvancedWrap: true }
     }
 
     preload() {
@@ -1015,74 +677,170 @@ constructor() {
         this.load.image('bandera_gal', 'media/img/idiomas/boton_gallego.png');
         this.load.image('boton', 'media/img/Boton.png');
     }
+    
+    
+      nextText() {
+        console.log('nextText called');
+        this.mensajes= (this.mensajes+1)%6;
+        this.updateText();
+      }
+
+      previousText() {
+        console.log('previousText called');
+
+        this.mensajes -= 1;
+        if (this.mensajes < 0) this.mensajes = 6;
+        this.updateText();
+      }
+
+      //Reinicia el timer countdownTimer
+      restartTimer() {
+        if(this.countdownTimer) this.countdownTimer.remove();
+        this.countdownTimer = this.time.addEvent({
+          delay: 9000,
+          callback: this.nextText,
+          callbackScope: this,
+          loop: true
+        });
+      }
+
 
     create() {
         console.log('AboutEB started');
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'info').setOrigin(0.5, 0.5);
-        this.add.image(this.cameras.main.centerX, 865, 'boton').setOrigin(0.5, 0.5);
-        
-        this.addTextPlay();
+
         this.addImageFlag(bandera);
-        this.addTextInstruction()
+        
+        this.mensajes = 0;
+        
+        this.textTitle = this.add.text(115, 320, '', this.styleTitle)
+        this.textContent = this.add.text(115, 406, '', this.style );
+
+        this.messagesindicator = this.add.text(385, 770, '🟠 ⚪ ⚪ ⚪ ⚪ ⚪', { fontSize: '16px', fill: '#FFFFFF80' });
+
+        this.nextButton = this.add.text(955, 546, '▶', { fontSize: '52px', fill: '#FFFFFF' });
+        this.nextButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
+        this.nextButton.on('pointerup', () => {
+          //Reinicia el timer countdownTimer
+          this.restartTimer()
+          this.nextText();
+        });
+        this.previousButton = this.add.text(35, 546, '◀', { fontSize: '52px', fill: '#FFFFFF' });
+        this.previousButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
+        this.previousButton.on('pointerup', () => {
+          this.restartTimer()
+          this.previousText();
+        });
+
+        //Arranco el timer y pinto el texto con valor 0
+        this.restartTimer();
+        this.updateText();
+
+        
+        this.link = this.add.circle(890, 925, 55, 0xFFFFFF, 0);
+        this.link.setInteractive({ useHandCursor: true });
+        this.link.on('pointerup', () => {
+            this.scene.start('GameOverScene', { puntuacion: this.score });
+        });
+        
+        this.moreButton = this.add.rectangle(325, 940, 360, 150, 0xFFFFFF, 0);
+        this.moreButton.setInteractive({ useHandCursor: true });
+        this.moreButton.on('pointerup', () => {
+            window.open('https://escanos.org', '_blank');
+        });
         
         const optimalFontSize = getOptimalFontSize(this, 'v3.01', 75, 50, 'Arial', 4);
         const optimalPositionBottomRight = getOptimalSquarePosition(this, 'v3.01', optimalFontSize, 'Arial', 4, 'bottom-right');
         this.TextVersionBottomRight = addTextWithAdjustedPosition(this, optimalPositionBottomRight.x, optimalPositionBottomRight.y, optimalPositionBottomRight.fontSize, '#FFFFFF', 'v3.01', 'Arial');
         
-        this.moreButton = this.add.rectangle(325, 940, 360, 150, 0xFFFFFF, 0); // Añade un rectángulo semi-transparente
-        this.moreButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
-        this.moreButton.on('pointerup', () => {
-                window.open('https://escanos.org', '_blank');
-        });
+        this.events.on('shutdown', this.shutdown, this);
     }
 
+      updateText() {
+        switch (this.mensajes) {
+          case 0:
+            if (this.contador === 0) {
+              console.log('contador='+this.contador);
+              this.textTitle.setText(Quepaso, this.styleTitle);
+              this.textContent.setText( vuelveajugar);
+            } else if (this.contador > 1) {
+              console.log('contador='+this.contador);
+              this.textTitle.setText(TituloFinal1);
+              this.textContent.setText( Hasdejado + this.contador + escanosovacios + (this.contador*120000).toLocaleString('es-ES') +'€');
+            } else {
+              console.log('contador='+this.contador);
+              this.textTitle.setText(TituloFinal1);
+              this.textContent.setText(unescanovacio+ ((this.contador*120000)+220000).toLocaleString('es-ES') +'€');
+            }
+            //cambio el messageindicator
+            this.messagesindicator.setText('🟠 ⚪ ⚪ ⚪ ⚪ ⚪');
+
+            break;
+          case 1:
+            this.textTitle.setText(Quienessomos);
+            this.textContent.setText(Somosungrupo);
+            //cambio el messageindicator
+            this.messagesindicator.setText('⚪ 🟠 ⚪ ⚪ ⚪ ⚪');
+
+            break;
+          case 2:
+            this.textTitle.setText(Quequeremos);
+            this.textContent.setText( Visibilizar );
+            //cambio el messageindicator
+            this.messagesindicator.setText('⚪ ⚪ 🟠 ⚪ ⚪ ⚪');
+            break;
+          case 3:
+            this.textTitle.setText(Comolo);
+            this.textContent.setText( Nospresentamos );
+            //cambio el messageindicator
+            this.messagesindicator.setText('⚪ ⚪ ⚪ 🟠 ⚪ ⚪');
+            break;
+          case 4:
+            this.textTitle.setText(Estoes);
+            this.textContent.setText(Siyahay14);
+            //cambio el messageindicator
+            this.messagesindicator.setText('⚪ ⚪ ⚪ ⚪ 🟠 ⚪');
+            break;
+          case 5:
+            this.textTitle.setText(Comopuedo);
+            this.textContent.setText( Comenta );
+            //cambio el messageindicator
+            this.messagesindicator.setText('⚪ ⚪ ⚪ ⚪ ⚪ 🟠');
+            break;
+          }
+
+
+      }
+    
     update() {
-    }
     
-    transitionOut(progress) {
-        this.cameras.main.alpha = 1 - progress;
     }
-    
+    shutdown() {
+        console.log("SHUTDOWN");
+        if (this.ImageFlag) {
+            this.ImageFlag.destroy();
+            this.ImageFlag = null;
+            console.log("Imagen destruida");
+        } else {
+            console.log("Imagen NO destruida");
+        }
+    }
+
     addImageFlag(bandera_actual) {
+        
+        console.log("Dentro fun: ",bandera_actual);
         if (!this.ImageFlag) {
-            this.ImageFlag = this.add.image(878, 890, bandera).setOrigin(0.5);
+            console.log("No hay");
+            this.ImageFlag = this.add.image(890, 140, bandera).setOrigin(0.5);
             this.ImageFlag.setInteractive({ useHandCursor: true });
             this.ImageFlag.on('pointerup', () => {
                 changeLanguage();
-                this.addTextPlay();
-                this.addTextInstruction()
                 this.addImageFlag(bandera)
             });
         } else {
+            console.log("Hay");
             this.ImageFlag.setTexture(bandera_actual);
         }
-    }
-    
-    addTextPlay() {
-        
-        if (this.TextPlay) {
-            this.TextPlay.destroy();
-        }
-        
-        const optimalFontSize_TextPlay = getOptimalFontSize(this, Jugar, 320, 90, 'MyFont', 4);
-        this.TextPlay = addCenteredText(this, Jugar, optimalFontSize_TextPlay, 'MyFont', '#FFFFFF');
-        
-        this.TextPlay.y = 865;
-        this.TextPlay.setInteractive({ useHandCursor: true });
-        this.TextPlay.on('pointerup', () => {
-            this.scene.start('InstructionsGame');
-        });
-    }
-    
-    addTextInstruction() {
-        
-        if (this.TextInstruction) {
-            this.TextInstruction.destroy();
-        }
-        
-        const optimalFontSize_TextInstruction = getOptimalFontSize(this, info1, 665, 565, 'MyFont', 4);
-        this.TextInstruction = addCenteredText(this, info1, optimalFontSize_TextInstruction, 'MyFont', '#000000');
-        
     }
 }
 
@@ -1122,9 +880,8 @@ const addTextWithAdjustedPosition = (scene, x, y, fontSize, color, text, font) =
     
     tempText.destroy();
     
-    // Calcular la posición final
-    let posX = x + 4; // Ajustamos para asegurarnos de que no salga de pantalla
-    let posY = y + 4; // Ajustamos para asegurarnos de que no salga de pantalla
+    let posX = x + 4; 
+    let posY = y + 4;
     
     let textObject = scene.add.text(posX, posY, text, { 
         fontSize: fontSize + 'px', 
@@ -1136,7 +893,7 @@ const addTextWithAdjustedPosition = (scene, x, y, fontSize, color, text, font) =
     return textObject;
 };
 
-function addCenteredText(scene, text, fontSize, fontFamily, color, classCSS) {
+function addCenteredText(scene, text, fontSize, fontFamily, color) {
     // Crear el texto con el tamaño de fuente especificado
     let textObject = scene.add.text(0, 0, text, {
         fontSize: fontSize + 'px',
@@ -1152,6 +909,24 @@ function addCenteredText(scene, text, fontSize, fontFamily, color, classCSS) {
 
     return textObject;
 }
+
+function addTextWithCustomX(scene, text, fontSize, fontFamily, color, posX) {
+    // Crear el texto con el tamaño de fuente especificado
+    let textObject = scene.add.text(0, 0, text, {
+        fontSize: fontSize + 'px',
+        fontFamily: fontFamily,
+        color: color,
+        align: 'center'
+    });
+
+    // Centrar el texto en la pantalla en el eje Y y usar posX para el eje X
+    textObject.setOrigin(0.5, 0.5);
+    textObject.x = posX;
+    textObject.y = scene.cameras.main.height / 2;
+
+    return textObject;
+}
+
 
 const getOptimalFontSize = (scene, text, maxWidth, maxHeight, fontFamily, padding) => {
     let minFontSize = 1;
