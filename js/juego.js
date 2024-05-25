@@ -817,14 +817,14 @@ class AboutEB extends Phaser.Scene {
         fontSize: '50px',
         fontFamily: 'MyFont',
         fill: '#000000',
-        wordWrap: { width: 750, useAdvancedWrap: true }
+        wordWrap: { width: 800, useAdvancedWrap: true }
     }
     styleTitle = {
         fontSize: '75px',
         fontFamily: 'MyFont',
         fontWeight: 'bold',
         fill: '#AAAAAA',
-        wordWrap: { width: 750, useAdvancedWrap: true }
+        wordWrap: { width: 800, useAdvancedWrap: true }
     }
     preload() {
         this.load.image('info', 'media/img/info.png');
@@ -862,8 +862,8 @@ class AboutEB extends Phaser.Scene {
         
         this.mensajes = 0;
         
-        this.textTitle = this.add.text(130, 320, '', this.styleTitle)
-        this.textContent = this.add.text(130, 406, '', this.style );
+        this.textTitle = this.add.text(150, 320, '', this.styleTitle)
+        this.textContent = this.add.text(150, 406, '', this.style );
 
         this.messagesindicator = this.add.text(385, 770, '🟠 ⚪ ⚪ ⚪ ⚪ ⚪', { fontSize: '16px', fill: '#FFFFFF80' });
 
