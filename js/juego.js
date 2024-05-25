@@ -164,29 +164,27 @@ class PlayGameScene extends Phaser.Scene {
             this.tweenUp.stop();
             this.tweenUp.destroy();
         }
-        
+
         if (this.tweenStay) {
             this.tweenStay.stop();
             this.tweenStay.destroy();
         }
-        
+
         if (this.tweenDown) {
             this.tweenDown.stop();
             this.tweenDown.destroy();
         }
-        
+
         if (this.randomPositionImage) this.randomPositionImage.y = this.originalY;
 
         this.positionImages.forEach(function (positionImage) {
             positionImage.setAlpha(0);
         });
 
-            console.log('Images to display '+this.gameImagesToDisplay.length);
-        
             const imagesPosibles = this.gameImagesToDisplay.filter(image => !this.historialImages.includes(image));
             this.randomImage = Phaser.Math.RND.pick(imagesPosibles);
             this.historialImages.push(this.randomImage);
-        
+
             if (this.historialImages.length > 4) {
               this.historialImages.shift();
             }
@@ -195,7 +193,6 @@ class PlayGameScene extends Phaser.Scene {
         this.originalY = this.randomPositionImage.y;
 
         if (this.randomImage) {
-            console.log('showNextImage called '+this.randomImage);
             this.randomPositionImage.setTexture(this.randomImage);
             this.randomPositionImage.setAlpha(1);
 
@@ -211,7 +208,7 @@ class PlayGameScene extends Phaser.Scene {
             } else {
                 this.staytime = 700;
             }
-            
+
             this.tweenStay = this.tweens.add({
                 targets: this.escanoblanco,
                 y: '-=' + this.escanoblanco.height,
@@ -221,7 +218,7 @@ class PlayGameScene extends Phaser.Scene {
                     this.tweenDown.play();
                 }
             });
-            
+
             this.tweenUp = this.tweens.add({
                 targets: this.randomPositionImage,
                 y: '-=' + this.randomPositionImage.height,
@@ -254,7 +251,7 @@ class PlayGameScene extends Phaser.Scene {
     soundGo = null;
     soundWin = null;
 
-  preload() {
+    preload() {
 
     this.load.image('escanoblanco', 'media/img/diputados/escanoblanco.webp');
     this.load.image('pp', 'media/img/diputados/pp.webp');
@@ -278,7 +275,7 @@ class PlayGameScene extends Phaser.Scene {
     for(let i = 1; i <= 12; i++) {
         this.load.image(`coin${i}`, `media/img/monedas/${i.toString().padStart(3, '0')}.png`);
     }
-    
+
     this.load.audio('music', 'media/audio/music.mp3');
     this.load.audio('wosh', 'media/audio/wosh.mp3');
     this.load.audio('opened', 'media/audio/Open.wav');
@@ -288,26 +285,26 @@ class PlayGameScene extends Phaser.Scene {
     this.load.audio('go', 'media/audio/Go.mp3');
     this.load.audio('win', 'media/audio/Win.mp3');
     this.load.audio('monedas', 'media/audio/monedas01.mp3');
-      
+
     this.countdown = 20;
     this.score = 0;
 
     this.optimalFontSize_TextScore = getOptimalFontSize(this, Puntuacion + ': 100', 300, 100, 'MyFont', 4);
     this.optimalPosition_TextScore = getOptimalSquarePosition(this, Puntuacion + ': 100', this.optimalFontSize_TextScore, 'MyFont', 4,'top-left');
-      
+
     this.optimalFontSize_TextCountdown = getOptimalFontSize(this, Tiempo +': ' + this.countdown, 300, 100, 'MyFont', 4);
     this.optimalPosition_TextCountdown = getOptimalSquarePosition(this, Tiempo +': ' + this.countdown, this.optimalFontSize_TextCountdown, 'MyFont', 4,'top-left');
-      
+
     this.optimalFontSize_TextReady = getOptimalFontSize(this, Atencion, 380, 150, 'MyFont', 4);
 
-  }
-  create() {
+    }
+    create() {
     console.log('Create PlayGameScene');
     this.timeup = 300;
     this.staytime = 700;
 
     this.escanoblanco = this.add.image(0, 0, 'escanoblanco').setOrigin(0);
-    
+
     this.fila4 = this.add.container(0, 0);
     this.fila3 = this.add.container(0, 0);
     this.fila2 = this.add.container(0, 0);
@@ -318,15 +315,15 @@ class PlayGameScene extends Phaser.Scene {
     this.fila2.add(this.add.image(0, 0, 'fila2').setOrigin(0));
     this.fila1.add(this.add.image(0, 0, 'fila1').setOrigin(0));
     this.fila0.add(this.add.image(0, 0, 'fila0').setOrigin(0));
-      
-    
+
+
     this.TextReady = addCenteredText(this, Atencion, this.optimalFontSize_TextReady, 'MyFont', '#FFFF00');
-      
+
     this.TextScore = addTextWithAdjustedPosition(this, this.optimalPosition_TextScore.x, this.optimalPosition_TextScore.y+8 , this.optimalFontSize_TextScore, '#000000', Puntuacion + ': ' + this.score,'myFont');
-      
+
     this.TextCountdown = addTextWithAdjustedPosition(this, this.optimalPosition_TextCountdown.x, this.optimalPosition_TextCountdown.y+80, this.optimalFontSize_TextCountdown, '#000000', Tiempo +': ' + this.countdown,'myFont','top-left');
 
-// Paso 2: Crear la animación en la función create
+    // Paso 2: Crear la animación en la función create
     let frames = [];
     for(let i = 1; i <= 12; i++) {
         frames.push({ key: `coin${i}` });
@@ -362,17 +359,17 @@ class PlayGameScene extends Phaser.Scene {
         bottom: 5
       }
     };
-    
+
     this.playSound('ready');
-    
+
     this.music = this.sound.add('music');
     this.music.play();
-                
+
 
     //console.log('6')
     this.startGame();
-  }
-  loadSounds() {
+    }
+    loadSounds() {
     this.soundMusic = this.sound.add('music');
     this.soundMusic = this.sound.add('wosh');
     this.soundOpened = this.sound.add('opened');
@@ -382,8 +379,8 @@ class PlayGameScene extends Phaser.Scene {
     this.soundReady = this.sound.add('ready');
     this.soundGo = this.sound.add('go');
     this.soundWin = this.sound.add('win');
-  }
-  createPositionImages() {
+    }
+    createPositionImages() {
     this.images = [];
 
     this.positions = [
@@ -406,40 +403,40 @@ class PlayGameScene extends Phaser.Scene {
       // ... (agrega las demás posiciones aquí)
     ];
 
-  for (var i = 0; i < this.positions.length; i++) {
-    let currentPosition = this.positions[i];
-    this.positionImage = this.add.image(currentPosition.x, currentPosition.y -10, '').setOrigin(0.5);
-    if (currentPosition.y === 526) this.fila4.add(this.positionImage);
-    if (currentPosition.y === 696) this.fila3.add(this.positionImage);
-    if (currentPosition.y === 866) this.fila2.add(this.positionImage);
-    if (currentPosition.y === 1053) this.fila1.add(this.positionImage);
+      for (var i = 0; i < this.positions.length; i++) {
+        let currentPosition = this.positions[i];
+        this.positionImage = this.add.image(currentPosition.x, currentPosition.y -10, '').setOrigin(0.5);
+        if (currentPosition.y === 526) this.fila4.add(this.positionImage);
+        if (currentPosition.y === 696) this.fila3.add(this.positionImage);
+        if (currentPosition.y === 866) this.fila2.add(this.positionImage);
+        if (currentPosition.y === 1053) this.fila1.add(this.positionImage);
 
-    this.positionImage.setDisplaySize(30, 30);
-    this.positionImage.setInteractive();
-    //console.log('ADDED IMAGE');
-    this.positionImage.on('pointerdown', () => this.increaseScore(currentPosition.x, currentPosition.y));
-    this.images.push(this.positionImage);
-  }
-
-    return this.images;
-  }
-  decreaseCountdown() {
+        this.positionImage.setDisplaySize(30, 30);
+        this.positionImage.setInteractive();
+        //console.log('ADDED IMAGE');
+        this.positionImage.on('pointerdown', () => this.increaseScore(currentPosition.x, currentPosition.y));
+        this.images.push(this.positionImage);
+      }   
+      return this.images;
+    }
+    decreaseCountdown() {
     this.countdown--;
+    //this.countdown=0;
 
     this.TextCountdown.setText(Tiempo+': ' + this.countdown);
 
     if (this.countdown == 15) {
         this.music.setRate(1.04);
     }
-      
+
     if (this.countdown == 13) {
         this.music.setRate(1.06);
     }
-      
+
     if (this.countdown == 11) {
         this.music.setRate(1.10);
     }
-      
+
     if (this.countdown == 10){
         this.wosh = this.sound.add('wosh');
         this.wosh.setVolume(2);
@@ -450,11 +447,11 @@ class PlayGameScene extends Phaser.Scene {
         this.timeup=200
         this.staytime=50;
     }
-      
+
     if (this.countdown == 9) {
         this.TextDeprisa.destroy();
     }
-      
+
     if (this.countdown == 5) {
         this.music.setRate(1.15);
     }
@@ -462,13 +459,14 @@ class PlayGameScene extends Phaser.Scene {
     if (this.countdown === 0) {
         this.music.stop();
         this.registry.set('score', this.score);
+        
         this.scene.start('GameOverScene', { puntuacion: this.score });
 
         if (this.score >0 ) this.playSound('win'); else this.playSound('failed');
     }
 
-  }
-  playSound(sound) {
+    }
+    playSound(sound) {
     //console.log('playSound called '+sound);
 
     switch (sound) {
@@ -506,8 +504,8 @@ class PlayGameScene extends Phaser.Scene {
     if (this.sound.context.state === 'suspended') {
       this.sound.context.resume();
     }
-  }
-  startGame() {
+    }
+    startGame() {
     console.log('startGame called');
 
     if (this.greenCircleTimer) {
@@ -524,8 +522,8 @@ class PlayGameScene extends Phaser.Scene {
       callbackScope: this,
       loop: false
     })
-  }
-  startReady() {
+    }
+    startReady() {
     //console.log('startReady called');
     this.TextReady.destroy();
 
@@ -543,8 +541,8 @@ class PlayGameScene extends Phaser.Scene {
       loop: true
     });
 
-  }
-  ReloadGreenCircleTimer () {    
+    }
+    ReloadGreenCircleTimer () {    
     this.showNextImage();
     this.greenCircleTimer = this.time.addEvent({
       delay: this.timeup+this.staytime,
@@ -552,7 +550,7 @@ class PlayGameScene extends Phaser.Scene {
       callbackScope: this,
       loop: false
     });
-  }
+    }
 }
 
 class GameOverScene extends Phaser.Scene {
@@ -582,25 +580,68 @@ class GameOverScene extends Phaser.Scene {
     }
 
     create() {
-
-        this.mensajes = 0;
         this.add.image(0, 0, 'background').setOrigin(0);
-        this.cameras.main.setBackgroundColor('#FFFFFF');
 
         let score = this.registry.get('score');
-        console.log('Puntuación:', score);
+        
 
+        const top3_day = 5;
+        const top3_world = 12;
+        var textTitleInput;
+        var textInput;
+        var createInput=false;
+
+        if (score == 0 || score <= top3_day ) {
+            this.textTitleInput = title_NoTop;
+            this.textInput =  text_NoTop;
+            this.createInput = false;
+        } else if (score > top3_day && score <= top3_world) {
+            this.textTitleInput = title_TopDay;
+            this.textInput =  text_TopDay;
+            this.createInput = true;
+        } else {
+            this.textTitleInput = title_TopWorld;
+            this.textInput =  text_TopWorld;
+            this.createInput = true;
+        }
+        
+        //this.addTextTitleInput();
+        //this.addTextInput();
+        //this.createInput();
+        
         this.addTextPlay();
+        
+        var textTitlePuntuacion;
+        var textHasDejado;
+        var textPuntuacion;
+        var textDineroPuntuacion;
+        const multiplicador = 120000;
+        const bonoExtra = 220000;
+        
+        if (score == 0 ) {
+            this.textTitlePuntuacion = Quepaso;
+            this.textHasDejado =  vuelveajugar;
+            this.textPuntuacion =  '';
+            this.textDineroPuntuacion = dalesescano;
+        } else {
+            this.textTitlePuntuacion = TituloFinal1;
+            this.textHasDejado =  Hasdejado;
+            this.textPuntuacion =  this.contador + escanosovacios;
+            this.textDineroPuntuacion = habriasahorrado + ((this.contador * multiplicador) + bonoExtra).toLocaleString('es-ES') + '€';
+        }
+        
+        this.addTextTitlePuntuacion();
+        this.addTextPuntuacion();
+        this.addTextDineroPuntuacion();
         
         this.moreButton = this.add.rectangle(263, 926, 340, 134, 0xFFFFFF, 0);
         this.moreButton.setInteractive({ useHandCursor: true });
         this.moreButton.on('pointerup', () => {
-                this.scene.start('AboutEB');
+            this.scene.start('AboutEB', { puntuacion: this.contador });
         });
 
         this.link = this.add.circle(890, 925, 55, 0xFFFFFF, 0);
         this.link.setInteractive({ useHandCursor: true });
-        
         this.link.on('pointerup', () => {
             if (navigator.share) {
                 try{ navigator.share({
@@ -620,15 +661,19 @@ class GameOverScene extends Phaser.Scene {
                 }   
             });
     }
+
+    update() {
+
+    }
     
     addTextPlay() {
         if (this.TextPlay) {
             this.TextPlay.destroy();
         }
-        
+
         const optimalFontSize_TextPlay = getOptimalFontSize(this, Jugar, 315, 70, 'MyFont', 4);
         this.TextPlay = addTextWithCustomX(this, Jugar, optimalFontSize_TextPlay, 'MyFont', '#FFFFFF', 640)
-        
+
         this.TextPlay.y = 925;
         this.TextPlay.setInteractive({ useHandCursor: true });
         this.TextPlay.on('pointerup', () => {
@@ -636,9 +681,92 @@ class GameOverScene extends Phaser.Scene {
         });
     }
 
-  update() {
-      
-  }
+    addTextTitleInput() {
+        if (this.TextTitlePuntuacion) {
+            this.TextTitlePuntuacion.destroy();
+        }
+
+        const optimalFontSize_TextTitlePuntuacion = getOptimalFontSize(this, '¡GREAT!', 315, 70, 'MyFont', 4);
+        this.TextTitlePuntuacion = addTextWithCustomX(this, Jugar, optimalFontSize_TextTitlePuntuacion, 'MyFont', '#FFFFFF', 20)
+
+        this.TextTitlePuntuacion.y = 100;
+        this.TextTitlePuntuacion.setInteractive({ useHandCursor: true });
+        this.TextTitlePuntuacion.on('pointerup', () => {
+            this.scene.start('PlayGameScene');
+        });
+    }
+    addTextInput() {
+        if (this.TextPuntuacion) {
+            this.TextPuntuacion.destroy();
+        }
+
+        const optimalFontSize_TextPuntuacion = getOptimalFontSize(this, '55', 315, 70, 'MyFont', 4);
+        this.TextPuntuacion = addTextWithCustomX(this, Jugar, optimalFontSize_TextPuntuacion, 'MyFont', '#FFFFFF', 150)
+
+        this.TextPuntuacion.y = 200;
+        this.TextPuntuacion.setInteractive({ useHandCursor: true });
+        this.TextPuntuacion.on('pointerup', () => {
+            this.scene.start('PlayGameScene');
+        });
+        }
+    createInput() {
+        if (this.TextDineroPuntuacion) {
+            this.TextDineroPuntuacion.destroy();
+        }
+
+        const optimalFontSize_TextDineroPuntuacion = getOptimalFontSize(this, '1.000.000', 315, 70, 'MyFont', 4);
+        this.TextDineroPuntuacion = addTextWithCustomX(this, Jugar, optimalFontSize_TextDineroPuntuacion, 'MyFont', '#FFFFFF', 300)
+
+        this.TextDineroPuntuacion.y = 300;
+        this.TextDineroPuntuacion.setInteractive({ useHandCursor: true });
+        this.TextDineroPuntuacion.on('pointerup', () => {
+            this.scene.start('PlayGameScene');
+        });
+    }
+    
+    addTextTitlePuntuacion() {
+        if (this.TextTitlePuntuacion) {
+            this.TextTitlePuntuacion.destroy();
+        }
+
+        const optimalFontSize_TextTitlePuntuacion = getOptimalFontSize(this, this.textTitlePuntuacion, 475, 80, 'MyFont', 4);
+        this.TextTitlePuntuacion = addTextWithCustomX(this, this.textTitlePuntuacion, optimalFontSize_TextTitlePuntuacion, 'MyFont', '#FFFF00', 735)
+
+        this.TextTitlePuntuacion.y = 100;
+        this.TextTitlePuntuacion.setInteractive({ useHandCursor: true });
+        this.TextTitlePuntuacion.on('pointerup', () => {
+            this.scene.start('PlayGameScene');
+        });
+    }
+    addTextPuntuacion() {
+    if (this.TextPuntuacion) {
+            this.TextPuntuacion.destroy();
+        }
+
+        const optimalFontSize_TextPuntuacion = getOptimalFontSize(this, this.textHasDejado + '\n' + this.textPuntuacion, 475, 160, 'MyFont', 4);
+        this.TextPuntuacion = addTextWithCustomX(this, this.textHasDejado + '\n' + this.textPuntuacion, optimalFontSize_TextPuntuacion, 'MyFont', '#FFFFFF', 735)
+
+        this.TextPuntuacion.y = 215;
+        this.TextPuntuacion.setInteractive({ useHandCursor: true });
+        this.TextPuntuacion.on('pointerup', () => {
+            this.scene.start('PlayGameScene');
+        });
+    }
+    addTextDineroPuntuacion() {
+        if (this.TextDineroPuntuacion) {
+            this.TextDineroPuntuacion.destroy();
+        }
+
+        const optimalFontSize_TextDineroPuntuacion = getOptimalFontSize(this, this.textDineroPuntuacion, 475, 130, 'MyFont', 4);
+        this.TextDineroPuntuacion = addTextWithCustomX (this, this.textDineroPuntuacion, optimalFontSize_TextDineroPuntuacion, 'MyFont', '#FFFF00', 735)
+
+        this.TextDineroPuntuacion.y = 335;
+        this.TextDineroPuntuacion.setInteractive({ useHandCursor: true });
+        this.TextDineroPuntuacion.on('pointerup', () => {
+            this.scene.start('PlayGameScene');
+        });
+    }
+    
 }
 
 class AboutEB extends Phaser.Scene {
@@ -659,7 +787,6 @@ class AboutEB extends Phaser.Scene {
         fill: '#000000',
         wordWrap: { width: 850, useAdvancedWrap: true }
     }
-
     styleTitle = {
         fontSize: '75px',
         fontFamily: 'MyFont',
@@ -667,7 +794,6 @@ class AboutEB extends Phaser.Scene {
         fill: '#AAAAAA',
         wordWrap: { width: 850, useAdvancedWrap: true }
     }
-
     preload() {
         this.load.image('info', 'media/img/info.png');
         this.load.image('bandera_esp', 'media/img/idiomas/boton_castellano.png');
@@ -676,24 +802,18 @@ class AboutEB extends Phaser.Scene {
         this.load.image('bandera_gal', 'media/img/idiomas/boton_gallego.png');
         this.load.image('boton', 'media/img/Boton.png');
     }
-    
-    
-      nextText() {
-        console.log('nextText called');
+    nextText() {
         this.mensajes= (this.mensajes+1)%6;
         this.updateText();
-      }
-
-      previousText() {
+    }
+    previousText() {
         console.log('previousText called');
 
         this.mensajes -= 1;
         if (this.mensajes < 0) this.mensajes = 6;
         this.updateText();
-      }
-
-      //Reinicia el timer countdownTimer
-      restartTimer() {
+    }
+    restartTimer() {
         if(this.countdownTimer) this.countdownTimer.remove();
         this.countdownTimer = this.time.addEvent({
           delay: 9000,
@@ -702,8 +822,6 @@ class AboutEB extends Phaser.Scene {
           loop: true
         });
       }
-
-
     create() {
         console.log('AboutEB started');
         this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'info').setOrigin(0.5, 0.5);
@@ -739,7 +857,7 @@ class AboutEB extends Phaser.Scene {
         this.link = this.add.circle(890, 925, 55, 0xFFFFFF, 0);
         this.link.setInteractive({ useHandCursor: true });
         this.link.on('pointerup', () => {
-            this.scene.start('GameOverScene', { puntuacion: this.score });
+            this.scene.start('GameOverScene', { puntuacion: this.contador });
         });
         
         this.moreButton = this.add.rectangle(325, 940, 360, 150, 0xFFFFFF, 0);
@@ -754,20 +872,16 @@ class AboutEB extends Phaser.Scene {
         
         this.events.on('shutdown', this.shutdown, this);
     }
-
-      updateText() {
+    updateText() {
         switch (this.mensajes) {
           case 0:
             if (this.contador === 0) {
-              console.log('contador='+this.contador);
               this.textTitle.setText(Quepaso, this.styleTitle);
               this.textContent.setText( vuelveajugar);
             } else if (this.contador > 1) {
-              console.log('contador='+this.contador);
               this.textTitle.setText(TituloFinal1);
               this.textContent.setText( Hasdejado + this.contador + escanosovacios + (this.contador*120000).toLocaleString('es-ES') +'€');
             } else {
-              console.log('contador='+this.contador);
               this.textTitle.setText(TituloFinal1);
               this.textContent.setText(unescanovacio+ ((this.contador*120000)+220000).toLocaleString('es-ES') +'€');
             }
@@ -810,26 +924,21 @@ class AboutEB extends Phaser.Scene {
 
 
       }
-    
+    init(data) {
+        console.log('init AboutEB ' + data.puntuacion);
+        this.contador = data.puntuacion;
+    }
     update() {
     
     }
     shutdown() {
-        console.log("SHUTDOWN");
         if (this.ImageFlag) {
             this.ImageFlag.destroy();
             this.ImageFlag = null;
-            console.log("Imagen destruida");
-        } else {
-            console.log("Imagen NO destruida");
         }
     }
-
     addImageFlag(bandera_actual) {
-        
-        console.log("Dentro fun: ",bandera_actual);
         if (!this.ImageFlag) {
-            console.log("No hay");
             this.ImageFlag = this.add.image(890, 140, bandera).setOrigin(0.5);
             this.ImageFlag.setInteractive({ useHandCursor: true });
             this.ImageFlag.on('pointerup', () => {
@@ -838,7 +947,6 @@ class AboutEB extends Phaser.Scene {
                 this.updateText()
             });
         } else {
-            console.log("Hay");
             this.ImageFlag.setTexture(bandera_actual);
         }
     }
@@ -889,28 +997,9 @@ const addTextWithAdjustedPosition = (scene, x, y, fontSize, color, text, font) =
         fontFamily: font
     });
     
-    console.log("Texto añadido en:", { x: posX, y: posY, fontSize: fontSize + 'px' });
     return textObject;
 };
-
-function addCenteredText(scene, text, fontSize, fontFamily, color) {
-    // Crear el texto con el tamaño de fuente especificado
-    let textObject = scene.add.text(0, 0, text, {
-        fontSize: fontSize + 'px',
-        fontFamily: fontFamily,
-        color: color,
-        align: 'center'
-    });
-
-    // Centrar el texto en la pantalla
-    textObject.setOrigin(0.5, 0.5);
-    textObject.x = scene.cameras.main.width / 2;
-    textObject.y = scene.cameras.main.height / 2;
-
-    return textObject;
-}
-
-function addTextWithCustomX(scene, text, fontSize, fontFamily, color, posX) {
+const addTextWithCustomX = (scene, text, fontSize, fontFamily, color, posX) => {
     // Crear el texto con el tamaño de fuente especificado
     let textObject = scene.add.text(0, 0, text, {
         fontSize: fontSize + 'px',
@@ -926,8 +1015,22 @@ function addTextWithCustomX(scene, text, fontSize, fontFamily, color, posX) {
 
     return textObject;
 }
+const addCenteredText = (scene, text, fontSize, fontFamily, color) =>  {
+    // Crear el texto con el tamaño de fuente especificado
+    let textObject = scene.add.text(0, 0, text, {
+        fontSize: fontSize + 'px',
+        fontFamily: fontFamily,
+        color: color,
+        align: 'center'
+    });
 
+    // Centrar el texto en la pantalla
+    textObject.setOrigin(0.5, 0.5);
+    textObject.x = scene.cameras.main.width / 2;
+    textObject.y = scene.cameras.main.height / 2;
 
+    return textObject;
+}
 const getOptimalFontSize = (scene, text, maxWidth, maxHeight, fontFamily, padding) => {
     let minFontSize = 1;
     let maxFontSize = 200;
@@ -949,8 +1052,7 @@ const getOptimalFontSize = (scene, text, maxWidth, maxHeight, fontFamily, paddin
     }
     return bestFitFontSize;
 };
-
-function measureText(scene, text, fontSize, fontFamily) {
+const measureText = (scene, text, fontSize, fontFamily) => {
     let canvas = document.createElement("canvas");
     let ctx = canvas.getContext("2d");
     ctx.font = `${fontSize}px ${fontFamily}`;
@@ -969,7 +1071,6 @@ function measureText(scene, text, fontSize, fontFamily) {
         height: totalHeight
     };
 }
-
 const getOptimalSquarePosition = (scene, text, fontSize, fontFamily, padding, position) => {
     let dimensions = measureText(scene, text, fontSize, fontFamily);
 

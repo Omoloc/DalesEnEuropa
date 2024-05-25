@@ -1,15 +1,16 @@
 // Variables globales
-let bandera, TituloFinal1, info1, Quepaso, vuelveajugar, Hasdejado, escanosovacios, unescanovacio, Quienessomos, Somosungrupo, Quequeremos, Visibilizar, Comolo, Nospresentamos, Estoes, Siyahay14, Comopuedo, Comenta, Puntuacion, Tiempo, Atencion, Deprisa, Jugar;
+let bandera, TituloFinal1, Quepaso, vuelveajugar, unescanovacio, dalesescano, Hasdejado, escanosovacios, habriasahorrado, Quienessomos, Somosungrupo, Quequeremos, Visibilizar, Comolo, Nospresentamos, Estoes, Siyahay14, Comopuedo, Comenta, Puntuacion, Tiempo, Atencion, Deprisa, Jugar;
 
 const languages = {
     esp: {
         bandera: 'bandera_esp',
-        info1: "¿Cómo se juega?\n\nDeberas evitar que los diputados\n\n se sienten en TU escaño\n\n del Parlamento Europeo\n\nVacía tantos escaños como puedas\n\n y ahórranos dinero a todos",
         TituloFinal1: "¡Enhorabuena!",
         Quepaso: "¿Qué ha pasado?",
-        vuelveajugar: "Vuelve a jugar y no pulses en el Escaño en Blanco sólo a los políticos.\n\n ¡Dales en el escaño!",
-        Hasdejado: "¡Has dejado ",
-        escanosovacios: " escaños vacíos!\n\nSi esto fuera el Parlamento Europeo, habrías ahorrado más de ",
+        vuelveajugar: "Vuelve a jugar y\n no pulses en el Escaño en Blanco\n sólo a los políticos.",
+        dalesescano: "¡Dales en el escaño!",
+        Hasdejado: "¡Has dejado",
+        escanosovacios: " escaños vacíos!",
+        habriasahorrado: "Habrías ahorrado\nmás de ",
         unescanovacio: " ¡Has dejado un escaño vacío!\n\n Si esto fuera el Parlamento Europeo, habrías ahorrado más de ",
         Quienessomos: "¿Quiénes somos?",
         Somosungrupo: "Somos un grupo de ciudadanos cansados de la clase política que no encontramos utilidad ni en el voto nulo, blanco ni la abstención",
@@ -30,12 +31,13 @@ const languages = {
     eus: {
         bandera: 'bandera_eus',
         TituloFinal1: "Zorionak!",
-        info1: "Nola jokatu?\n\nLegebiltzarkideei ZURE eserlekuan\n\n esertzea saihestu beharko zenuke\n\n Europako Parlamentuan\n\nHustu ahal duzun adina eserleku\n\n eta aurreztu iezaguzu diru guztia. ",
         Quepaso: "Zer gertatu da?",
-        vuelveajugar: "Jokatu berriro, eta ez sakatu Aulki Zurian, politikariei bakarrik.\n\nEman euren eserlekuan!",
-        Hasdejado: "Utzi zara",
-        escanosovacios: " eserleku hutsik utzi dituzu!\n\nHau Eusko Legebiltzarra balitz, kopuru hau baino gehiago aurreztuko zenuen: ",
+        vuelveajugar: "Jokatu berriro,\n eta ez sakatu Aulki Zurian,\n politikariei bakarrik.",
+        dalesescano: "Eman euren eserlekuan!",
         unescanovacio: "Aulki bat hutsik utzi duzu!\n\nHau Eusko Legebiltzarra balitz, kopuru hau baino gehiago aurreztuko zenuen: ",
+        Hasdejado: "Utzi zara",
+        escanosovacios: " eserleku hutsik \nutzi dituzu!",
+        habriasahorrado: "Baino gehiago\naurreztuko zenuke ",
         Quienessomos: "Nor gara?",
         Somosungrupo: "Klase politikoarekin nekatuta gauden herritar talde bat gara, eta ez diogu baliorik aurkitzen boto nuloari, zuriari edo abstentzioari",
         Quequeremos: "Zer nahi dugu?",
@@ -116,12 +118,13 @@ const changeLanguage = () => {
         // Actualizar las variables globales al nuevo idioma
         bandera = nextFlag;
         TituloFinal1 = newLanguageData.TituloFinal1;
-        info1 = newLanguageData.info1;
+        dalesescano = newLanguageData.dalesescano;
+        habriasahorrado = newLanguageData.habriasahorrado;
+        unescanovacio = newLanguageData.unescanovacio;
         Quepaso = newLanguageData.Quepaso;
         vuelveajugar = newLanguageData.vuelveajugar;
         Hasdejado = newLanguageData.Hasdejado;
         escanosovacios = newLanguageData.escanosovacios;
-        unescanovacio = newLanguageData.unescanovacio;
         Quienessomos = newLanguageData.Quienessomos;
         Somosungrupo = newLanguageData.Somosungrupo;
         Quequeremos = newLanguageData.Quequeremos;
