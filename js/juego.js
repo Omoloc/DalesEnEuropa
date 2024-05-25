@@ -290,10 +290,10 @@ class PlayGameScene extends Phaser.Scene {
     this.countdown = 20;
     this.score = 0;
 
-    this.optimalFontSize_TextScore = getOptimalFontSize(this, Puntuacion + ': 100', 300, 100, 'MyFont', 4);
+    this.optimalFontSize_TextScore = getOptimalFontSize(this, Puntuacion + ': 100', 400, 100, 'MyFont', 4);
     this.optimalPosition_TextScore = getOptimalSquarePosition(this, Puntuacion + ': 100', this.optimalFontSize_TextScore, 'MyFont', 4,'top-left');
 
-    this.optimalFontSize_TextCountdown = getOptimalFontSize(this, Tiempo +': ' + this.countdown, 300, 100, 'MyFont', 4);
+    this.optimalFontSize_TextCountdown = getOptimalFontSize(this, Tiempo +': ' + this.countdown, 400, 100, 'MyFont', 4);
     this.optimalPosition_TextCountdown = getOptimalSquarePosition(this, Tiempo +': ' + this.countdown, this.optimalFontSize_TextCountdown, 'MyFont', 4,'top-left');
 
     this.optimalFontSize_TextReady = getOptimalFontSize(this, Atencion, 380, 150, 'MyFont', 4);
