@@ -240,7 +240,7 @@ class PlayGameScene extends Phaser.Scene {
     score = 0;
     positionImages = [];
     imagesToDisplay = ['escanoblanco', 'pp','psoe', 'sumar', 'vox', 'podemos',
-                      'junts','ceus', 'ahora_rep', 'feijoopp', 'abascalvox', 'sanchezpsoe'];
+                      'junts','ceus', 'ahora_rep'];
     gameImagesToDisplay = [...this.imagesToDisplay];
     countdown = 0;
     scoreText ="";
@@ -263,9 +263,6 @@ class PlayGameScene extends Phaser.Scene {
     this.load.image('junts', 'media/img/diputados/junts.webp');
     this.load.image('ceus', 'media/img/diputados/ceus.webp');
     this.load.image('ahora_rep', 'media/img/diputados/ahora_rep.webp');
-    this.load.image('feijoopp', 'media/img/diputados/feijoopp.webp');
-    this.load.image('abascalvox', 'media/img/diputados/abascalvox.webp');
-    this.load.image('sanchezpsoe', 'media/img/diputados/sanchezpsoe.webp');
 
     this.load.image('congreso', 'media/img/congreso//congreso_EU.png');
     this.load.image('fila0', 'media/img/congreso/fila0_EU.png');
@@ -814,17 +811,17 @@ class AboutEB extends Phaser.Scene {
     moreButton = "";
 
     style = {
-        fontSize: '50px',
+        fontSize: '45px',
         fontFamily: 'MyFont',
         fill: '#000000',
-        wordWrap: { width: 800, useAdvancedWrap: true }
+        wordWrap: { width: 780, useAdvancedWrap: true }
     }
     styleTitle = {
-        fontSize: '75px',
+        fontSize: '70px',
         fontFamily: 'MyFont',
         fontWeight: 'bold',
         fill: '#AAAAAA',
-        wordWrap: { width: 800, useAdvancedWrap: true }
+        wordWrap: { width: 780, useAdvancedWrap: true }
     }
     preload() {
         this.load.image('info', 'media/img/info.png');
