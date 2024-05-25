@@ -1,9 +1,10 @@
 let title_NoTop = 'Lo siento...';
-let text_NoTop = 'No has ahorrar lo suficiente para entrar en el TOP :(';
+let text_NoTop = 'No has ahorrar lo suficiente para\n entrar en el TOP :(';
 let title_TopDay = '¡Bien!';
-let text_TopDay = `Has conseguido ahorrar para entrar en el TOP 3 diario. Introduce tus 3 iniciales:`;
+let text_TopDay = `Has conseguido ahorrar para entrar\n en el TOP 3 diario.\n Introduce tus 3 iniciales:`;
 let title_TopWorld = '¡Enhorabuena!';
-let text_TopWorld = `Has conseguido ahorrar para entrar en el TOP 3 diario y global. Introduce tus 3 iniciales:`;
+let text_TopWorld = `Has conseguido ahorrar para entrar\n en el TOP 3 diario y global.\n Introduce tus 3 iniciales:`;
+let escribeaqui = 'Escribe aquí...';
 
 class BaseScene extends Phaser.Scene {
     constructor() {
@@ -421,7 +422,6 @@ class PlayGameScene extends Phaser.Scene {
     }
     decreaseCountdown() {
     this.countdown--;
-    //this.countdown=0;
 
     this.TextCountdown.setText(Tiempo+': ' + this.countdown);
 
@@ -460,7 +460,7 @@ class PlayGameScene extends Phaser.Scene {
         this.music.stop();
         this.registry.set('score', this.score);
         
-        this.scene.start('GameOverScene', { puntuacion: this.score });
+        this.scene.start('GameOverScene', { puntuacion: this.score, originGame: true });
 
         if (this.score >0 ) this.playSound('win'); else this.playSound('failed');
     }
@@ -565,6 +565,8 @@ class GameOverScene extends Phaser.Scene {
     init(data) {
         console.log('init GameOverScene ' + data.puntuacion);
         this.contador = data.puntuacion;
+        this.originGame = data.originGame;
+        console.log('Vienes del juego: ', data.originGame)
     }
 
     preload() {
@@ -579,18 +581,7 @@ class GameOverScene extends Phaser.Scene {
         this.scene.start('PlayGameScene');
     }
 
-    create() {
-        this.add.image(0, 0, 'background').setOrigin(0);
-
-        let score = this.registry.get('score');
-        
-
-        const top3_day = 5;
-        const top3_world = 12;
-        var textTitleInput;
-        var textInput;
-        var createInput=false;
-
+    refreshText(score, top3_day, top3_world) {
         if (score == 0 || score <= top3_day ) {
             this.textTitleInput = title_NoTop;
             this.textInput =  text_NoTop;
@@ -604,10 +595,29 @@ class GameOverScene extends Phaser.Scene {
             this.textInput =  text_TopWorld;
             this.createInput = true;
         }
+
+        console.log('textTitleInput:', this.textTitleInput, 'textInput:', this.textInput, 'createInput:', this.createInput);
+    }
+
+    create() {
+        this.add.image(0, 0, 'background').setOrigin(0);
+
+        let score = this.registry.get('score');
+        const top3_day = 0;
+        const top3_world = 12;
+        var textTitleInput;
+        var textInput;
+        var createInput=false;
+
+        if (this.originGame) {
+             this.refreshText (score, top3_day, top3_world);
         
-        //this.addTextTitleInput();
-        //this.addTextInput();
-        //this.createInput();
+            this.addTextTitleInput();
+            this.addMessageInput();
+            if (this.createInput){
+                this.createBoxInput();
+            }           
+        }
         
         this.addTextPlay();
         
@@ -682,47 +692,81 @@ class GameOverScene extends Phaser.Scene {
     }
 
     addTextTitleInput() {
-        if (this.TextTitlePuntuacion) {
-            this.TextTitlePuntuacion.destroy();
+        if (this.TextTitleInput) {
+            this.TextTitleInput.destroy();
         }
 
-        const optimalFontSize_TextTitlePuntuacion = getOptimalFontSize(this, '¡GREAT!', 315, 70, 'MyFont', 4);
-        this.TextTitlePuntuacion = addTextWithCustomX(this, Jugar, optimalFontSize_TextTitlePuntuacion, 'MyFont', '#FFFFFF', 20)
+        const optimalFontSize_textTitleInput = getOptimalFontSize(this, this.textTitleInput, 315, 70, 'MyFont', 4);
+        
+        this.TextTitleInput = addCenteredText(this, this.textTitleInput, optimalFontSize_textTitleInput, 'MyFont', '#FFFFFF')
 
-        this.TextTitlePuntuacion.y = 100;
-        this.TextTitlePuntuacion.setInteractive({ useHandCursor: true });
-        this.TextTitlePuntuacion.on('pointerup', () => {
-            this.scene.start('PlayGameScene');
-        });
+        this.TextTitleInput.y = 500;
     }
-    addTextInput() {
-        if (this.TextPuntuacion) {
-            this.TextPuntuacion.destroy();
+    addMessageInput() {
+        if (this.messageInput) {
+            this.messageInput.destroy();
         }
+        const optimalFontSize_messageInput = getOptimalFontSize(this, this.textInput, 900, 130, 'MyFont', 4);
+        
+        this.messageInput = addCenteredText(this, this.textInput, optimalFontSize_messageInput, 'MyFont', '#FFFFFF')
 
-        const optimalFontSize_TextPuntuacion = getOptimalFontSize(this, '55', 315, 70, 'MyFont', 4);
-        this.TextPuntuacion = addTextWithCustomX(this, Jugar, optimalFontSize_TextPuntuacion, 'MyFont', '#FFFFFF', 150)
-
-        this.TextPuntuacion.y = 200;
-        this.TextPuntuacion.setInteractive({ useHandCursor: true });
-        this.TextPuntuacion.on('pointerup', () => {
-            this.scene.start('PlayGameScene');
-        });
-        }
-    createInput() {
-        if (this.TextDineroPuntuacion) {
-            this.TextDineroPuntuacion.destroy();
-        }
-
-        const optimalFontSize_TextDineroPuntuacion = getOptimalFontSize(this, '1.000.000', 315, 70, 'MyFont', 4);
-        this.TextDineroPuntuacion = addTextWithCustomX(this, Jugar, optimalFontSize_TextDineroPuntuacion, 'MyFont', '#FFFFFF', 300)
-
-        this.TextDineroPuntuacion.y = 300;
-        this.TextDineroPuntuacion.setInteractive({ useHandCursor: true });
-        this.TextDineroPuntuacion.on('pointerup', () => {
-            this.scene.start('PlayGameScene');
-        });
+        this.messageInput.y = 630;
     }
+
+    createBoxInput() {
+
+    // Crear un rectángulo para simular el input box
+    this.inputBox = this.add.graphics();
+    this.inputBox.fillStyle(0xffffff, 1); // Color blanco
+    this.inputBox.fillRect(355, 725, 350, 50); // Posición y tamaño del rectángulo
+
+    // Crear un texto que actúa como el placeholder del input
+    this.inputText = this.add.text(134, 750, 'Escribe aquí...', {
+        fontSize: '28px',
+        fill: '#000000',
+        align: 'center'
+    });
+
+    // Centrar el texto
+    this.inputText.setOrigin(0.5);
+    this.inputText.x = this.cameras.main.width / 2;
+
+    // Hacer que el texto sea interactivo para capturar clics
+    this.inputText.setInteractive();
+    this.inputText.on('pointerdown', () => {
+        this.inputText.setText(''); // Limpiar el placeholder al hacer clic
+        this.inputActive = true;
+    });
+
+    // Capturar la entrada del teclado
+    this.input.keyboard.on('keydown', (event) => {
+        if (this.inputActive) {
+            if (event.key === 'Backspace') {
+                this.inputText.text = this.inputText.text.slice(0, -1);
+            } else if (event.key.length === 1) {
+                if (this.inputText.text.length < 3) {
+                    this.inputText.text += event.key;
+                }
+            }
+        }
+    });
+
+    // Desactivar la entrada cuando se haga clic fuera del área de entrada
+    this.input.on('pointerdown', (pointer) => {
+        if (pointer.x < 100 || pointer.x > 900 || pointer.y < 700 || pointer.y > 750) {
+            this.inputActive = false;
+            if (this.inputText.text === '') {
+                this.inputText.setText(escribeaqui);
+            }
+        }
+    });
+        
+    this.sendButton = this.add.text(648, 730, '▶', { fontSize: '32px', fill: '#000000' });
+        this.sendButton.setInteractive({ useHandCursor: true }); 
+        this.sendButton.on('pointerup', () => {
+    });
+}
+
     
     addTextTitlePuntuacion() {
         if (this.TextTitlePuntuacion) {
@@ -733,10 +777,6 @@ class GameOverScene extends Phaser.Scene {
         this.TextTitlePuntuacion = addTextWithCustomX(this, this.textTitlePuntuacion, optimalFontSize_TextTitlePuntuacion, 'MyFont', '#FFFF00', 735)
 
         this.TextTitlePuntuacion.y = 100;
-        this.TextTitlePuntuacion.setInteractive({ useHandCursor: true });
-        this.TextTitlePuntuacion.on('pointerup', () => {
-            this.scene.start('PlayGameScene');
-        });
     }
     addTextPuntuacion() {
     if (this.TextPuntuacion) {
@@ -747,10 +787,6 @@ class GameOverScene extends Phaser.Scene {
         this.TextPuntuacion = addTextWithCustomX(this, this.textHasDejado + '\n' + this.textPuntuacion, optimalFontSize_TextPuntuacion, 'MyFont', '#FFFFFF', 735)
 
         this.TextPuntuacion.y = 215;
-        this.TextPuntuacion.setInteractive({ useHandCursor: true });
-        this.TextPuntuacion.on('pointerup', () => {
-            this.scene.start('PlayGameScene');
-        });
     }
     addTextDineroPuntuacion() {
         if (this.TextDineroPuntuacion) {
@@ -761,10 +797,6 @@ class GameOverScene extends Phaser.Scene {
         this.TextDineroPuntuacion = addTextWithCustomX (this, this.textDineroPuntuacion, optimalFontSize_TextDineroPuntuacion, 'MyFont', '#FFFF00', 735)
 
         this.TextDineroPuntuacion.y = 335;
-        this.TextDineroPuntuacion.setInteractive({ useHandCursor: true });
-        this.TextDineroPuntuacion.on('pointerup', () => {
-            this.scene.start('PlayGameScene');
-        });
     }
     
 }
@@ -857,7 +889,7 @@ class AboutEB extends Phaser.Scene {
         this.link = this.add.circle(890, 925, 55, 0xFFFFFF, 0);
         this.link.setInteractive({ useHandCursor: true });
         this.link.on('pointerup', () => {
-            this.scene.start('GameOverScene', { puntuacion: this.contador });
+            this.scene.start('GameOverScene', { puntuacion: this.score, originGame: false });
         });
         
         this.moreButton = this.add.rectangle(325, 940, 360, 150, 0xFFFFFF, 0);
