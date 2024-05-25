@@ -814,7 +814,7 @@ class AboutEB extends Phaser.Scene {
         fontSize: '45px',
         fontFamily: 'MyFont',
         fill: '#000000',
-        wordWrap: { width: 800, useAdvancedWrap: true }
+        wordWrap: { width: 620, useAdvancedWrap: true }
     }
     styleTitle = {
         fontSize: '70px',
