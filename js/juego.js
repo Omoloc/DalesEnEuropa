@@ -320,9 +320,9 @@ class PlayGameScene extends Phaser.Scene {
 
     this.TextReady = addCenteredText(this, Atencion, this.optimalFontSize_TextReady, 'MyFont', '#FFFF00');
 
-    this.TextScore = addTextWithAdjustedPosition(this, this.optimalPosition_TextScore.x+10, this.optimalPosition_TextScore.y+8 , this.optimalFontSize_TextScore, '#000000', Puntuacion + ': ' + this.score,'myFont');
+    this.TextScore = addTextWithAdjustedPosition(this, this.optimalPosition_TextScore.x+12, this.optimalPosition_TextScore.y+8 , this.optimalFontSize_TextScore, '#000000', Puntuacion + ': ' + this.score,'myFont');
 
-    this.TextCountdown = addTextWithAdjustedPosition(this, this.optimalPosition_TextCountdown.x+10, this.optimalPosition_TextCountdown.y+80, this.optimalFontSize_TextCountdown, '#000000', Tiempo +': ' + this.countdown,'myFont','top-left');
+    this.TextCountdown = addTextWithAdjustedPosition(this, this.optimalPosition_TextCountdown.x+12, this.optimalPosition_TextCountdown.y+80, this.optimalFontSize_TextCountdown, '#000000', Tiempo +': ' + this.countdown,'myFont','top-left');
 
     // Paso 2: Crear la animación en la función create
     let frames = [];
