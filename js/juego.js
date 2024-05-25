@@ -290,10 +290,10 @@ class PlayGameScene extends Phaser.Scene {
     this.countdown = 20;
     this.score = 0;
 
-    this.optimalFontSize_TextScore = getOptimalFontSize(this, Puntuacion + ': 100', 400, 100, 'MyFont', 4);
+    this.optimalFontSize_TextScore = getOptimalFontSize(this, Puntuacion + ': 100', 360, 100, 'MyFont', 4);
     this.optimalPosition_TextScore = getOptimalSquarePosition(this, Puntuacion + ': 100', this.optimalFontSize_TextScore, 'MyFont', 4,'top-left');
 
-    this.optimalFontSize_TextCountdown = getOptimalFontSize(this, Tiempo +': ' + this.countdown, 400, 100, 'MyFont', 4);
+    this.optimalFontSize_TextCountdown = getOptimalFontSize(this, Tiempo +': ' + this.countdown, 360, 100, 'MyFont', 4);
     this.optimalPosition_TextCountdown = getOptimalSquarePosition(this, Tiempo +': ' + this.countdown, this.optimalFontSize_TextCountdown, 'MyFont', 4,'top-left');
 
     this.optimalFontSize_TextReady = getOptimalFontSize(this, Atencion, 380, 150, 'MyFont', 4);
@@ -320,9 +320,9 @@ class PlayGameScene extends Phaser.Scene {
 
     this.TextReady = addCenteredText(this, Atencion, this.optimalFontSize_TextReady, 'MyFont', '#FFFF00');
 
-    this.TextScore = addTextWithAdjustedPosition(this, this.optimalPosition_TextScore.x, this.optimalPosition_TextScore.y+8 , this.optimalFontSize_TextScore, '#000000', Puntuacion + ': ' + this.score,'myFont');
+    this.TextScore = addTextWithAdjustedPosition(this, this.optimalPosition_TextScore.x+10, this.optimalPosition_TextScore.y+8 , this.optimalFontSize_TextScore, '#000000', Puntuacion + ': ' + this.score,'myFont');
 
-    this.TextCountdown = addTextWithAdjustedPosition(this, this.optimalPosition_TextCountdown.x, this.optimalPosition_TextCountdown.y+80, this.optimalFontSize_TextCountdown, '#000000', Tiempo +': ' + this.countdown,'myFont','top-left');
+    this.TextCountdown = addTextWithAdjustedPosition(this, this.optimalPosition_TextCountdown.x+10, this.optimalPosition_TextCountdown.y+80, this.optimalFontSize_TextCountdown, '#000000', Tiempo +': ' + this.countdown,'myFont','top-left');
 
     // Paso 2: Crear la animación en la función create
     let frames = [];
