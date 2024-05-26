@@ -598,7 +598,7 @@ class GameOverScene extends Phaser.Scene {
         let score = this.contador;
         
         const top3_day = 0;
-        const top3_world = 1;
+        const top3_world = 12;
         var textTitleInput;
         var textInput;
         var createInput=false;
@@ -859,7 +859,7 @@ class AboutEB extends Phaser.Scene {
         this.textTitle = this.add.text(150, 320, '', this.styleTitle)
         this.textContent = this.add.text(200, 406, '', this.style );
 
-        this.messagesindicator = this.add.text(385, 770, '🟠 ⚪ ⚪ ⚪ ⚪ ⚪', { fontSize: '16px', fill: '#FFFFFF80' });
+        this.messagesindicator = this.add.text(410, 295, '🟠 ⚪ ⚪ ⚪ ⚪ ⚪', { fontSize: '16px', fill: '#FFFFFF80' });
 
         this.nextButton = this.add.text(955, 546, '▶', { fontSize: '52px', fill: '#FFFFFF' });
         this.nextButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
