@@ -589,36 +589,98 @@ class GameOverScene extends Phaser.Scene {
         var createInput;
         var top3_day;
         var top3_world;
-        var top3_list_day;
-        var top3_list_world;
         
-        top3_list_day = [
-            {iniciales: "ABC", puntuacion: 17},
-            {iniciales: "DFG", puntuacion: 12},
-            {iniciales: "HIJ", puntuacion: 5}
-        ];
+// Definición de funciones asíncronas
+async function guardarPuntuacion(token, iniciales, puntuacion) {
+    try {
+        const response = await fetch('./php/guardar_puntuacion.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ token, iniciales, puntuacion })
+        });
 
-        top3_list_world = [
-            {iniciales: "GHI", puntuacion: 27},
-            {iniciales: "ABC", puntuacion: 17},
-            {iniciales: "DFG", puntuacion: 12}
-        ];
-        
-        top3_day = top3_list_day[2].puntuacion;
-        top3_world = top3_list_world[2].puntuacion;
-        
-        if (this.originGame) {
-             this.refreshText (score, top3_day, top3_world);         
-        }
-        
-        if (this.createInput){
-            this.addTextTitleInput();
-            this.addMessageInput();
-            this.createBoxInput();
-            this.createInput=false;
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            console.log('Puntuación guardada correctamente');
         } else {
-            this.showScores(top3_list_day,top3_list_world);
-        }  
+            console.log('Error al guardar la puntuación: ', data.message);
+        }
+    } catch (error) {
+        console.error('Error en la solicitud de guardado: ', error);
+    }
+}
+
+async function obtenerPuntuaciones() {
+    try {
+        const response = await fetch('./php/obtener_puntuaciones.php');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error al obtener las puntuaciones: ', error);
+        return null;  // Asegúrate de manejar esto adecuadamente en caso de error
+    }
+}
+
+async function iniciarJuego() {
+    try {
+        const response = await fetch('./php/inicio_juego.php');
+        const data = await response.json();
+        return data.token;
+    } catch (error) {
+        console.error('Error al iniciar el juego: ', error);
+        return null;
+    }
+}
+
+// Código principal integrado en una IIFE asíncrona
+(async () => {
+    const token = await iniciarJuego();
+    const iniciales = 'ABC'; // Aquí define las iniciales que deseas enviar
+    const puntuacion = 5;  // Aquí define la puntuación que deseas enviar
+
+    if (token) {
+        await guardarPuntuacion(token, iniciales, puntuacion); // Aquí puedes cambiar las iniciales y puntuación
+
+        const puntuaciones = await obtenerPuntuaciones();
+
+        if (puntuaciones) {
+            const { top3_day = [], top3_world = [] } = puntuaciones;  // Asegúrate de tener listas vacías si los datos no están presentes
+            let top3_list_day = top3_day;
+            let top3_list_world = top3_world;
+
+            // Manejar caso donde no hay suficientes puntuaciones
+            let top3_day_score = top3_list_day.length >= 3 ? top3_list_day[2].puntuacion : 0;
+            let top3_world_score = top3_list_world.length >= 3 ? top3_list_world[2].puntuacion : 0;
+
+            if (this.originGame) {
+                this.refreshText(score, top3_day_score, top3_world_score);
+            }
+
+            if (this.createInput) {
+                this.addTextTitleInput();
+                this.addMessageInput();
+                console.log (top3_list_day);
+                console.log (top3_list_world);
+                this.createBoxInput(top3_list_day, top3_list_world);
+                this.createInput = false;
+            } else {
+                console.log (top3_list_day);
+                console.log (top3_list_world);
+                this.showScores(top3_list_day, top3_list_world);
+            }
+        } else {
+            console.error('No se pudieron obtener las puntuaciones.');
+        }
+    } else {
+        console.error('No se pudo obtener el token del juego.');
+    }
+})();
+
+
+
         
         this.addTextPlay();
         
@@ -760,7 +822,7 @@ class GameOverScene extends Phaser.Scene {
 
         this.messageInput.y = 630;
     }
-    createBoxInput() {
+    createBoxInput(top3_list_day,top3_list_world) {
         
     this.inputBox = this.add.graphics();
     this.inputBox.fillStyle(0xffffff, 1);
@@ -805,6 +867,8 @@ class GameOverScene extends Phaser.Scene {
     this.sendButton = this.add.text(648, 730, '▶', { fontSize: '32px', fill: '#000000' });
         this.sendButton.setInteractive({ useHandCursor: true }); 
         this.sendButton.on('pointerup', () => {
+            this.messageInput.destroy();
+            this.TextTitleInput.destroy();
             this.inputBox.destroy();
             this.inputText.destroy();
             this.sendButton.destroy();
@@ -1089,6 +1153,12 @@ document.addEventListener("DOMContentLoaded", function() {
         };
 
         var game = new Phaser.Game(config);
+        fetch('./php/inicio_juego.php')
+            .then(response => response.json())
+            .then(data => {
+            const token = data.token;
+            sessionStorage.setItem('game_token', token);
+        });
     });
 });
 
