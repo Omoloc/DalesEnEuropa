@@ -3,6 +3,9 @@ let text_TopDay = `Has conseguido ahorrar para entrar\n en el TOP 3 diario.\n In
 let title_TopWorld = '¡Enhorabuena!';
 let text_TopWorld = `Has conseguido ahorrar para entrar\n en el TOP 3 diario y global.\n Introduce tus 3 iniciales:`;
 let escribeaqui = 'Escribe aquí...';
+let mejorespuntuaciones = 'Mejores Puntuaciones';
+let diarias = 'Diarias';
+let totales = 'Totales';
 
 class BaseScene extends Phaser.Scene {
     constructor() {
@@ -576,42 +579,46 @@ class GameOverScene extends Phaser.Scene {
         this.scene.start('PlayGameScene');
     }
 
-    refreshText(score, top3_day, top3_world) {
-        if (score == 0 || score <= top3_day ) {
-            this.createInput = false;
-        } else if (score > top3_day && score <= top3_world) {
-            this.textTitleInput = title_TopDay;
-            this.textInput =  text_TopDay;
-            this.createInput = true;
-        } else {
-            this.textTitleInput = title_TopWorld;
-            this.textInput =  text_TopWorld;
-            this.createInput = true;
-        }
-
-        console.log('textTitleInput:', this.textTitleInput, 'textInput:', this.textInput, 'createInput:', this.createInput);
-    }
-
     create() {
         this.add.image(0, 0, 'background').setOrigin(0);
 
         let score = this.contador;
         
-        const top3_day = 0;
-        const top3_world = 12;
         var textTitleInput;
         var textInput;
-        var createInput=false;
-
-        if (this.originGame) {
-             this.refreshText (score, top3_day, top3_world);
+        var createInput;
+        var top3_day;
+        var top3_world;
+        var top3_list_day;
+        var top3_list_world;
         
-            if (this.createInput){
-                this.addTextTitleInput();
-                this.addMessageInput();
-                this.createBoxInput();
-            }           
+        top3_list_day = [
+            {iniciales: "ABC", puntuacion: 17},
+            {iniciales: "DFG", puntuacion: 12},
+            {iniciales: "HIJ", puntuacion: 5}
+        ];
+
+        top3_list_world = [
+            {iniciales: "GHI", puntuacion: 27},
+            {iniciales: "ABC", puntuacion: 17},
+            {iniciales: "DFG", puntuacion: 12}
+        ];
+        
+        top3_day = top3_list_day[2].puntuacion;
+        top3_world = top3_list_world[2].puntuacion;
+        
+        if (this.originGame) {
+             this.refreshText (score, top3_day, top3_world);         
         }
+        
+        if (this.createInput){
+            this.addTextTitleInput();
+            this.addMessageInput();
+            this.createBoxInput();
+            this.createInput=false;
+        } else {
+            this.showScores(top3_list_day,top3_list_world);
+        }  
         
         this.addTextPlay();
         
@@ -630,8 +637,8 @@ class GameOverScene extends Phaser.Scene {
         } else {
             this.textTitlePuntuacion = TituloFinal1;
             this.textHasDejado =  Hasdejado;
-            this.textPuntuacion =  this.contador + escanosovacios;
-            this.textDineroPuntuacion = habriasahorrado + ((this.contador * multiplicador) + bonoExtra).toLocaleString('es-ES') + '€';
+            this.textPuntuacion =  score + escanosovacios;
+            this.textDineroPuntuacion = habriasahorrado + ((score * multiplicador) + bonoExtra).toLocaleString('es-ES') + '€';
         }
         
         this.addTextTitlePuntuacion();
@@ -641,7 +648,7 @@ class GameOverScene extends Phaser.Scene {
         this.moreButton = this.add.rectangle(263, 926, 340, 134, 0xFFFFFF, 0);
         this.moreButton.setInteractive({ useHandCursor: true });
         this.moreButton.on('pointerup', () => {
-            this.scene.start('AboutEB', { puntuacion: this.contador });
+            this.scene.start('AboutEB', { puntuacion: score });
         });
 
         this.link = this.add.circle(890, 925, 55, 0xFFFFFF, 0);
@@ -660,7 +667,7 @@ class GameOverScene extends Phaser.Scene {
                 if(this.contador <= 1) {
                     window.open('https://twitter.com/intent/tweet?text=Ayúdame a eliminar unos cuantos escaños en el Parlamento %0A%0A http://escanos.org/dalesenlosescanos/index.html %0A%0A Sigue a @escanosenblanco y ¡Dales donde más les duele!&hashtags=dalesenlosescaños' , '_blank'); 
                 } else {
-                    window.open('https://twitter.com/intent/tweet?text=¡He eliminado '+this.contador+ ' diputados!%0A%0AAyúdame a eliminar unos cuantos escaños http://escanos.org/dalesenlosescanos/index.html %0A%0A Sigue a @escanosenblanco y ¡dales donde más les duele!&hashtags=dalesenlosescaños' , '_blank');
+                    window.open('https://twitter.com/intent/tweet?text=¡He eliminado '+score+ ' diputados!%0A%0AAyúdame a eliminar unos cuantos escaños http://escanos.org/dalesenlosescanos/index.html %0A%0A Sigue a @escanosenblanco y ¡dales donde más les duele!&hashtags=dalesenlosescaños' , '_blank');
                     }
                 }   
             });
@@ -684,84 +691,23 @@ class GameOverScene extends Phaser.Scene {
             this.scene.start('PlayGameScene');
         });
     }
-
-    addTextTitleInput() {
-        if (this.TextTitleInput) {
-            this.TextTitleInput.destroy();
-        }
-
-        const optimalFontSize_textTitleInput = getOptimalFontSize(this, this.textTitleInput, 315, 70, 'MyFont', 4);
-        
-        this.TextTitleInput = addCenteredText(this, this.textTitleInput, optimalFontSize_textTitleInput, 'MyFont', '#FFFFFF')
-
-        this.TextTitleInput.y = 500;
-    }
-    addMessageInput() {
-        if (this.messageInput) {
-            this.messageInput.destroy();
-        }
-        const optimalFontSize_messageInput = getOptimalFontSize(this, this.textInput, 900, 130, 'MyFont', 4);
-        
-        this.messageInput = addCenteredText(this, this.textInput, optimalFontSize_messageInput, 'MyFont', '#FFFFFF')
-
-        this.messageInput.y = 630;
-    }
-
-    createBoxInput() {
-
-    // Crear un rectángulo para simular el input box
-    this.inputBox = this.add.graphics();
-    this.inputBox.fillStyle(0xffffff, 1); // Color blanco
-    this.inputBox.fillRect(355, 725, 350, 50); // Posición y tamaño del rectángulo
-
-    // Crear un texto que actúa como el placeholder del input
-    this.inputText = this.add.text(134, 750, 'Escribe aquí...', {
-        fontSize: '28px',
-        fill: '#000000',
-        align: 'center'
-    });
-
-    // Centrar el texto
-    this.inputText.setOrigin(0.5);
-    this.inputText.x = this.cameras.main.width / 2;
-
-    // Hacer que el texto sea interactivo para capturar clics
-    this.inputText.setInteractive();
-    this.inputText.on('pointerdown', () => {
-        this.inputText.setText(''); // Limpiar el placeholder al hacer clic
-        this.inputActive = true;
-    });
-
-    // Capturar la entrada del teclado
-    this.input.keyboard.on('keydown', (event) => {
-        if (this.inputActive) {
-            if (event.key === 'Backspace') {
-                this.inputText.text = this.inputText.text.slice(0, -1);
-            } else if (event.key.length === 1) {
-                if (this.inputText.text.length < 3) {
-                    this.inputText.text += event.key;
-                }
-            }
-        }
-    });
-
-    // Desactivar la entrada cuando se haga clic fuera del área de entrada
-    this.input.on('pointerdown', (pointer) => {
-        if (pointer.x < 100 || pointer.x > 900 || pointer.y < 700 || pointer.y > 750) {
-            this.inputActive = false;
-            if (this.inputText.text === '') {
-                this.inputText.setText(escribeaqui);
-            }
-        }
-    });
-        
-    this.sendButton = this.add.text(648, 730, '▶', { fontSize: '32px', fill: '#000000' });
-        this.sendButton.setInteractive({ useHandCursor: true }); 
-        this.sendButton.on('pointerup', () => {
-    });
-}
-
     
+    refreshText(score, top3_day, top3_world) {
+        console.log(score + ' ' + top3_day + ' ' + top3_world)
+        if (score == 0 || score <= top3_day ) {
+            this.createInput = false;
+        } else if (score > top3_day && score <= top3_world) {
+            this.textTitleInput = title_TopDay;
+            this.textInput =  text_TopDay;
+            this.createInput = true;
+        } else {
+            this.textTitleInput = title_TopWorld;
+            this.textInput =  text_TopWorld;
+            this.createInput = true;
+            
+        }
+    }
+
     addTextTitlePuntuacion() {
         if (this.TextTitlePuntuacion) {
             this.TextTitlePuntuacion.destroy();
@@ -792,7 +738,152 @@ class GameOverScene extends Phaser.Scene {
 
         this.TextDineroPuntuacion.y = 335;
     }
+
+    addTextTitleInput() {
+        if (this.TextTitleInput) {
+            this.TextTitleInput.destroy();
+        }
+
+        const optimalFontSize_textTitleInput = getOptimalFontSize(this, this.textTitleInput, 315, 70, 'MyFont', 4);
+        
+        this.TextTitleInput = addCenteredText(this, this.textTitleInput, optimalFontSize_textTitleInput, 'MyFont', '#FFFFFF')
+
+        this.TextTitleInput.y = 500;
+    }
+    addMessageInput() {
+        if (this.messageInput) {
+            this.messageInput.destroy();
+        }
+        const optimalFontSize_messageInput = getOptimalFontSize(this, this.textInput, 900, 130, 'MyFont', 4);
+        
+        this.messageInput = addCenteredText(this, this.textInput, optimalFontSize_messageInput, 'MyFont', '#FFFFFF')
+
+        this.messageInput.y = 630;
+    }
+    createBoxInput() {
+        
+    this.inputBox = this.add.graphics();
+    this.inputBox.fillStyle(0xffffff, 1);
+    this.inputBox.fillRect(355, 725, 350, 50);
     
+    this.inputText = this.add.text(134, 750, 'Escribe aquí...', {
+        fontSize: '28px',
+        fill: '#000000',
+        align: 'center'
+    });
+    
+    this.inputText.setOrigin(0.5);
+    this.inputText.x = this.cameras.main.width / 2;
+    
+    this.inputText.setInteractive();
+    this.inputText.on('pointerdown', () => {
+        this.inputText.setText('');
+        this.inputActive = true;
+    });
+
+    this.input.keyboard.on('keydown', (event) => {
+        if (this.inputActive) {
+            if (event.key === 'Backspace') {
+                this.inputText.text = this.inputText.text.slice(0, -1);
+            } else if (event.key.length === 1) {
+                if (this.inputText.text.length < 3) {
+                    this.inputText.text += event.key;
+                }
+            }
+        }
+    });
+        
+    this.input.on('pointerdown', (pointer) => {
+        if (pointer.x < 100 || pointer.x > 900 || pointer.y < 700 || pointer.y > 750) {
+            this.inputActive = false;
+            if (this.inputText.text === '') {
+                this.inputText.setText(escribeaqui);
+            }
+        }
+    });
+        
+    this.sendButton = this.add.text(648, 730, '▶', { fontSize: '32px', fill: '#000000' });
+        this.sendButton.setInteractive({ useHandCursor: true }); 
+        this.sendButton.on('pointerup', () => {
+            this.inputBox.destroy();
+            this.inputText.destroy();
+            this.sendButton.destroy();
+            this.showScores(top3_list_day,top3_list_world);
+            
+    });
+}
+    
+    showScores(top3_list_day,top3_list_world){
+        if (this.scoreTitle) {
+            this.scoreTitle.destroy();
+        }
+        
+        const optimalFontSize_scoreTitle = getOptimalFontSize(this, mejorespuntuaciones, 500, 700, 'MyFont', 4);
+        
+        this.scoreTitle = addCenteredText(this, mejorespuntuaciones, optimalFontSize_scoreTitle, 'MyFont', '#f9fe11')
+
+        this.scoreTitle.y = 500;
+        
+        const optimalFontSize_scoreTops = getOptimalFontSize(this, totales, 200, 350, 'MyFont', 4);
+
+        if (this.scoreTitleDay) {
+            this.scoreTitleDay.destroy();
+        }
+        
+        this.scoreTitle = addTextWithCustomX (this, diarias, optimalFontSize_scoreTops, 'MyFont', '#5bf9fd', 256)
+
+        this.scoreTitle.y = 550; 
+
+       if (this.scoreTitleTotal) {
+            this.scoreTitleTotal.destroy();
+        }
+        
+        this.scoreTitleTotal = addTextWithCustomX (this, totales, optimalFontSize_scoreTops, 'MyFont', '#6dbffe', 768)
+
+        this.scoreTitleTotal.y = 550;
+        
+        //Puntuaciones
+        
+        const optimalFontSize_Scores = getOptimalFontSize(this, "XXX", 150, 70, 'MyFont', 4);
+        
+        for (let i = 0; i < top3_list_day.length; i++) {
+            const dayIndex = i + 1;
+            const yOffset = 625 + i * 75;
+            
+            if (this[`initialsDay_${dayIndex}`]) {
+                this[`initialsDay_${dayIndex}`].destroy();
+            }
+
+            if (this[`scoreDay_${dayIndex}`]) {
+                this[`scoreDay_${dayIndex}`].destroy();
+            }
+            
+            this[`initialsDay_${dayIndex}`] = addTextWithCustomX(this, top3_list_day[i].iniciales, optimalFontSize_Scores, 'MyFont', '#FFFFFF', 150);
+            this[`scoreDay_${dayIndex}`] = addTextWithCustomX(this, top3_list_day[i].puntuacion, optimalFontSize_Scores, 'MyFont', '#FFFFFF', 350);
+            
+            this[`initialsDay_${dayIndex}`].y = yOffset;
+            this[`scoreDay_${dayIndex}`].y = yOffset;
+        }
+        
+        for (let i = 0; i < top3_list_world.length; i++) {
+            const dayIndex = i + 1;
+            const yOffset = 625 + i * 75;
+            
+            if (this[`initialsWorld_${dayIndex}`]) {
+                this[`initialsWorld_${dayIndex}`].destroy();
+            }
+
+            if (this[`scoreWorld_${dayIndex}`]) {
+                this[`scoreWorld_${dayIndex}`].destroy();
+            }
+                
+            this[`initialsWorld_${dayIndex}`] = addTextWithCustomX(this, top3_list_world[i].iniciales, optimalFontSize_Scores, 'MyFont', '#FFFFFF', 650);
+            this[`scoreWorld_${dayIndex}`] = addTextWithCustomX(this, top3_list_world[i].puntuacion, optimalFontSize_Scores, 'MyFont', '#FFFFFF', 850);
+            
+            this[`initialsWorld_${dayIndex}`].y = yOffset;
+            this[`scoreWorld_${dayIndex}`].y = yOffset;
+        }
+    }
 }
 
 class AboutEB extends Phaser.Scene {
