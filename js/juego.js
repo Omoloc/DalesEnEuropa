@@ -950,7 +950,7 @@ class AboutEB extends Phaser.Scene {
         this.textTitle = this.add.text(150, 320, '', this.styleTitle)
         this.textContent = this.add.text(200, 406, '', this.style );
 
-        this.messagesindicator = this.add.text(410, 295, '🟠 ⚪ ⚪ ⚪ ⚪ ⚪', { fontSize: '16px', fill: '#FFFFFF80' });
+        this.messagesindicator = this.add.text(410, 834, '🟠 ⚪ ⚪ ⚪ ⚪ ⚪', { fontSize: '16px', fill: '#FFFFFF80' });
 
         this.nextButton = this.add.text(955, 546, '▶', { fontSize: '52px', fill: '#FFFFFF' });
         this.nextButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
