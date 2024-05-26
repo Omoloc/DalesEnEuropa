@@ -1,5 +1,3 @@
-let title_NoTop = 'Lo siento...';
-let text_NoTop = 'No has ahorrar lo suficiente para\n entrar en el TOP :(';
 let title_TopDay = '¡Bien!';
 let text_TopDay = `Has conseguido ahorrar para entrar\n en el TOP 3 diario.\n Introduce tus 3 iniciales:`;
 let title_TopWorld = '¡Enhorabuena!';
@@ -580,8 +578,6 @@ class GameOverScene extends Phaser.Scene {
 
     refreshText(score, top3_day, top3_world) {
         if (score == 0 || score <= top3_day ) {
-            this.textTitleInput = title_NoTop;
-            this.textInput =  text_NoTop;
             this.createInput = false;
         } else if (score > top3_day && score <= top3_world) {
             this.textTitleInput = title_TopDay;
@@ -599,9 +595,10 @@ class GameOverScene extends Phaser.Scene {
     create() {
         this.add.image(0, 0, 'background').setOrigin(0);
 
-        let score = this.registry.get('score');
+        let score = this.contador;
+        
         const top3_day = 0;
-        const top3_world = 12;
+        const top3_world = 1;
         var textTitleInput;
         var textInput;
         var createInput=false;
@@ -609,9 +606,9 @@ class GameOverScene extends Phaser.Scene {
         if (this.originGame) {
              this.refreshText (score, top3_day, top3_world);
         
-            this.addTextTitleInput();
-            this.addMessageInput();
             if (this.createInput){
+                this.addTextTitleInput();
+                this.addMessageInput();
                 this.createBoxInput();
             }           
         }
@@ -886,7 +883,7 @@ class AboutEB extends Phaser.Scene {
         this.link = this.add.circle(890, 925, 55, 0xFFFFFF, 0);
         this.link.setInteractive({ useHandCursor: true });
         this.link.on('pointerup', () => {
-            this.scene.start('GameOverScene', { puntuacion: this.score, originGame: false });
+            this.scene.start('GameOverScene', { puntuacion: this.contador, originGame: false });
         });
         
         this.moreButton = this.add.rectangle(325, 940, 360, 150, 0xFFFFFF, 0);
