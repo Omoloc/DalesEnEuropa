@@ -131,7 +131,7 @@ const changeLanguage = () => {
         Visibilizar = newLanguageData.Visibilizar;
         Comolo = newLanguageData.Comolo;
         Nospresentamos = newLanguageData.Nospresentamos;
-        Estoes = newLanguageData.Estores;
+        Estoes = newLanguageData.Estoes;
         Siyahay14 = newLanguageData.Siyahay14;
         Comopuedo = newLanguageData.Comopuedo;
         Comenta = newLanguageData.Comenta;

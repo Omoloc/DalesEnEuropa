@@ -590,97 +590,7 @@ class GameOverScene extends Phaser.Scene {
         var top3_day;
         var top3_world;
         
-// Definición de funciones asíncronas
-async function guardarPuntuacion(token, iniciales, puntuacion) {
-    try {
-        const response = await fetch('./php/guardar_puntuacion.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ token, iniciales, puntuacion })
-        });
-
-        const data = await response.json();
-
-        if (data.status === 'success') {
-            console.log('Puntuación guardada correctamente');
-        } else {
-            console.log('Error al guardar la puntuación: ', data.message);
-        }
-    } catch (error) {
-        console.error('Error en la solicitud de guardado: ', error);
-    }
-}
-
-async function obtenerPuntuaciones() {
-    try {
-        const response = await fetch('./php/obtener_puntuaciones.php');
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error al obtener las puntuaciones: ', error);
-        return null;  // Asegúrate de manejar esto adecuadamente en caso de error
-    }
-}
-
-async function iniciarJuego() {
-    try {
-        const response = await fetch('./php/inicio_juego.php');
-        const data = await response.json();
-        return data.token;
-    } catch (error) {
-        console.error('Error al iniciar el juego: ', error);
-        return null;
-    }
-}
-
-// Código principal integrado en una IIFE asíncrona
-(async () => {
-    const token = await iniciarJuego();
-    const iniciales = 'ABC'; // Aquí define las iniciales que deseas enviar
-    const puntuacion = 5;  // Aquí define la puntuación que deseas enviar
-
-    if (token) {
-        await guardarPuntuacion(token, iniciales, puntuacion); // Aquí puedes cambiar las iniciales y puntuación
-
-        const puntuaciones = await obtenerPuntuaciones();
-
-        if (puntuaciones) {
-            const { top3_day = [], top3_world = [] } = puntuaciones;  // Asegúrate de tener listas vacías si los datos no están presentes
-            let top3_list_day = top3_day;
-            let top3_list_world = top3_world;
-
-            // Manejar caso donde no hay suficientes puntuaciones
-            let top3_day_score = top3_list_day.length >= 3 ? top3_list_day[2].puntuacion : 0;
-            let top3_world_score = top3_list_world.length >= 3 ? top3_list_world[2].puntuacion : 0;
-
-            if (this.originGame) {
-                this.refreshText(score, top3_day_score, top3_world_score);
-            }
-
-            if (this.createInput) {
-                this.addTextTitleInput();
-                this.addMessageInput();
-                console.log (top3_list_day);
-                console.log (top3_list_world);
-                this.createBoxInput(top3_list_day, top3_list_world);
-                this.createInput = false;
-            } else {
-                console.log (top3_list_day);
-                console.log (top3_list_world);
-                this.showScores(top3_list_day, top3_list_world);
-            }
-        } else {
-            console.error('No se pudieron obtener las puntuaciones.');
-        }
-    } else {
-        console.error('No se pudo obtener el token del juego.');
-    }
-})();
-
-
-
+        this.ejecutarPuntuaciones(null,score);
         
         this.addTextPlay();
         
@@ -738,6 +648,92 @@ async function iniciarJuego() {
     update() {
 
     }
+
+async ejecutarPuntuaciones(iniciales = null,score) {
+    const token = await this.iniciarJuego();
+    const puntuacion = score;
+
+    if (token) {
+        if (iniciales) {
+            await this.guardarPuntuacion(token, iniciales, puntuacion);
+        }
+
+        const puntuaciones = await this.obtenerPuntuaciones();
+
+        if (puntuaciones) {
+            const { top3_day = [], top3_world = [] } = puntuaciones;
+            let top3_list_day = top3_day;
+            let top3_list_world = top3_world;
+
+            let top3_day_score = top3_list_day.length >= 3 ? top3_list_day[2].puntuacion : 0;
+            let top3_world_score = top3_list_world.length >= 3 ? top3_list_world[2].puntuacion : 0;
+
+            if (this.originGame) {
+                this.refreshText(score, top3_day_score, top3_world_score);
+            }
+            if (iniciales) {
+                this.createInput = false;
+            }
+
+            if (this.createInput) {
+                this.addTextTitleInput();
+                this.addMessageInput();
+                this.createBoxInput(score,top3_list_day, top3_list_world);
+                this.createInput = false;
+            } else {
+                this.showScores(top3_list_day, top3_list_world);
+            }
+        } else {
+            console.error('No se pudieron obtener las puntuaciones.');
+        }
+    } else {
+        console.error('No se pudo obtener el token del juego.');
+    }
+};
+
+            
+    async guardarPuntuacion(token, iniciales, puntuacion) {
+        try {
+            const response = await fetch('./php/guardar_puntuacion.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ token, iniciales, puntuacion })
+            });
+
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                console.log('Puntuación guardada correctamente');
+            } else {
+                console.log('Error al guardar la puntuación: ', data.message);
+            }
+        } catch (error) {
+            console.error('Error en la solicitud de guardado: ', error);
+        }
+}
+    async obtenerPuntuaciones() {
+        try {
+            const response = await fetch('./php/obtener_puntuaciones.php');
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error al obtener las puntuaciones: ', error);
+            return null;  // Asegúrate de manejar esto adecuadamente en caso de error
+        }
+}
+    async iniciarJuego() {
+        try {
+            const response = await fetch('./php/inicio_juego.php');
+            const data = await response.json();
+            return data.token;
+        } catch (error) {
+            console.error('Error al iniciar el juego: ', error);
+            return null;
+        }
+}
+    
     
     addTextPlay() {
         if (this.TextPlay) {
@@ -822,7 +818,7 @@ async function iniciarJuego() {
 
         this.messageInput.y = 630;
     }
-    createBoxInput(top3_list_day,top3_list_world) {
+    createBoxInput(score,top3_list_day,top3_list_world) {
         
     this.inputBox = this.add.graphics();
     this.inputBox.fillStyle(0xffffff, 1);
@@ -870,10 +866,9 @@ async function iniciarJuego() {
             this.messageInput.destroy();
             this.TextTitleInput.destroy();
             this.inputBox.destroy();
-            this.inputText.destroy();
             this.sendButton.destroy();
-            this.showScores(top3_list_day,top3_list_world);
-            
+            this.ejecutarPuntuaciones(this.inputText.text,score);
+            this.inputText.destroy();
     });
 }
     
@@ -991,7 +986,7 @@ class AboutEB extends Phaser.Scene {
         console.log('previousText called');
 
         this.mensajes -= 1;
-        if (this.mensajes < 0) this.mensajes = 6;
+        if (this.mensajes < 0) this.mensajes = 4;
         this.updateText();
     }
     restartTimer() {
@@ -1014,7 +1009,7 @@ class AboutEB extends Phaser.Scene {
         this.textTitle = this.add.text(150, 320, '', this.styleTitle)
         this.textContent = this.add.text(200, 406, '', this.style );
 
-        this.messagesindicator = this.add.text(410, 295, '🟠 ⚪ ⚪ ⚪ ⚪ ⚪', { fontSize: '16px', fill: '#FFFFFF80' });
+        this.messagesindicator = this.add.text(410, 295, '🟠 ⚪ ⚪ ⚪ ⚪ ', { fontSize: '16px', fill: '#FFFFFF80' });
 
         this.nextButton = this.add.text(955, 546, '▶', { fontSize: '52px', fill: '#FFFFFF' });
         this.nextButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
@@ -1056,50 +1051,36 @@ class AboutEB extends Phaser.Scene {
     updateText() {
         switch (this.mensajes) {
           case 0:
-            if (this.contador === 0) {
-              this.textTitle.setText(Quepaso, this.styleTitle);
-              this.textContent.setText( vuelveajugar);
-            } else if (this.contador > 1) {
-              this.textTitle.setText(TituloFinal1);
-              this.textContent.setText( Hasdejado + this.contador + escanosovacios + (this.contador*120000).toLocaleString('es-ES') +'€');
-            } else {
-              this.textTitle.setText(TituloFinal1);
-              this.textContent.setText(unescanovacio+ ((this.contador*120000)+220000).toLocaleString('es-ES') +'€');
-            }
-            //cambio el messageindicator
-            this.messagesindicator.setText('🟠 ⚪ ⚪ ⚪ ⚪ ⚪');
-
-            break;
-          case 1:
             this.textTitle.setText(Quienessomos);
             this.textContent.setText(Somosungrupo);
             //cambio el messageindicator
-            this.messagesindicator.setText('⚪ 🟠 ⚪ ⚪ ⚪ ⚪');
+            this.messagesindicator.setText('🟠 ⚪ ⚪ ⚪ ⚪ ');
 
             break;
-          case 2:
+          case 1:
             this.textTitle.setText(Quequeremos);
             this.textContent.setText( Visibilizar );
             //cambio el messageindicator
-            this.messagesindicator.setText('⚪ ⚪ 🟠 ⚪ ⚪ ⚪');
+            this.messagesindicator.setText('⚪ 🟠 ⚪ ⚪ ⚪ ');
             break;
-          case 3:
+          case 2:
             this.textTitle.setText(Comolo);
             this.textContent.setText( Nospresentamos );
             //cambio el messageindicator
-            this.messagesindicator.setText('⚪ ⚪ ⚪ 🟠 ⚪ ⚪');
+            this.messagesindicator.setText('⚪ ⚪ 🟠 ⚪ ⚪ ');
             break;
-          case 4:
+          case 3:
             this.textTitle.setText(Estoes);
             this.textContent.setText(Siyahay14);
             //cambio el messageindicator
-            this.messagesindicator.setText('⚪ ⚪ ⚪ ⚪ 🟠 ⚪');
+            this.messagesindicator.setText('⚪ ⚪ ⚪ 🟠 ⚪ ');
             break;
-          case 5:
+          case 4:
+                console.log(Comopuedo)
             this.textTitle.setText(Comopuedo);
             this.textContent.setText( Comenta );
             //cambio el messageindicator
-            this.messagesindicator.setText('⚪ ⚪ ⚪ ⚪ ⚪ 🟠');
+            this.messagesindicator.setText('⚪ ⚪ ⚪ ⚪ 🟠');
             break;
           }
 

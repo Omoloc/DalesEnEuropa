@@ -54,6 +54,10 @@ if ($token === $_SESSION['game_token'] && $iniciales && $puntuacion) {
     echo json_encode(['status' => 'error', 'message' => 'Token no válido o datos incompletos']);
 }
 
-$conn->close();
-error_log("Database connection closed.");
+if (isset($conn) && $conn != null) {
+    $conn->close();
+    error_log("Database connection closed.");
+} else {
+    error_log("No database connection to close.");
+}
 ?>
