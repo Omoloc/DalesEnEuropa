@@ -153,7 +153,7 @@ const languages = {
         Visibilizar: "Visibilizar a falta de representación, chamar a atención dos medios e abrir un debate sobre as carencias do noso sistema.",
         Comolo: "Como o facemos?",
         Nospresentamos: "Presentámonos ás eleccións para deixar escanos baleiros. Deste xeito ninguén cobrará por ese escano. Nós tampouco.",
-        Esto es: "Isto é posible?",
+        Estoes: "Isto é posible?",
         Siyahay14: "Si. Xa deixamos baleiras 14 concellarías e un Concello. Axúdanos a deixar un escano baleiro no Parlamento Europeo!",
         Comopuedo: "Como axudar?",
         Comenta: "Comenta a nosa proposta cos teus amigos, familiares e coñecidos. Síguenos nas redes sociais e comparte as nosas publicacións.",

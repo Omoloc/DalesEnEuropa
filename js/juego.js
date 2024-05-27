@@ -1043,8 +1043,8 @@ class AboutEB extends Phaser.Scene {
             window.open('https://escanos.org', '_blank');
         });
 
-        const optimalFontSize = getOptimalFontSize(this, 'v3.01', 75, 50, 'Arial', 4);
-        const optimalPositionBottomRight = getOptimalSquarePosition(this, 'v3.01', optimalFontSize, 'Arial', 4, 'bottom-right');
+        const optimalFontSize = getOptimalFontSize(this, 'v3.02', 75, 50, 'Arial', 4);
+        const optimalPositionBottomRight = getOptimalSquarePosition(this, 'v3.02', optimalFontSize, 'Arial', 4, 'bottom-right');
         this.TextVersionBottomRight = addTextWithAdjustedPosition(this, optimalPositionBottomRight.x, optimalPositionBottomRight.y, optimalPositionBottomRight.fontSize, '#FFFFFF', 'v3.01', 'Arial');
 
         this.events.on('shutdown', this.shutdown, this);
