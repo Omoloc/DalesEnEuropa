@@ -105,6 +105,7 @@ const languages = {
         servererror: 'Ezin izan dira\n kargatu puntuazioak'
     },
     cat: {
+        bandera: 'bandera_cat',
         TituloFinal1 : "Enhorabona!",
         Quepaso : "Què ha passat?",
         vuelveajugar : "Torna a jugar i no pitgis l'Escó en Blanc, només als polítics.\n\n Dóna'ls a l'escó!",
