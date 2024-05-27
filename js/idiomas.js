@@ -224,11 +224,13 @@ const languageManager = new LanguageManager(languages);
 
 const changeLanguage = () => {
     const newLanguageData = languageManager.changeLanguage();
-    const nextFlag = languageManager.getNextAvailableLanguageFlag();
+    //Es confuso que saque la siguiente bandera. mejor que muestre la bandera que está mostrándose ahora mismo.
+    //const nextFlag = languageManager.getNextAvailableLanguageFlag();
 
     if (newLanguageData) {
         // Actualizar las variables globales al nuevo idioma
-        bandera = nextFlag;
+        //bandera = nextFlag;
+        bandera = newLanguageData.bandera;
         TituloFinal1 = newLanguageData.TituloFinal1;
         dalesescano = newLanguageData.dalesescano;
         habriasahorrado = newLanguageData.habriasahorrado;
