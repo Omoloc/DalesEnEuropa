@@ -648,48 +648,53 @@ class GameOverScene extends Phaser.Scene {
 
     }
 
-async ejecutarPuntuaciones(iniciales = null,score) {
-    const token = await this.iniciarJuego();
-    const puntuacion = score;
+    async ejecutarPuntuaciones(iniciales = null,score) {
+        const token = await this.iniciarJuego();
+        const puntuacion = score;
 
-    if (token) {
-        if (iniciales) {
-            await this.guardarPuntuacion(token, iniciales, puntuacion);
-        }
-
-        const puntuaciones = await this.obtenerPuntuaciones();
-
-        if (puntuaciones) {
-            const { top3_day = [], top3_world = [] } = puntuaciones;
-            let top3_list_day = top3_day;
-            let top3_list_world = top3_world;
-
-            let top3_day_score = top3_list_day.length >= 3 ? top3_list_day[2].puntuacion : 0;
-            let top3_world_score = top3_list_world.length >= 3 ? top3_list_world[2].puntuacion : 0;
-
-            if (this.originGame) {
-                this.refreshText(score, top3_day_score, top3_world_score);
-            }
+        if (token) {
             if (iniciales) {
-                this.createInput = false;
+                const resultadoGuardado = await this.guardarPuntuacion(token, iniciales, puntuacion);
+                console.log(resultadoGuardado.status);
+                if (resultadoGuardado.status !== 'success') {
+                    console.error('Error al guardar la puntuación: ' + resultadoGuardado.message);
+                    return;
+                }
             }
 
-            if (this.createInput) {
-                this.addTextTitleInput();
-                this.addMessageInput();
-                this.createBoxInput(score,top3_list_day, top3_list_world);
-                this.createInput = false;
+            const puntuaciones = await this.obtenerPuntuaciones();
+            console.log(puntuaciones.status);
+            if (puntuaciones.status == 'success') {
+                const { top3_day = [], top3_world = [] } = puntuaciones;
+                let top3_list_day = top3_day;
+                let top3_list_world = top3_world;
+
+                let top3_day_score = top3_list_day.length >= 3 ? top3_list_day[2].puntuacion : 0;
+                let top3_world_score = top3_list_world.length >= 3 ? top3_list_world[2].puntuacion : 0;
+
+                if (this.originGame) {
+                    this.refreshText(score, top3_day_score, top3_world_score);
+                }
+                if (iniciales) {
+                    this.createInput = false;
+                }
+
+                if (this.createInput) {
+                    this.addTextTitleInput();
+                    this.addMessageInput();
+                    this.createBoxInput(score,top3_list_day, top3_list_world);
+                    this.createInput = false;
+                } else {
+                    this.showScores(top3_list_day, top3_list_world);
+                }
             } else {
-                this.showScores(top3_list_day, top3_list_world);
+                console.error('No se pudieron obtener las puntuaciones.');
+                this.addTextError();
             }
         } else {
-            console.error('No se pudieron obtener las puntuaciones.');
+            console.error('No se pudo obtener el token del juego.');
         }
-    } else {
-        console.error('No se pudo obtener el token del juego.');
-    }
-};
-
+    };
 
     async guardarPuntuacion(token, iniciales, puntuacion) {
         try {
@@ -708,10 +713,12 @@ async ejecutarPuntuaciones(iniciales = null,score) {
             } else {
                 console.log('Error al guardar la puntuación: ', data.message);
             }
+            return data;
         } catch (error) {
             console.error('Error en la solicitud de guardado: ', error);
+            return null;
         }
-}
+    }
     async obtenerPuntuaciones() {
         try {
             const response = await fetch('./php/obtener_puntuaciones.php');
@@ -721,7 +728,7 @@ async ejecutarPuntuaciones(iniciales = null,score) {
             console.error('Error al obtener las puntuaciones: ', error);
             return null;  // Asegúrate de manejar esto adecuadamente en caso de error
         }
-}
+    }
     async iniciarJuego() {
         try {
             const response = await fetch('./php/inicio_juego.php');
@@ -731,7 +738,19 @@ async ejecutarPuntuaciones(iniciales = null,score) {
             console.error('Error al iniciar el juego: ', error);
             return null;
         }
-}
+    }
+    
+    addTextError() {
+        if (this.TextError) {
+            this.TextError.destroy();
+        }
+
+        const optimalFontSize_textError = getOptimalFontSize(this, servererror, 700, 550, 'MyFont', 4);
+
+        this.TextError = addCenteredText(this, servererror, optimalFontSize_textError, 'MyFont', '#FFFFFF')
+
+        this.TextError.y = 650;
+    }
 
 
     addTextPlay() {

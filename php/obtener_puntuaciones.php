@@ -61,7 +61,7 @@ try {
     error_log("Top 3 world scores fetched successfully.");
 
     // Envío de los resultados en formato JSON
-    echo json_encode(['top3_day' => $top3_day, 'top3_world' => $top3_world]);
+    echo json_encode(['status' => 'success', 'top3_day' => $top3_day, 'top3_world' => $top3_world]);
 
 } catch (Exception $e) {
     // En caso de error, enviar la respuesta en formato JSON con el mensaje de error y log
