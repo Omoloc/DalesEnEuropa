@@ -1,11 +1,4 @@
-let title_TopDay = '¡Bien!';
-let text_TopDay = `Has conseguido ahorrar para entrar\n en el TOP 3 diario.\n Introduce tus 3 iniciales:`;
-let title_TopWorld = '¡Enhorabuena!';
-let text_TopWorld = `Has conseguido ahorrar para entrar\n en el TOP 3 diario y global.\n Introduce tus 3 iniciales:`;
-let escribeaqui = 'Escribe aquí...';
-let mejorespuntuaciones = 'Mejores Puntuaciones';
-let diarias = 'Diarias';
-let totales = 'Totales';
+
 
 class BaseScene extends Phaser.Scene {
     constructor() {
@@ -599,8 +592,13 @@ class GameOverScene extends Phaser.Scene {
         var textHasDejado;
         var textPuntuacion;
         var textDineroPuntuacion;
-        const multiplicador = 120000;
-        const bonoExtra = 220000;
+        //https://www.newtral.es/eurodiputado-salario-dietas-asistentes-sueldo/20231219/
+        //Sueldo bruto	9.975,42 euros mensuales
+        //Sueldo neto	7.776,06 euros mensuales
+        //Dietas	4.778 euros menusales
+        //Viajes	Hasta 4.716 euros anuales
+        //Asistentes	28.412 euros mensuales
+        const costeanual = 616014;
 
         if (score == 0 ) {
             this.textTitlePuntuacion = Quepaso;
@@ -611,7 +609,7 @@ class GameOverScene extends Phaser.Scene {
             this.textTitlePuntuacion = TituloFinal1;
             this.textHasDejado =  Hasdejado;
             this.textPuntuacion =  score + escanosovacios;
-            this.textDineroPuntuacion = habriasahorrado + ((score * multiplicador) + bonoExtra).toLocaleString('es-ES') + '€';
+            this.textDineroPuntuacion = habriasahorrado + (score * costeanual).toLocaleString('es-ES') + '€';
         }
 
         this.addTextTitlePuntuacion();
