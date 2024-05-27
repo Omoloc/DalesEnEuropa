@@ -1,4 +1,3 @@
-// Variables globales
 let bandera,
     TituloFinal1,
     Quepaso, 
@@ -254,6 +253,15 @@ const changeLanguage = () => {
         Atencion = newLanguageData.Atencion;
         Deprisa = newLanguageData.Deprisa;
         Jugar = newLanguageData.Jugar;
+        title_TopDay = newLanguageData.title_TopDay;
+        text_TopDay = newLanguageData.text_TopDay;
+        title_TopWorld = newLanguageData.title_TopWorld;
+        text_TopWorld = newLanguageData.text_TopWorld;
+        escribeaqui = newLanguageData.escribeaqui;
+        mejorespuntuaciones = newLanguageData.mejorespuntuaciones;
+        diarias = newLanguageData.diarias;
+        totales = newLanguageData.totales;
+        servererror = newLanguageData.servererror;
     } else {
         console.log('No more languages available or language not supported');
     }
