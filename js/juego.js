@@ -885,7 +885,7 @@ class GameOverScene extends Phaser.Scene {
             this.TextTitleInput.destroy();
             this.inputBox.destroy();
             this.sendButton.destroy();
-            this.ejecutarPuntuaciones(this.inputText.text,score);
+            this.ejecutarPuntuaciones(this.inputText.text.toUpperCase(),score);
             this.inputText.destroy();
     });
 }
