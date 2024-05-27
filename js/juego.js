@@ -62,8 +62,8 @@ class InitialScene extends Phaser.Scene {
         this.addTextPlay();
         this.addImageFlag(bandera);
 
-        const optimalFontSize = getOptimalFontSize(this, 'v3.01', 75, 50, 'Arial', 4);
-        const optimalPositionBottomRight = getOptimalSquarePosition(this, 'v3.01', optimalFontSize, 'Arial', 4, 'bottom-right');
+        const optimalFontSize = getOptimalFontSize(this, 'v3.03', 75, 50, 'Arial', 4);
+        const optimalPositionBottomRight = getOptimalSquarePosition(this, 'v3.03', optimalFontSize, 'Arial', 4, 'bottom-right');
         this.TextVersionBottomRight = addTextWithAdjustedPosition(this, optimalPositionBottomRight.x, optimalPositionBottomRight.y, optimalPositionBottomRight.fontSize, '#FFFFFF', 'v3.01', 'Arial');
     }
 

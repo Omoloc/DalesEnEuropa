@@ -138,7 +138,6 @@ const languages = {
     },
     gal: {
         bandera: 'bandera_gal',
-        bandera: 'bandera_esp',
         TituloFinal1: "Parabéns!",
         Quepaso: "Que pasou?",
         vuelveajugar: "Volve xogar e\n non pulses no Escaño en Branco\n só aos políticos.",
