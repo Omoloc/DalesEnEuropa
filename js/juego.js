@@ -84,7 +84,7 @@ class InitialScene extends Phaser.Scene {
             this.TextPlay.destroy();
         }
 
-        const optimalFontSize_TextPlay = getOptimalFontSize(this, Jugar, 320, 85, 'MyFont', 4);
+        const optimalFontSize_TextPlay = getOptimalFontSize(this, Jugar, 260, 75, 'MyFont', 4);
         this.TextPlay = addCenteredText(this, Jugar, optimalFontSize_TextPlay, 'MyFont', '#FFFFFF');
 
         this.TextPlay.y = 865;
@@ -420,7 +420,8 @@ class PlayGameScene extends Phaser.Scene {
     }
     decreaseCountdown() {
     this.countdown--;
-
+	//juego no dura nada
+	this.countdown=0;
     this.TextCountdown.setText(Tiempo+': ' + this.countdown);
 
     if (this.countdown == 15) {
@@ -792,7 +793,7 @@ async ejecutarPuntuaciones(iniciales = null,score) {
         }
 
         const optimalFontSize_TextDineroPuntuacion = getOptimalFontSize(this, this.textDineroPuntuacion, 475, 130, 'MyFont', 4);
-        this.TextDineroPuntuacion = addTextWithCustomX (this, this.textDineroPuntuacion, optimalFontSize_TextDineroPuntuacion, 'MyFont', '#FFFF00', 735)
+        this.TextDineroPuntuacion = addTextWithCustomX (this, this.textDineroPuntuacion, optimalFontSize_TextDineroPuntuacion, 'MyFont', '#ffff00', 735)
 
         this.TextDineroPuntuacion.y = 335;
     }
@@ -960,15 +961,17 @@ class AboutEB extends Phaser.Scene {
     style = {
         fontSize: '45px',
         fontFamily: 'MyFont',
-        fill: '#000000',
+        fill: '#092a54',
         wordWrap: { width: 620, useAdvancedWrap: true }
+
     }
     styleTitle = {
-        fontSize: '50px',
+        fontSize: '65px',
         fontFamily: 'MyFont',
         fontWeight: 'bold',
-        fill: '#AAAAAA',
+        fill: '#e6b300',
         wordWrap: { width: 880, useAdvancedWrap: true }
+
     }
     preload() {
         this.load.image('info', 'media/img/info.png');
@@ -1006,10 +1009,10 @@ class AboutEB extends Phaser.Scene {
 
         this.mensajes = 0;
 
-        this.textTitle = this.add.text(150, 320, '', this.styleTitle)
-        this.textContent = this.add.text(200, 406, '', this.style );
+        this.textTitle = this.add.text(150, 300, '', this.styleTitle)
+        this.textContent = this.add.text(250, 416, '', this.style );
 
-        this.messagesindicator = this.add.text(410, 834, '🟠 ⚪ ⚪ ⚪ ⚪ ', { fontSize: '16px', fill: '#FFFFFF80' });
+        this.messagesindicator = this.add.text(420, 834, '🟠 ⚪ ⚪ ⚪ ⚪ ', { fontSize: '16px', fill: '#FFFFFF80' });
 
         this.nextButton = this.add.text(955, 546, '▶', { fontSize: '52px', fill: '#FFFFFF' });
         this.nextButton.setInteractive({ useHandCursor: true });  // Hace que el cursor cambie a una mano al pasar por encima
@@ -1036,7 +1039,7 @@ class AboutEB extends Phaser.Scene {
             this.scene.start('GameOverScene', { puntuacion: this.contador, originGame: false });
         });
 
-        this.moreButton = this.add.rectangle(325, 940, 360, 150, 0xFFFFFF, 0);
+        this.moreButton = this.add.rectangle(560, 940, 430, 150, 0xFFFFFF, 0);
         this.moreButton.setInteractive({ useHandCursor: true });
         this.moreButton.on('pointerup', () => {
             window.open('https://escanos.org', '_blank');
