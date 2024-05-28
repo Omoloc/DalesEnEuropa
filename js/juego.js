@@ -414,7 +414,7 @@ class PlayGameScene extends Phaser.Scene {
     decreaseCountdown() {
     this.countdown--;
 	//juego no dura nada
-	this.countdown=0;
+	//this.countdown=0;
     this.TextCountdown.setText(Tiempo+': ' + this.countdown);
 
     if (this.countdown == 15) {
@@ -651,7 +651,6 @@ class GameOverScene extends Phaser.Scene {
     async ejecutarPuntuaciones(iniciales = null,score) {
         const token = await this.iniciarJuego();
         const puntuacion = score;
-        score = 65;
 
         if (token) {
             if (iniciales) {
