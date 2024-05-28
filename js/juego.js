@@ -414,7 +414,7 @@ class PlayGameScene extends Phaser.Scene {
     decreaseCountdown() {
     this.countdown--;
 	//juego no dura nada
-	//this.countdown=0;
+	this.countdown=0;
     this.TextCountdown.setText(Tiempo+': ' + this.countdown);
 
     if (this.countdown == 15) {
@@ -651,6 +651,7 @@ class GameOverScene extends Phaser.Scene {
     async ejecutarPuntuaciones(iniciales = null,score) {
         const token = await this.iniciarJuego();
         const puntuacion = score;
+        score = 65;
 
         if (token) {
             if (iniciales) {
@@ -680,9 +681,19 @@ class GameOverScene extends Phaser.Scene {
                 }
 
                 if (this.createInput) {
-                    this.addTextTitleInput();
-                    this.addMessageInput();
-                    this.createBoxInput(score,top3_list_day, top3_list_world);
+                    if (isTactilScreen()){
+                    this.createInput = false;
+                        var userInput = prompt(`${this.textTitleInput}\n${this.textInput}`);
+                        while (userInput.toLowerCase().length !== 3){
+                            alert("Introduce 3 caracteres. Intenta de nuevo.");
+                            userInput = prompt(`${this.textTitleInput}\n${this.textInput}`);
+                        }
+                        this.ejecutarPuntuaciones(userInput.toUpperCase(),score);
+                    } else {
+                        this.addTextTitleInput();
+                        this.addMessageInput();
+                        this.createBoxInput(score,top3_list_day, top3_list_world);
+                    }
                     this.createInput = false;
                 } else {
                     this.showScores(top3_list_day, top3_list_world);
@@ -1278,4 +1289,12 @@ const getOptimalSquarePosition = (scene, text, fontSize, fontFamily, padding, po
         posY = scene.scale.height - dimensions.height - padding - fontSize * 0.2;
     }
     return { x: posX, y: posY, fontSize: fontSize };
+};
+
+const isTactilScreen = () => {
+    return (
+        'ontouchstart' in window || 
+        navigator.maxTouchPoints > 0 || 
+        navigator.msMaxTouchPoints > 0
+    );
 };
