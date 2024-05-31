@@ -2,8 +2,8 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background: rgb(2,0,36);
-	background: linear-gradient(135deg, rgba(2,0,36,1) 0%, rgba(1,52,132,1) 50%, rgba(0,212,255,1) 100%);
+    background: rgb(3,25,50);
+    background: linear-gradient(90deg, rgba(3,25,50,1) 0%, rgba(19,62,115,1) 50%, rgba(3,25,50,1) 100%);
 }
 
 @font-face {
